@@ -29,12 +29,12 @@ public class Property : MonoBehaviour {
     }
 
     void Start() {
-        Hide();
+   //     Hide();
     }
 
 	public void Show()
 	{
-		UpdateInfo();
+	//	UpdateInfo();
 		isShow=true;
 		gameObject.SetActive(true);
 	}
