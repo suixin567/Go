@@ -112,9 +112,7 @@ public class InventoryManager : MonoBehaviour
 //		return;
 
 		List<Item> _itemList = new List<Item>();
-      
-		string itemsJson = items;//物品信息的Json格式
-        JSONObject j = new JSONObject(itemsJson);
+        JSONObject j = new JSONObject(items);
         foreach (JSONObject temp in j.list)
         {
 			Item item = null; 

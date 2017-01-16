@@ -64,9 +64,10 @@ type ItemHandler struct {
 	items             map[int]*ItemDTO           //游戏中所有的物品。预留一个根据id获取物品的接口
 	SessionItems      map[*ace.Session][]ItemDTO //一个session中都有什么物品。也就是一个角色的物品
 	SessionEquipments map[*ace.Session][]ItemDTO //一个session中都穿戴了什么物品
+	SessionSkills     map[*ace.Session][]SkillDTO
 }
 
-var ItemHander = &ItemHandler{items: make(map[int]*ItemDTO), SessionItems: make(map[*ace.Session][]ItemDTO), SessionEquipments: make(map[*ace.Session][]ItemDTO)}
+var ItemHander = &ItemHandler{items: make(map[int]*ItemDTO), SessionItems: make(map[*ace.Session][]ItemDTO), SessionEquipments: make(map[*ace.Session][]ItemDTO), SessionSkills: make(map[*ace.Session][]SkillDTO)}
 
 func init() {
 	ItemHander.initProcess()
@@ -100,7 +101,6 @@ func (this *ItemHandler) initProcess() {
 		fmt.Println(itemDTO)
 		this.items[id] = itemDTO //保存物品信息
 	}
-
 }
 
 //物品处理逻辑
@@ -171,28 +171,40 @@ func (this *ItemHandler) ItemProcess(session *ace.Session, message ace.DefaultSo
 		if err != nil {
 			fmt.Println(err)
 		}
-		if useItem.Id == 1000 || useItem.Id == 1001 {
-			//使用物品后要删除切片中的物品
-			for k, v := range this.SessionItems[session] {
-				if *useItem == v {
-					fmt.Println("使用的是：", v.Id, v.Name)
-					this.SessionItems[session] = append(this.SessionItems[session][:k], this.SessionItems[session][k+1:]...)
-					break
-				}
+		//使用物品后要删除切片中的物品
+		for k, v := range this.SessionItems[session] {
+			if *useItem == v {
+				fmt.Println("使用的是：", v.Id, v.Name)
+				this.SessionItems[session] = append(this.SessionItems[session][:k], this.SessionItems[session][k+1:]...)
+				break
 			}
+		}
+		usePlayer := data.SyncAccount.SessionPlayer[session]
+		if useItem.Id == 1000 || useItem.Id == 1001 {
 			//更新人物的血量属性
-			data.SyncAccount.SessionPlayer[session].Hp += useItem.Hp
-			if data.SyncAccount.SessionPlayer[session].Hp >= data.SyncAccount.SessionPlayer[session].MaxHP {
-				data.SyncAccount.SessionPlayer[session].Hp = data.SyncAccount.SessionPlayer[session].MaxHP
+			usePlayer.Hp += useItem.Hp
+			if usePlayer.Hp >= usePlayer.MaxHP {
+				usePlayer.Hp = usePlayer.MaxHP
 			}
 			//广播新的属性值给地图内的所有人   人物名字+物品名字
-			roles := Map.Manager.Maps[data.SyncAccount.SessionPlayer[session].Map].Roles
+			roles := Map.Manager.Maps[usePlayer.Map].Roles
 			for se, _ := range roles {
-				useItemdto := UseItemDTO{data.SyncAccount.SessionPlayer[session].Name, useItem.Id}
+				useItemdto := UseItemDTO{usePlayer.Name, useItem.Id}
 				message, _ := json.Marshal(useItemdto)
 
 				se.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, USE_SRES, message})
 			}
+		}
+		if useItem.Id == 6000 { //使用治愈术
+			skillDTO := SkillSync.Skills[useItem.Name]
+			//给人物增加技能
+			skillsInfo := this.SessionSkills[session]
+			skillsInfo = append(skillsInfo, *skillDTO)
+			this.SessionSkills[session] = skillsInfo
+			//响应是技能模型
+			message, _ := json.Marshal(skillDTO)
+			//fmt.Println(string(message))
+			session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, 15, message})
 		}
 		break
 	case PUTON_CREQ: //穿戴装备
@@ -344,8 +356,14 @@ func (this *ItemHandler) SessionClose(session *ace.Session) {
 		stmtUp, err = db.Prepare("update playeritem set equipments=? WHERE playername = ?")
 		_, err = stmtUp.Exec(string(jsonEquipments), lp)
 		checkErr(err)
+		//持久化技能数据
+		jsonSkills, _ := json.Marshal(this.SessionSkills[session]) //转json字符串
+		stmtUp, err = db.Prepare("update playeritem set skills=? WHERE playername = ?")
+		_, err = stmtUp.Exec(string(jsonSkills), lp)
+		checkErr(err)
 		//持久化之后删除内存
 		delete(this.SessionItems, session)
 		delete(this.SessionEquipments, session)
+		delete(this.SessionSkills, session)
 	}
 }

@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 
-    void Update()
+    public virtual void Update()
     {
         if (canvasGroup.alpha != targetAlpha)
         {

@@ -11,8 +11,8 @@ public class PlayerModel {
 	public int Job { get; set;}
 	//等级
 	public int Level{ get; set;}
-
-	public int Gold{ get; set;}
+    //金币
+    public int Gold { get; set;}
 	//当前经验
 	public int Exp{ get; set;}
 	//攻击力
@@ -42,6 +42,7 @@ public class PlayerModel {
 	{
 		this.Job = model.Job;
 		this.Level = model.Level;
+        this.Gold = model.Gold;
 		this.Exp = model.Exp;
 		this.Atk = model.Atk;
 		this.Def = model.Def;
@@ -49,11 +50,12 @@ public class PlayerModel {
 		this.Hp = model.Hp;
 		this.MaxHP = model.MaxHP;
 	}
-	public PlayerModel(int job,int level,int exp,int atk,int def,int map,int hp,int maxHp)
+	public PlayerModel(int job,int level,int gold,int exp,int atk,int def,int map,int hp,int maxHp)
 	{
 		this.Job = job;
 		this.Level =level;
-		this.Exp = exp;
+        this.Gold = gold;
+        this.Exp = exp;
 		this.Atk = atk;
 		this.Def = def;
 		this.Map = Map;

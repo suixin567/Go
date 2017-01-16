@@ -26,7 +26,7 @@ public class ItemHandler : MonoBehaviour {
 		case ItemProtocal.BUY_SRES:
 			BuyItem(model.Message);
 			break;
-		case ItemProtocal.USE_SRES:
+		case ItemProtocal.USE_SRES://使用物品
 			UseItem(model.Message);
 			break;
 		case ItemProtocal.PUTON_SRES://穿装备后 响应回来的是人物的新属性
@@ -35,13 +35,24 @@ public class ItemHandler : MonoBehaviour {
         case ItemProtocal.PUTOFF_SRES://卸下装备的响应
             putOffEquipment(model.Message);
             break;
+            case ItemProtocal.USE_SKILL_SRES://学技能的响应
+                learnSkill(model.Message);
+                break;
 		default:
 			break;
 		}
 	}
 
-	//初始化背包
-	void initKnapsack(string message)
+    void learnSkill(string message)
+    {
+        print("学会技能："+message);
+        Skill newSkill = SkillsInfo._instance.json2Skill(message);
+        SkillPanel._instance.creatSkillItem(newSkill);
+        Knapsack.Instance.lastUsedItem.ReduceAmount();
+    }
+
+    //初始化背包
+    void initKnapsack(string message)
 	{
 		if(message!=string.Empty)
 		{
@@ -105,4 +116,5 @@ public class ItemHandler : MonoBehaviour {
         PlayerModel pdto = Coding<PlayerModel>.decode(message);
         mapHandler.playerGoList[pdto.Name].GetComponent<PlayerProperties>().M_playerModel = pdto;
     }
+
 }

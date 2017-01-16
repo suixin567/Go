@@ -23,4 +23,7 @@ public class ItemProtocal {
 
 	public const int PUTOFF_CRES=12;//脱下装备
 	public const int PUTOFF_SRES=13;
+
+//    public const int USE_SKILL_CREQ = 14;//申请学技能
+    public const int USE_SKILL_SRES = 15; //学技能的响应
 }

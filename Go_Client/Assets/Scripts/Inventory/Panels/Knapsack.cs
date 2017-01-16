@@ -46,8 +46,6 @@ public class Knapsack : Inventory
 	public override void Show ()
 	{
 		base.Show ();
-		goldText.text =GameInfo.myPlayerModel.Gold.ToString();//刷新金币
-		//初始化背包里的物品
 	}
 
 	//立即刷新背包的金币数文本显示
@@ -56,5 +54,10 @@ public class Knapsack : Inventory
 		goldText.text =GameInfo.myPlayerModel.Gold.ToString();
 	}
 
+    public override void Update()
+    {
+        base.Update();
+        UpdateGoldText();
+    }
 
 }
