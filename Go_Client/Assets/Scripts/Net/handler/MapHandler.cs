@@ -99,7 +99,7 @@ public class MapHandler : MonoBehaviour {
 		Assets.Model.Vector4 rotation = model.Rotation;
 		GameObject go = (GameObject)Instantiate(playerPres[model.Job] , new Vector3((float)point.X,(float)point.Y,(float)point.Z),new Quaternion((float)rotation.X,(float)rotation.Y,(float)rotation.Z,(float)rotation.W));
 		go.name = "人物_"+model.Name;
-
+//        go.layer = 8;//设置Player层，为了面部相机
         //添加到角色列表
     //    playerModelList.Add(model.Name, model);
         playerGoList.Add(model.Name, go);
