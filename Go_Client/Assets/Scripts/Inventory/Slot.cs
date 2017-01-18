@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System;
 
 /// <summary>
 /// 物品槽
@@ -51,6 +52,16 @@ public class Slot : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler,IPoi
         return transform.GetChild(0).GetComponent<ItemUI>().Item.Id;
     }
 
+    internal string GetItemName()
+    {
+        if (transform.FindChild("Item(Clone)")!=null)
+        {
+            return transform.FindChild("Item(Clone)").GetComponent<ItemUI>().Item.Name;
+        }
+
+        return string.Empty;
+    }
+
     public bool IsFilled()
     {
         ItemUI itemUI = transform.GetChild(0).GetComponent<ItemUI>();
@@ -91,15 +102,28 @@ public class Slot : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler,IPoi
         if (eventData.button != PointerEventData.InputButton.Left) return;//以下都是鼠标左键的逻辑
 		moveItem();
 		bool doubleClic =HaveClickMouseTwice(doubleInterval,ref mouseTimer,0);
-		if(doubleClic && transform.FindChild("Item(Clone)")!=null)
+        //使用物品
+        if (doubleClic && transform.FindChild("Item(Clone)")!=null)
 		{
-			Knapsack.Instance.lastUsedItem = transform.FindChild("Item(Clone)").GetComponent<ItemUI>();
-			Item usedItem = Knapsack.Instance.lastUsedItem.Item;
-			string message= Coding<Item>.encode(usedItem);
-			NetWorkScript.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.USE_CREQ,message);
-			return;
-		}
+            //Knapsack.Instance.lastUsedItem = transform.FindChild("Item(Clone)").GetComponent<ItemUI>().Item;
+            //Item usedItem = Knapsack.Instance.lastUsedItem;
+            //string message= Coding<Item>.encode(usedItem);
+            //NetWorkScript.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.USE_CREQ,message);
+            //         transform.FindChild("Item(Clone)").GetComponent<ItemUI>().ReduceAmount();//使用后减少一个物品
+            useItem();
+
+        }
 	}
+
+    //使用物品
+    public void useItem()
+    {
+        Knapsack.Instance.lastUsedItem = transform.FindChild("Item(Clone)").GetComponent<ItemUI>().Item;
+        Item usedItem = Knapsack.Instance.lastUsedItem;
+        string message = Coding<Item>.encode(usedItem);
+        NetWorkScript.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.USE_CREQ, message);
+        transform.FindChild("Item(Clone)").GetComponent<ItemUI>().ReduceAmount();//使用后减少一个物品
+    }
 
 	void moveItem()
 	{

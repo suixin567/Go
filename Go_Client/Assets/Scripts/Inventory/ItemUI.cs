@@ -91,7 +91,7 @@ public class ItemUI : MonoBehaviour
         else
             AmountText.text = "";
 		if(Amount<=0 && gameObject.name!="PickedItem"){
-			Destroy(gameObject);
+			DestroyImmediate(gameObject);
 		}
     }
     public void SetAmount(int amount)

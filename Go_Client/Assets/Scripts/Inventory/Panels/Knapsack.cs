@@ -24,7 +24,7 @@ public class Knapsack : Inventory
 
 	public Text goldText;
 
-	public ItemUI lastUsedItem;//最近使用的物品
+	public Item lastUsedItem;//最近使用的物品
 
 	public override void Start () {
 		base.Start();
@@ -35,17 +35,12 @@ public class Knapsack : Inventory
 	public void readPlayerItems(string _playerItems)
 	{
 		print("初始化背包物品");
-	//	Debug.LogWarning( _playerItems);
+		//Debug.LogWarning( _playerItems);
 		playerItemList =  InventoryManager.Instance.ParseItemJson(_playerItems);
 		foreach(var item in playerItemList)
 		{
 			StoreItem(item);
 		}
-	}
-
-	public override void Show ()
-	{
-		base.Show ();
 	}
 
 	//立即刷新背包的金币数文本显示
@@ -60,4 +55,37 @@ public class Knapsack : Inventory
         UpdateGoldText();
     }
 
+
+    //检测是否有足够数量的某物品
+    public bool CheckItem(string name, int amount)
+    {
+        int tempAmount = 0;
+        Slot[] slots = transform.GetComponentsInChildren<Slot>();
+        for (int i = 0; i < slots.Length; i++)//遍历所有格子
+        {
+            if (slots[i].GetItemName() == name)
+            {
+                tempAmount++;
+            }
+        }
+        if (tempAmount >= amount)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //使用某物品
+    public bool useItem(string name) {
+        Slot[] slots = transform.GetComponentsInChildren<Slot>();
+        for (int i = 0; i < slots.Length; i++)//遍历所有格子
+        {
+            if (slots[i].GetItemName() == name)//找到物品
+            {
+                slots[i].GetComponent<Slot>().useItem();
+                return true;
+            }
+        }
+        return false;
+    } 
 }

@@ -48,7 +48,7 @@ public class ItemHandler : MonoBehaviour {
         print("学会技能："+message);
         Skill newSkill = SkillsInfo._instance.json2Skill(message);
         SkillPanel._instance.creatSkillItem(newSkill);
-        Knapsack.Instance.lastUsedItem.ReduceAmount();
+//        Knapsack.Instance.lastUsedItem.ReduceAmount();
     }
 
     //初始化背包
@@ -88,10 +88,10 @@ public class ItemHandler : MonoBehaviour {
 	void UseItem(string message)  //如何区分使用的什么物品  dto: 人物名字 物品名字 
 	{
         UseItemDto ud = Coding<UseItemDto>.decode (message);
-        if (ud.Name == GameInfo.myPlayerModel.Name) //如果是自己使用的
-        {
-            Knapsack.Instance.lastUsedItem.ReduceAmount();
-        }
+        //if (ud.Name == GameInfo.myPlayerModel.Name) //如果是自己使用的
+        //{
+        //    Knapsack.Instance.lastUsedItem.ReduceAmount();
+        //}
         switch (ud.ItemId)
         {
             case 1000://小瓶红药
