@@ -39,7 +39,7 @@ type MapManager struct {
 
 type MapHandler struct {
 	Area  int
-	Roles map[*ace.Session]string
+	Roles map[*ace.Session]string //根据session获得此地图中的角色名字
 }
 
 var Manager = &MapManager{make(map[int]*MapHandler)}
@@ -50,6 +50,7 @@ func init() {
 		fmt.Println("创建地图", i)
 		Manager.Maps[i] = &MapHandler{i, make(map[*ace.Session]string)}
 	}
+
 }
 
 func (this *MapManager) Process(session *ace.Session, model ace.DefaultSocketModel) {

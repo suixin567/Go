@@ -13,11 +13,14 @@ func check(e error) {
 		panic(e)
 	}
 }
-func fileTest() {
-	//也许大部分基本的文件读取任务是将文件内容读取到内存中。
-	dat, err := ioutil.ReadFile("/tmp/dat")
+
+func LoadFile(path string) string {
+	dat, err := ioutil.ReadFile(path)
 	check(err)
-	fmt.Print(string(dat))
+	return string(dat)
+}
+
+func fileTest() {
 	//你经常会想对于一个文件是怎么读并且读取到哪一部分进行更多的控制。对于这个任务，从使用 os.Open打开一个文件获取一个 os.File 值开始。
 	f, err := os.Open("/tmp/dat")
 	check(err)
