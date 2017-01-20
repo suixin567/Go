@@ -4,7 +4,6 @@ import (
 	"ace"
 	"database/sql"
 	"fmt"
-	//"game/logic/protocol"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"

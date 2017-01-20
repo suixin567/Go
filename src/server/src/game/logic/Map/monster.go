@@ -1,11 +1,18 @@
 package Map
 
+//这是一个刷怪文件
+
 import (
+	"ace"
 	"database/sql"
 	"fmt"
 	"game/data"
+	"strings"
 	"time"
 	"tools"
+
+	"encoding/json"
+	"game/logic/protocol"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -45,27 +52,47 @@ func init() {
 	MonsterSync.initProcess()
 	//初始化刷怪管理器
 	genMons := tools.LoadFile("config/MonGen.txt")
-	fmt.Println(genMons) //按回车符拆分信息   然后按空格符拆分具体信息
+	//fmt.Println(genMons) //按回车符拆分信息   然后按空格符拆分具体信息
+	dtos := strings.Split(genMons, "\r")
+	for _, v := range dtos {
+		if !strings.Contains(v, ";") { //过滤掉带注释的行
+			//fmt.Println("--->", v)
+			vs := strings.Fields(v) //拆分为具体值 根据空白返回一个属性列表["1" "2" "2"]
+			//fmt.Println("具体值", values[0], values[1])
+			_monMap := tools.String2int(&vs[0])
+			_point_x := tools.String2float(&vs[1])
+			_point_y := tools.String2float(&vs[2])
+			_point_z := tools.String2float(&vs[3])
+			_name := vs[4]
+			_ranges := tools.String2int(&vs[5])
+			_amount := tools.String2int(&vs[6])
+			_interval := tools.String2int(&vs[7])
 
-	//	MonGen := &MonGenDTO{0, data.Vector3{0, 1, 2}, "黑野猪", 10, 4, 1, 0}
-	//	go MonGen.creatMon(MonGen.interval, &MonGen.name)
-
-	//	MonGen = &MonGenDTO{0, data.Vector3{0, 1, 2}, "白野猪", 10, 3, 5, 0}
-	//	go MonGen.creatMon(MonGen.interval, &MonGen.name)
-
+			MonGen := &MonGenDTO{_monMap, data.Vector3{_point_x, _point_y, _point_z}, _name, _ranges, _amount, _interval, 0}
+			fmt.Println(MonGen)
+			go MonGen.creatMon()
+		}
+	}
 }
 
 //定时刷怪
-func (this *MonGenDTO) creatMon(interval int, name *string) {
-	timer := time.NewTicker(time.Duration(interval) * time.Second)
+func (this *MonGenDTO) creatMon() {
+	timer := time.NewTicker(time.Duration(this.interval) * time.Second)
 	for {
 		select {
 		case <-timer.C:
 			//具体刷怪逻辑
 			this.currentAmount++
 			if this.currentAmount <= this.amount { //小于刷怪数的话就刷怪
-				fmt.Println("刷", *name)
-				//通知所有此地图的人刷怪
+				fmt.Println("刷怪信息0")
+				//广播所有此地图的人刷怪
+				roles := Manager.Maps[this.monMap].Roles
+				for se, _ := range roles {
+					m, _ := json.Marshal(*this)
+
+					fmt.Println("刷怪信息", string(m))
+					se.Write(&ace.DefaultSocketModel{protocol.MAP, -1, 0, m})
+				}
 			}
 		}
 	}

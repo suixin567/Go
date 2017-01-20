@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"strconv"
 )
 
 func check(e error) {
@@ -18,6 +19,23 @@ func LoadFile(path string) string {
 	dat, err := ioutil.ReadFile(path)
 	check(err)
 	return string(dat)
+}
+
+//string 转 int
+func String2int(from *string) int {
+	newInt, err := strconv.Atoi(*from)
+	if err != nil {
+		fmt.Println("转换字符串失败", from)
+	}
+	return newInt
+}
+
+func String2float(from *string) float64 { //      float转字符串的话   a := strconv.FormatFloat(10.010, 'f', -1, 64)
+	newFolat, err := strconv.ParseFloat(*from, 32)
+	if err != nil {
+		fmt.Println("转换字符串失败", from)
+	}
+	return newFolat
 }
 
 func fileTest() {

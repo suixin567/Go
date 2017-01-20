@@ -50,7 +50,6 @@ func init() {
 		fmt.Println("创建地图", i)
 		Manager.Maps[i] = &MapHandler{i, make(map[*ace.Session]string)}
 	}
-
 }
 
 func (this *MapManager) Process(session *ace.Session, model ace.DefaultSocketModel) {
