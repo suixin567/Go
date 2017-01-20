@@ -25,7 +25,7 @@ type SkillDTO struct {
 }
 
 type SkillHandler struct {
-	Skills map[string]*SkillDTO
+	Skills map[string]*SkillDTO //绑定技能名字与技能模型
 }
 
 var SkillSync = &SkillHandler{Skills: make(map[string]*SkillDTO)}
