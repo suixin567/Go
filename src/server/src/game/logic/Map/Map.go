@@ -10,13 +10,14 @@ import (
 )
 
 const (
-	ENTER_CREQ = 0
-	ENTER_SRES = 1
-	ENTER_BRO  = 2
-	MOVE_CREQ  = 3
-	MOVE_BRO   = 4
-	LEAVE_CREQ = 5
-	LEAVE_BRO  = 6
+	ENTER_CREQ        = 0
+	ENTER_SRES        = 1
+	ENTER_BRO         = 2
+	MOVE_CREQ         = 3
+	MOVE_BRO          = 4
+	LEAVE_CREQ        = 5
+	LEAVE_BRO         = 6
+	MONSTER_INIT_SRES = 9 //服务器为一个客户端初始化怪物
 )
 
 type EnterMapDTO struct {
@@ -89,9 +90,10 @@ func (this *MapHandler) enter(session *ace.Session, message ace.DefaultSocketMod
 	this.exBrocast(session, ENTER_BRO, m)
 	//获取场景内所有人信息发送给进入场景的用户
 	ms, _ := json.Marshal(this.getRoles())
-
 	fmt.Println("此地图里的所有人：", string(ms))
 	this.Write(session, ENTER_SRES, ms)
+	//给这个新进入的玩家所有怪物信息
+	go MonManager.GetMons(session, enterData.Map)
 }
 
 func (this *MapHandler) move(session *ace.Session, model ace.DefaultSocketModel) {
@@ -122,10 +124,7 @@ func (this *MapHandler) getRoles() []*data.PlayerDTO {
 	return players
 }
 
-func (this *MapHandler) Write(session *ace.Session, command int, message []byte) {
-	session.Write(&ace.DefaultSocketModel{protocol.MAP, this.Area, command, message})
-}
-
+//小广播MAP协议
 func (this *MapHandler) exBrocast(session *ace.Session, command int, message []byte) {
 	for s, _ := range this.Roles {
 		if s != session {
@@ -134,10 +133,16 @@ func (this *MapHandler) exBrocast(session *ace.Session, command int, message []b
 	}
 }
 
+//大广播MAP协议
 func (this *MapHandler) brocast(command int, message []byte) {
 	for s, _ := range this.Roles {
 		this.Write(s, command, message)
 	}
+}
+
+//写入Session
+func (this *MapHandler) Write(session *ace.Session, command int, message []byte) {
+	session.Write(&ace.DefaultSocketModel{protocol.MAP, this.Area, command, message})
 }
 
 //下线处理

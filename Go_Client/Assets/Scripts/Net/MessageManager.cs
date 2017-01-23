@@ -19,7 +19,6 @@ public class MessageManager : MonoBehaviour {
 
 	void Update () 
 	{
-	
 		List<SocketModel> list = NetWorkScript.getInstance ().getList ();
 		for(int  i =0;i<8;i++)
 		{
@@ -34,13 +33,19 @@ public class MessageManager : MonoBehaviour {
 			}
 		}
 	}
+
+
 	public void OnMessage(SocketModel model)
 	{
-//		Debug.Log ("模型信息"+model.Type); //总是0
-//		Debug.Log ("模型信息"+model.Area); //总是1
-//		Debug.Log ("模型信息"+model.Command); //总是0
-//		Debug.Log ("模型信息"+model.Message);
-
+        //		Debug.Log ("模型信息"+model.Type); //总是0
+        //		Debug.Log ("模型信息"+model.Area); //总是1
+        //		Debug.Log ("模型信息"+model.Command); //总是0
+        //		Debug.Log ("模型信息"+model.Message);
+        if (model == null)
+        {
+            Debug.LogWarning("这个不该发生");
+            return;
+        }
 		switch(model.Type)
 		{
 		case Protocol.LOGIN:

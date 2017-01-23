@@ -9,7 +9,7 @@ public class MapHandler : MonoBehaviour {
 	//保存此场景下所有角色的列表
 //	public Dictionary<string ,PlayerModel> playerModelList = new Dictionary<string, PlayerModel>();
 	public Dictionary<string ,GameObject> playerGoList = new Dictionary<string, GameObject>();
-
+    public Transform monsterHolder;
 	public void OnMessage(SocketModel model)
 	{
 		switch (model.Command){
@@ -23,14 +23,25 @@ public class MapHandler : MonoBehaviour {
 			move(model.Message);
 			break;
 		case MapProtocol.LEAVE_BRO:
-			
 			leave(model.Message);
 			break;
+            //初始化怪物
+            case MapProtocol.MONSTER_INIT_SRES:
+                initMons(model.Message);
+                break;
+
+
 		case MapProtocol.TALK_BRO:
 			chat(model.Message);
 			break;
 		}
 	}
+
+    //进入新地图时，初始化此地图里的所有怪
+    void initMons(string message) {
+        MonsterModel mon = Coding<MonsterModel>.decode(message);
+        LoadData.loadingMonsterList.Add(mon);
+    }
 
 	void chat(string message)
 	{
@@ -85,14 +96,42 @@ public class MapHandler : MonoBehaviour {
 			return;
 		}
 		if(level != GameInfo.myPlayerModel.Map) return;
-		//开始列表解析，并生成自己在内的所有对象
+		//开始解析角色列表，并生成自己在内的所有对象
 		foreach (PlayerModel model in LoadData.loadingPlayerList){
 			creatPlayer(model);
 		}
 		LoadData.loadingPlayerList.Clear();
+        //解析新场景里的所有怪物
+        StartCoroutine("getMons");
 	}
 
-	void creatPlayer(PlayerModel model)
+    //从怪物缓存列表中取出怪物
+    IEnumerator getMons() {
+        while (true) {
+            yield return new WaitForSeconds(0.04f);
+            if (LoadData.loadingMonsterList.Count > 0)
+            {
+                MonsterModel model = LoadData.loadingMonsterList[0];
+                creatMon(model);
+                LoadData.loadingMonsterList.RemoveAt(0);
+            }
+        }
+    }
+    //初始化怪物
+    void creatMon(MonsterModel model)
+    {
+        GameInfo.tempCount++;
+        print("实例化" + GameInfo.tempCount);
+        GameObject go = Instantiate(Resources.Load<GameObject>("Monsters/"+model.Look));
+        go.GetComponent<MonsterBase>().initCommonProperties(model);
+        go.transform.position = new Vector3((float)model.OriPoint.X, (float)model.OriPoint.Y, (float)model.OriPoint.Z);
+        go.transform.parent = monsterHolder;
+        go.transform.localScale = Vector3.one;
+     
+    }
+
+
+        void creatPlayer(PlayerModel model)
 	{
 		//实例化人物
 		Assets.Model.Vector3 point = model.Point;

@@ -38,7 +38,6 @@ public class PlayerProperties : MonoBehaviour {
         }
         //人物名字
 		transform.FindChild("Canvas/name").GetComponent<Text>().text = model.Name;
-		updateBlood(0);
 	}
 
 
