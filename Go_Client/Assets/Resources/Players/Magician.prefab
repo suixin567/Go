@@ -1602,7 +1602,7 @@ MonoBehaviour:
   attackInterval: 1
   attackDistance: 3
   attackTarget: {fileID: 0}
-  aniState: 1
+  aniState: 2
 --- !u!114 &11409954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1830,6 +1830,7 @@ MonoBehaviour:
   isLocalPlayer: 0
   effect_click_prefab: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
+  Player_Motion_State: 0
 --- !u!124 &12475108
 Behaviour:
   m_ObjectHideFlags: 1

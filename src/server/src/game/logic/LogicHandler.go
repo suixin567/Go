@@ -25,7 +25,6 @@ func (this *GameHandler) SessionClose(session *ace.Session) {
 	Map.Manager.SessionClose(session)
 	item.ItemHander.SessionClose(session)
 	data.SyncAccount.SessionClose(session)
-
 }
 
 func (this *GameHandler) MessageReceived(session *ace.Session, message interface{}) {
@@ -54,7 +53,7 @@ func (this *GameHandler) MessageReceived(session *ace.Session, message interface
 		break
 	case protocol.MAP: //收到地图信息
 		Map.Manager.Process(session, m)
-		//		fmt.Println("哈哈 ")
+		fmt.Println("哈哈 ")
 		break
 	case protocol.ITEM: //请求物品信息
 		item.ItemHander.ItemProcess(session, m)

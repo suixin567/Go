@@ -81,6 +81,9 @@ func (this *MapHandler) Process(session *ace.Session, model ace.DefaultSocketMod
 	case ATTACK_CREQ: //客户端发起攻击
 		this.attack(session, model)
 		break
+	default:
+		fmt.Println("未知的地图协议")
+		break
 	}
 }
 func (this *MapHandler) attack(session *ace.Session, message ace.DefaultSocketModel) {

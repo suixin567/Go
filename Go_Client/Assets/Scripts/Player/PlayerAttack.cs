@@ -20,8 +20,11 @@ public class PlayerAttack : MonoBehaviour {
         playerDir = GetComponent<PlayerDir>();
 
     }
-	
+
+    bool autoMoved = false;
+    bool autoStoped = false;
     void Update () {
+
         if (gameObject.tag != Tags.localPlayer)
         {
             return;
@@ -40,19 +43,25 @@ public class PlayerAttack : MonoBehaviour {
                 playerDir.Player_Motion_State = PlayerMotionState.NORMAL;
                 attackTarget = null;
             }
+            autoMoved = false;
+            autoStoped = false;
         }
         if (playerDir.Player_Motion_State == PlayerMotionState.ATTACK) {
-
+ 
             float dis = Vector3.Distance(transform.position,attackTarget.position);
             if (dis <= attackDistance)//可以攻击
             {
-                playerDir.autoMove(transform.position);//如果之前是自动跑向目标，应该停下脚步
+                if (autoStoped==false)
+                {
+                    playerDir.autoMove(transform.position);//如果之前是自动跑向目标，应该停下脚步
+                    autoStoped = true;
+                }
+               
                 //判断时间间隔
                 if (Time.time > lastAttTime + attackInterval)
                 {
                     lastAttTime = Time.time;
                     //攻击
-                    print("攻击");
                     aniState = AniState.Attack;
                     //发送攻击的网络协议
                     AttackMonDTO dto = new AttackMonDTO();
@@ -60,15 +69,19 @@ public class PlayerAttack : MonoBehaviour {
                     dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().model.SecondIndex;
                     string message = LitJson.JsonMapper.ToJson(dto);
                     NetWorkScript.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
-
+                    print("攻击");
                 }
-                else {//等待间隔
+                else
+                {//等待间隔
                     aniState = AniState.Wait;
                 }
             }
             else {//走向敌人
-                playerDir.autoMove(attackTarget.position);
-                aniState = AniState.RunTo;
+                if (autoMoved == false) {
+                    playerDir.autoMove(attackTarget.position);
+                    aniState = AniState.RunTo;
+                    autoMoved = true;
+                }
             }
         }
 	}
