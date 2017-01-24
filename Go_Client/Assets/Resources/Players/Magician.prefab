@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11436228}
   - 114: {fileID: 11424112}
   - 114: {fileID: 11404818}
+  - 114: {fileID: 11406496}
   m_Layer: 8
   m_Name: Magician
   m_TagString: Player
@@ -1587,6 +1588,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ad1ab1652fed840bc76afe53db2e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11406496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb505e0663628f48a1b1829edbacaaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackInterval: 1
+  attackDistance: 3
+  attackTarget: {fileID: 0}
+  aniState: 1
 --- !u!114 &11409954
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -121,7 +121,7 @@ public class MapHandler : MonoBehaviour {
     void creatMon(MonsterModel model)
     {
         GameInfo.tempCount++;
-        print("实例化" + GameInfo.tempCount);
+       // print("实例化" + GameInfo.tempCount);
         GameObject go = Instantiate(Resources.Load<GameObject>("Monsters/"+model.Look));
         go.GetComponent<MonsterBase>().initCommonProperties(model);
         go.transform.position = new Vector3((float)model.OriPoint.X, (float)model.OriPoint.Y, (float)model.OriPoint.Z);

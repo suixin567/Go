@@ -39,4 +39,14 @@ public class MonsterBase : MonoBehaviour {
         bloodSlider.value = (float)model.Hp / model.MaxHp;
         bloodText.text = model.Hp + "/" + model.MaxHp;
     }
+
+    protected void OnMouseEnter()
+    {
+        CursorManager._instance.SetAttack();
+    }
+
+    protected void OnMouseExit()
+    {
+        CursorManager._instance.SetNormal();
+    }
 }

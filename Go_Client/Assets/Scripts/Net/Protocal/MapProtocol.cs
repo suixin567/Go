@@ -16,12 +16,10 @@ public class MapProtocol {
 
     //初始化怪物
     public const int MONSTER_INIT_SRES = 9;
-    //怪物掉血
-    public const int MONSTER_BLOOD_CREQ = 10;
     //怪物死亡
-    public const int MONSTER_DIE_BRO = 11;
+    public const int MONSTER_DIE_BRO = 10;
     //怪物复活
-    public const int MONSTER_RELIVE_BRO = 12;
+    public const int MONSTER_RELIVE_BRO = 11;
 
     //攻击
     public const int ATTACK_CREQ = 12;

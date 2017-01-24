@@ -3,27 +3,57 @@ using System.Collections;
 
 public class PlayerAnimation : MonoBehaviour {
 
-	private PlayerMove move;
+    private PlayerDir dir;
+    private PlayerMove move;
+    private PlayerAttack attack;
 
-	// Use this for initialization
 	void Start () {
-		move =this.GetComponent<PlayerMove>();
-	}
+        dir = GetComponent<PlayerDir>();
+move =this.GetComponent<PlayerMove>();
+        attack = this.GetComponent<PlayerAttack>();
+
+    }
 	
 
 
 	void LateUpdate () {
-		if (move.state == PlayerMove.ControlMotionState.Moving) {
-			PlayAnim("Run");
-		} else if (move.state == PlayerMove.ControlMotionState.Idle) {
-			PlayAnim("Idle");
-		}
+
+        if (dir.Player_Motion_State == PlayerMotionState.NORMAL)
+        {
+            if (move.state == PlayerMove.ControlMotionState.Moving)
+            {
+                PlayAnim("Run");
+            }
+            else if (move.state == PlayerMove.ControlMotionState.Idle)
+            {
+                PlayAnim("Idle");
+            }
+        }
+        else if(dir.Player_Motion_State  == PlayerMotionState.ATTACK)//攻击状态
+        {
+            if (attack.aniState == PlayerAttack.AniState.Attack)
+            {
+                PlayAnim("Attack1");
+            }
+            else if (attack.aniState == PlayerAttack.AniState.Wait)
+            {
+                PlayAnim("Idle");
+            }
+            else if (attack.aniState == PlayerAttack.AniState.RunTo)
+            {
+                PlayAnim("Run");
+            }
+        }
+
 
 	
 	}
 
-	void PlayAnim(string animName) {
-		GetComponent<Animation>().CrossFade(animName);
+	void Play(string animName) {
+		GetComponent<Animation>().Play(animName);
 	}
-
+    void PlayAnim(string animName)
+    {
+        GetComponent<Animation>().CrossFade(animName);
+    }
 }
