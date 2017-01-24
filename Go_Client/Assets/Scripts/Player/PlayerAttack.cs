@@ -55,6 +55,11 @@ public class PlayerAttack : MonoBehaviour {
                     print("攻击");
                     aniState = AniState.Attack;
                     //发送攻击的网络协议
+                    AttackMonDTO dto = new AttackMonDTO();
+                    dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().model.FirstIndex;
+                    dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().model.SecondIndex;
+                    string message = LitJson.JsonMapper.ToJson(dto);
+                    NetWorkScript.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
 
                 }
                 else {//等待间隔

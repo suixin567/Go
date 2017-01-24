@@ -17,7 +17,8 @@ const (
 	MOVE_BRO          = 4
 	LEAVE_CREQ        = 5
 	LEAVE_BRO         = 6
-	MONSTER_INIT_SRES = 9 //服务器为一个客户端初始化怪物
+	MONSTER_INIT_SRES = 9  //服务器为一个客户端初始化怪物
+	ATTACK_CREQ       = 12 //客户端发起攻击
 )
 
 type EnterMapDTO struct {
@@ -34,13 +35,19 @@ type MoveDTO struct {
 	Rotation data.Vector4
 }
 
+type AttackMonDTO struct {
+	FirstIndex  int
+	SecondIndex int
+}
+
 type MapManager struct {
 	Maps map[int]*MapHandler
 }
 
 type MapHandler struct {
-	Area  int
-	Roles map[*ace.Session]string //根据session获得此地图中的角色名字
+	Area    int
+	Roles   map[*ace.Session]string //根据session获得此地图中的角色名字
+	MonGens []*MonGenDTO            //每个地图管理员有多个刷怪管理器
 }
 
 var Manager = &MapManager{make(map[int]*MapHandler)}
@@ -49,17 +56,20 @@ func init() {
 	var i int = 0
 	for ; i < 10; i += 1 {
 		fmt.Println("创建地图", i)
-		Manager.Maps[i] = &MapHandler{i, make(map[*ace.Session]string)}
+		Manager.Maps[i] = &MapHandler{i, make(map[*ace.Session]string), nil}
 	}
+	InitGenMon()
 }
 
 func (this *MapManager) Process(session *ace.Session, model ace.DefaultSocketModel) {
 	//收到角色传来的地图消息  根据传输消息中的区域码来获取 对应的地图模块 调用该模块的消息处理函数
 	var area = model.Area
 	this.Maps[area].Process(session, model)
+
 }
 
 func (this *MapHandler) Process(session *ace.Session, model ace.DefaultSocketModel) {
+
 	switch model.Command {
 	case ENTER_CREQ: //收到用户申请进入地图
 		this.enter(session, model)
@@ -68,7 +78,21 @@ func (this *MapHandler) Process(session *ace.Session, model ace.DefaultSocketMod
 	case MOVE_CREQ: //用户移动
 		this.move(session, model)
 		break
+	case ATTACK_CREQ: //客户端发起攻击
+		this.attack(session, model)
+		break
 	}
+}
+func (this *MapHandler) attack(session *ace.Session, message ace.DefaultSocketModel) {
+	monData := &AttackMonDTO{}
+	err := json.Unmarshal(message.Message, &monData)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("攻击怪物", string(message.Message))
+	fmt.Println("刷怪管理器的个数", len(this.MonGens))
+	fmt.Println("就是这个怪", this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex].Name)
 }
 
 func (this *MapHandler) enter(session *ace.Session, message ace.DefaultSocketModel) {
@@ -92,8 +116,21 @@ func (this *MapHandler) enter(session *ace.Session, message ace.DefaultSocketMod
 	ms, _ := json.Marshal(this.getRoles())
 	fmt.Println("此地图里的所有人：", string(ms))
 	this.Write(session, ENTER_SRES, ms)
+
 	//给这个新进入的玩家所有怪物信息
-	go MonManager.GetMons(session, enterData.Map)
+	//建立一个数组，保存所有要发送的怪，作为缓冲
+	tempMonArr := make([]*MonsterDTO, 0)
+	for k := range this.MonGens { //遍历此地图内的所有怪物管理器
+		for _, mv := range this.MonGens[k].Monsters { //遍历刷怪管理器里的所有怪物
+			if mv != nil {
+				if mv.Hp != 0 { //判断是活着的怪,随机怪物的位置
+					tempMonArr = append(tempMonArr, mv)
+				}
+			}
+		}
+	}
+	go sendMon(session, tempMonArr)
+	fmt.Println("此地图怪物数量", len(tempMonArr))
 }
 
 func (this *MapHandler) move(session *ace.Session, model ace.DefaultSocketModel) {
