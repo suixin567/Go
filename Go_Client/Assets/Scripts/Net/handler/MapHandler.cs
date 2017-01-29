@@ -9,7 +9,10 @@ public class MapHandler : MonoBehaviour {
 	//保存此场景下所有角色的列表
 //	public Dictionary<string ,PlayerModel> playerModelList = new Dictionary<string, PlayerModel>();
 	public Dictionary<string ,GameObject> playerGoList = new Dictionary<string, GameObject>();
+	public Dictionary<string ,GameObject> MonList = new Dictionary<string, GameObject>();//怪物列表 格式为： 1_2  monModel
     public Transform monsterHolder;
+
+
 	public void OnMessage(SocketModel model)
 	{
 		switch (model.Command){
@@ -29,7 +32,9 @@ public class MapHandler : MonoBehaviour {
             case MapProtocol.MONSTER_INIT_SRES:
                 initMons(model.Message);
                 break;
-
+		case MapProtocol.BE_ATTACK_BRO:
+			beAttack(model.Message);
+			break;
 
 		case MapProtocol.TALK_BRO:
 			chat(model.Message);
@@ -37,6 +42,20 @@ public class MapHandler : MonoBehaviour {
 		}
 	}
 
+	void beAttack(string message)
+	{
+		print("怪物血量"+message);
+		MonsterModel mon = Coding<MonsterModel>.decode(message);
+		string monIndex = mon.FirstIndex.ToString() +"_" +mon.SecondIndex.ToString();
+		if(mon.Hp<=0)
+		{
+			Destroy(MonList[monIndex]);
+			MonList.Remove(monIndex);
+		}else{//更新怪物血条
+			MonList[monIndex].GetComponent<MonsterBase>().monModel.Hp = mon.Hp;
+			print("更新怪物属性"+mon.Hp);
+		}
+	}
     //进入新地图时，初始化此地图里的所有怪
     void initMons(string message) {
         MonsterModel mon = Coding<MonsterModel>.decode(message);
@@ -52,7 +71,6 @@ public class MapHandler : MonoBehaviour {
 	void leave(string message){
 		Debug.Log("这个人离开了：" + message);
 	//	StringDTO playerName = Coding<StringDTO>.decode("{\"value\":"+message +"}");
-
 		if(/*playerModelList.ContainsKey(message) ==false || */playerGoList.ContainsKey(message)==false)
 		{
 			return;
@@ -127,7 +145,9 @@ public class MapHandler : MonoBehaviour {
         go.transform.position = new Vector3((float)model.OriPoint.X, (float)model.OriPoint.Y, (float)model.OriPoint.Z);
         go.transform.parent = monsterHolder;
         go.transform.localScale = Vector3.one;
-     
+     //加入怪物列表
+		string monIndex = model.FirstIndex.ToString() + "_" + model.SecondIndex.ToString();
+		MonList.Add(monIndex, go);
     }
 
 

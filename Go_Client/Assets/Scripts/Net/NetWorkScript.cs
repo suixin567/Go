@@ -68,6 +68,7 @@ public  class NetWorkScript
 	//sock异步线程读取完毕后调用此方法 形参ar会在异步线程结束后被自动传递过来
 	private void ReceiveCallBack(IAsyncResult ar)
 	{
+	//	Debug.Log("收到消息");
 		int readCount = 0;
 		try
 		{

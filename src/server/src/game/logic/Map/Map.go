@@ -19,6 +19,7 @@ const (
 	LEAVE_BRO         = 6
 	MONSTER_INIT_SRES = 9  //服务器为一个客户端初始化怪物
 	ATTACK_CREQ       = 12 //客户端发起攻击
+	BE_ATTACK_BRO     = 15 //被攻击的广播
 )
 
 type EnterMapDTO struct {
@@ -79,7 +80,7 @@ func (this *MapHandler) Process(session *ace.Session, model ace.DefaultSocketMod
 		this.move(session, model)
 		break
 	case ATTACK_CREQ: //客户端发起攻击
-		this.attack(session, model)
+		go this.attack(session, model)
 		break
 	default:
 		fmt.Println("未知的地图协议")
@@ -92,10 +93,21 @@ func (this *MapHandler) attack(session *ace.Session, message ace.DefaultSocketMo
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println("攻击怪物", string(message.Message))
-	fmt.Println("刷怪管理器的个数", len(this.MonGens))
-	fmt.Println("就是这个怪", this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex].Name)
+	//fmt.Println("就是这个怪", this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex].Name)
+	mon := this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex]
+	if mon.Hp <= 0 { //必须是或者的怪，死怪不需要继续被掉血
+		return
+	}
+	player := data.SyncAccount.SessionPlayer[session]
+	mon.Hp -= player.Atk
+	//攻击怪物的响应  广播新的怪物属性值给地图内的所有人
+	m, _ := json.Marshal(*mon)
+	//	for se, _ := range this.Roles {
+	//		fmt.Println("怪物新属性", string(m))
+	//		se.Write(&ace.DefaultSocketModel{protocol.MAP, -1, BE_ATTACK_BRO, m})
+	//	}
+	fmt.Println("广播怪物新属性", string(m))
+	this.brocast(BE_ATTACK_BRO, m) //告诉所有在这个地图的玩家，这个人离开了
 }
 
 func (this *MapHandler) enter(session *ace.Session, message ace.DefaultSocketModel) {
@@ -126,7 +138,7 @@ func (this *MapHandler) enter(session *ace.Session, message ace.DefaultSocketMod
 	for k := range this.MonGens { //遍历此地图内的所有怪物管理器
 		for _, mv := range this.MonGens[k].Monsters { //遍历刷怪管理器里的所有怪物
 			if mv != nil {
-				if mv.Hp != 0 { //判断是活着的怪,随机怪物的位置
+				if mv.Hp > 0 { //判断是活着的怪,随机怪物的位置
 					tempMonArr = append(tempMonArr, mv)
 				}
 			}

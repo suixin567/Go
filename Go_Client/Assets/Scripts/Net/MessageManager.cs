@@ -67,6 +67,9 @@ public class MessageManager : MonoBehaviour {
 			panelGo.transform.SetParent(GameObject.Find("Canvas").transform);
 			panelGo.transform.localPosition = new Vector3(0,0,-500);
 			break;
+		case 99:
+			print("收到测试信息"+model.Message);
+			break;
 		default:
 			WindowConstants.windowList.Add(WindowConstants.SOCKET_TYPE_FALL);
 			break;

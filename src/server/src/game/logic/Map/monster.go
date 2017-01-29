@@ -148,7 +148,7 @@ func sendMon(session *ace.Session, mons []*MonsterDTO) {
 					session.Write(&ace.DefaultSocketModel{protocol.MAP, -1, MONSTER_INIT_SRES, m})
 					mons = append(mons[:0], mons[1:]...)
 					tempcount++
-					fmt.Println("刷一个怪", string(m), tempcount)
+					//	fmt.Println("刷一个怪", string(m), tempcount)
 				}
 			} else {
 				fmt.Println("刷完了")
@@ -169,7 +169,7 @@ func (this *MonGenDTO) reLiveMon() {
 				for _, mon := range this.Monsters {
 
 					fmt.Println(mon.Name)
-					if mon.Hp == 0 { //复活这个死怪
+					if mon.Hp <= 0 { //复活这个死怪
 						m, _ := json.Marshal(*mon)
 						fmt.Println("复活死怪", string(m))
 						//广播所有此地图的人刷怪

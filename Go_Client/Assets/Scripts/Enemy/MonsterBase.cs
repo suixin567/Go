@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MonsterBase : MonoBehaviour {
 
-    public MonsterModel model;
+    public MonsterModel monModel;
 
     Slider bloodSlider;
     Text bloodText;
@@ -18,7 +18,7 @@ public class MonsterBase : MonoBehaviour {
 
     public virtual void initCommonProperties(MonsterModel model)
     {
-       this. model = model;
+       this. monModel = model;
         //名字
         transform.FindChild("Canvas/name").GetComponent<Text>().text = model.Name;
     }
@@ -31,13 +31,13 @@ public class MonsterBase : MonoBehaviour {
 
     public void updateBlood(int value)
     {
-        model.Hp += value;
-        if (model.Hp >= model.MaxHp)
-        {
-            model.Hp = model.MaxHp;
-        }
-        bloodSlider.value = (float)model.Hp / model.MaxHp;
-        bloodText.text = model.Hp + "/" + model.MaxHp;
+//        model.Hp += value;
+//        if (model.Hp >= model.MaxHp)
+//        {
+//            model.Hp = model.MaxHp;
+//        }
+        bloodSlider.value = (float)monModel.Hp / monModel.MaxHp;
+        bloodText.text = monModel.Hp + "/" + monModel.MaxHp;
     }
 
     protected void OnMouseEnter()

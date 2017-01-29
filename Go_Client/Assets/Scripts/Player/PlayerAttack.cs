@@ -47,7 +47,13 @@ public class PlayerAttack : MonoBehaviour {
             autoStoped = false;
         }
         if (playerDir.Player_Motion_State == PlayerMotionState.ATTACK) {
- 
+			//如果此怪物已被杀死并销毁
+			if(attackTarget ==null ){
+				playerDir.Player_Motion_State = PlayerMotionState.NORMAL;
+				attackTarget = null;
+				return;
+			}
+
             float dis = Vector3.Distance(transform.position,attackTarget.position);
             if (dis <= attackDistance)//可以攻击
             {
@@ -65,11 +71,11 @@ public class PlayerAttack : MonoBehaviour {
                     aniState = AniState.Attack;
                     //发送攻击的网络协议
                     AttackMonDTO dto = new AttackMonDTO();
-                    dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().model.FirstIndex;
-                    dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().model.SecondIndex;
+					dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().monModel.FirstIndex;
+					dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().monModel.SecondIndex;
                     string message = LitJson.JsonMapper.ToJson(dto);
                     NetWorkScript.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
-                    print("攻击");
+               //     print("攻击");
                 }
                 else
                 {//等待间隔

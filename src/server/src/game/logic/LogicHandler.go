@@ -57,6 +57,13 @@ func (this *GameHandler) MessageReceived(session *ace.Session, message interface
 	case protocol.ITEM: //请求物品信息
 		item.ItemHander.ItemProcess(session, m)
 		break
+	case 99:
+		fmt.Println("收到信息！", string(m.Message))
+		for i := 0; i < 2; i++ {
+			go session.Write(&ace.DefaultSocketModel{99, 88, 0, []byte("goly")})
+		}
+
+		break
 	default:
 		fmt.Println("未知协议类型！")
 		break
