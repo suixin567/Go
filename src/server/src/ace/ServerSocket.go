@@ -2,6 +2,8 @@
 package ace
 
 import (
+	"bytes"
+	"encoding/binary"
 	"fmt"
 	"net"
 	"runtime"
@@ -55,17 +57,54 @@ func (server *ServerSocket) Start(port int) {
 	}
 }
 
+var count int
+
 func clentConnection(session *Session, server *ServerSocket) {
 	server.handler.SessionOpen(session) //调用Handler的SessionOpen()方法
-	buffer := make([]byte, 1024)
-	//让session读取信息
-	for bytelength, readSuccess := session.Read(buffer); readSuccess; bytelength, readSuccess = session.Read(buffer) {
-		temp := buffer[0:bytelength]
-		msg := server.decode.Decode(temp)
-		if msg != nil {
-			server.handler.MessageReceived(session, msg) //接收到数据
-		} else {
-			session.Close()
+	//数据缓存
+	databuf := make([]byte, 10240)
+	// 消息缓冲
+	msgbuf := bytes.NewBuffer(make([]byte, 0))
+	// 消息长度
+	length := 0
+	// 消息长度uint32
+	ulength := uint32(0)
+	//不断的从连接中读取信息
+	for bytelength, readSuccess := session.Read(databuf); readSuccess; bytelength, readSuccess = session.Read(databuf) {
+		//fmt.Println("收到的byte数组长度:", bytelength, "值:", databuf[:bytelength])
+		_, err := msgbuf.Write(databuf[:bytelength]) // 数据添加到消息缓冲
+		if err != nil {
+			fmt.Printf("Buffer write error: %s\n", err)
+			return
+		}
+		for { // 消息分割循环
+			// 消息头
+			if length == 0 && msgbuf.Len() >= 4 {
+				binary.Read(msgbuf, binary.BigEndian, &ulength) //从msgbuf中读取  然后放入ulength
+				length = int(ulength)
+				//fmt.Println("消息头中所写的长度", ulength)
+				count++
+				fmt.Println("收到信息条数", count)
+				// 检查超长消息
+				if length > 10240 {
+					fmt.Printf("Message too length: %d\n", length)
+					return
+				}
+			}
+			// 消息体
+			if length > 0 && msgbuf.Len() >= length {
+				//fmt.Printf(": %s\n", string(msgbuf.Next(length)))
+				msg := server.decode.Decode([]byte(string(msgbuf.Next(length))))
+				if msg != nil {
+					server.handler.MessageReceived(session, msg) //接收到数据，去进行逻辑处理
+				} else {
+					fmt.Println("别运行啊!!!!!!!")
+					session.Close()
+				}
+				length = 0
+			} else {
+				break
+			}
 		}
 	}
 	server.handler.SessionClose(session) //调用Handler的SessionClose()方法

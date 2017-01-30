@@ -2,7 +2,6 @@
 package ace
 
 import (
-	//"fmt"
 	_ "fmt"
 	"net"
 )
@@ -44,9 +43,10 @@ func (session *Session) Write(msg *DefaultSocketModel) {
 }
 
 /**消息接收**/
-func (session *Session) Read(buffer []byte) (int, bool) {
+func (session *Session) Read(databuf []byte) (int, bool) {
 	//读取消息长度 错误则关闭客户端链接 并从客户端列表中移除客户端信息 否则返回长度
-	readLength, err := session.Conn.Read(buffer)
+	readLength, err := session.Conn.Read(databuf) //从连接中读到数据放入databuf中
+	//	fmt.Println("原始读取长度", readLength)
 	if err != nil {
 		session.Close()
 		return 0, false

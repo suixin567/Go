@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class ByteArray
 {
@@ -47,7 +48,10 @@ public class ByteArray
 	
 	public byte[] Buffer
 	{
-		get { return m_Stream.GetBuffer(); }
+		get {
+			
+
+			return m_Stream.GetBuffer(); }
 	}
 	
 	internal MemoryStream MemoryStream { get { return m_Stream; } }

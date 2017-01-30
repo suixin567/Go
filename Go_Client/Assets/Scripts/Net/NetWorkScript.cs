@@ -126,22 +126,32 @@ public  class NetWorkScript
 				try
 				{
 					ByteArray arr = new ByteArray();
+					arr.WriteInt(sm.Message.Length+16);
 					arr.WriteInt(sm.Type);
 					arr.WriteInt(sm.Area);
 					arr.WriteInt(sm.Command);
 					if (sm.Message != null)
 					{
-						arr.WriteInt(sm.Message.Length);
+						arr.WriteInt(sm.Message.Length);//20
 						arr.WriteUTFBytes(sm.Message);
 					}
-					socket.Send(arr.Buffer);
+					Debug.Log(arr.Length);
+					Debug.Log(arr.Buffer.Length);
+					byte[] removeZero = new byte[arr.Length];
+
+					for(int i=0;i<arr.Length;i++ )
+					{
+						removeZero[i]=arr.Buffer[i];
+						Debug.LogWarning(removeZero[i]);
+					}
+					socket.Send(removeZero);
 				}
 				catch (System.Exception ex)
 				{
 					UnityEngine.Debug.LogError(ex.Message);
 				}
 			}
-			Thread.Sleep(1);
+			//Thread.Sleep(1);
 		}
 	}
 
