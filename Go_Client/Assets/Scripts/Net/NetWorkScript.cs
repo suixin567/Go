@@ -135,14 +135,14 @@ public  class NetWorkScript
 						arr.WriteInt(sm.Message.Length);//20
 						arr.WriteUTFBytes(sm.Message);
 					}
-					Debug.Log(arr.Length);
-					Debug.Log(arr.Buffer.Length);
+					//Debug.Log(arr.Length);
+					//Debug.Log(arr.Buffer.Length);
 					byte[] removeZero = new byte[arr.Length];
 
 					for(int i=0;i<arr.Length;i++ )
 					{
 						removeZero[i]=arr.Buffer[i];
-						Debug.LogWarning(removeZero[i]);
+						//Debug.LogWarning(removeZero[i]);
 					}
 					socket.Send(removeZero);
 				}
