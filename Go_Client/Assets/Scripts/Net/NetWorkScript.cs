@@ -151,7 +151,7 @@ public  class NetWorkScript
 					UnityEngine.Debug.LogError(ex.Message);
 				}
 			}
-			//Thread.Sleep(1);
+			Thread.Sleep(1);
 		}
 	}
 
