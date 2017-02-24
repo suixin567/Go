@@ -6,6 +6,14 @@ public class LoginPanel : MonoBehaviour {
 
 	public GameObject regPanel;
 
+	void Start()
+	{
+		if(GameInfo.IS_SETUP ==false)
+		{
+			GameInfo.IS_SETUP =true;
+			Instantiate(Resources.Load<GameObject>("GlobalManager"));
+		}
+	}
 
 
 	public InputField accText;

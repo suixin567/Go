@@ -12,4 +12,5 @@ public class GameInfo {
 	public static PlayerModel myPlayerModel = new PlayerModel();//进入游戏后的全局角色对象
 
     public static int tempCount = 0;
+	public static bool IS_SETUP = false;
 }

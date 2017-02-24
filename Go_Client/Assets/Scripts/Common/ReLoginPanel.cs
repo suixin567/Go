@@ -12,7 +12,7 @@ public class ReLoginPanel : MonoBehaviour {
 	{
 		//切换场景
 		Destroy(gameObject);
-		ResceneScript.instance.Loading(0);
+		ResceneManager.instance.Loading(0);
 		print("返回登录场景");
 	}
 	public void onQuitBtnClic()

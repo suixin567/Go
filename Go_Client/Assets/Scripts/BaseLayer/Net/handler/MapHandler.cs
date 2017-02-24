@@ -93,7 +93,7 @@ public class MapHandler : MonoBehaviour {
 		LoadData.loadingPlayerList.AddRange(players);
 		isLoading =true;
 		//切换场景
-		ResceneScript.instance.Loading(GameInfo.myPlayerModel.Map);
+		ResceneManager.instance.Loading(GameInfo.myPlayerModel.Map);
 	}
 
 	//其他人进入地图

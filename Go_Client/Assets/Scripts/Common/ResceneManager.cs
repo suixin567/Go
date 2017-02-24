@@ -3,8 +3,8 @@ using System.Collections;
 /// <summary>
 /// 加载进度条、切换场景
 /// </summary>
-public class ResceneScript : MonoBehaviour {
-	public static ResceneScript instance;
+public class ResceneManager : MonoBehaviour {
+	public static ResceneManager instance;
 
 	public GameObject loadingPanel;
 	private AsyncOperation async;//异步加载

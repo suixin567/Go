@@ -10,10 +10,10 @@ public class MessageManager : MonoBehaviour {
 	private ItemHandler item;
 
 	void Start () {
-		login= GetComponent<LoginHandler>();
-		user = GetComponent<UserHandler> ();
-		map = GetComponent<MapHandler> ();
-		item =GetComponent<ItemHandler>();
+//		login=Camera.main. GetComponent<LoginHandler>();
+//		user = Camera.main. GetComponent<UserHandler> ();
+//		map = Camera.main. GetComponent<MapHandler> ();
+//		item =Camera.main. GetComponent<ItemHandler>();
 
 	}
 
@@ -49,15 +49,29 @@ public class MessageManager : MonoBehaviour {
 		switch(model.Type)
 		{
 		case Protocol.LOGIN:
+			if(login ==null)
+			{
+				login = Camera.main. GetComponent<LoginHandler> ();
+			}
 			login.OnMessage(model);
 			break;
 		case Protocol.USER:
+			if(user==null){
+				user = Camera.main. GetComponent<UserHandler> ();
+			}
 			user.OnMessage(model);
+			print(model.Message);
 			break;
 		case Protocol.MAP:
+			if(map==null){
+				map = Camera.main. GetComponent<MapHandler> ();
+			}
 			map.OnMessage(model);
 			break;
 		case Protocol.ITEM:
+			if(item==null){
+				item = Camera.main. GetComponent<ItemHandler> ();
+			}
 			item.OnMessage(model);
 			break;
 

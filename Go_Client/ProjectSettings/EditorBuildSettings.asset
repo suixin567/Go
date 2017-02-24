@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scene/1_LoginScene.unity
+    path: Assets/Scripts/Scenes/1_Login/LoginScene.unity
   - enabled: 1
-    path: Assets/Scene/2_JobScene.unity
+    path: Assets/Scripts/Scenes/2_JobScene/2_JobScene.unity
   - enabled: 1
-    path: Assets/Scene/3_Halloween_Level.unity
+    path: Assets/Scripts/Scenes/3_Halloween_Level/3_Halloween_Level.unity

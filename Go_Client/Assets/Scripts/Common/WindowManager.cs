@@ -23,6 +23,8 @@ public class WindowManager : MonoBehaviour {
 
 	public void OnWindow(int type)
 	{
+
+
 		switch(type)
 		{
 		case WindowConstants.INPUT_ERROR:

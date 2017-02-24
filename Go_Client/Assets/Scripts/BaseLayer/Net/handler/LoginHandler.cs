@@ -48,7 +48,7 @@ public class LoginHandler : MonoBehaviour {
 		{
 			print("登陆成功");
 			//登陆成功的话就 加载进度条，并跳转到角色选择场景
-			ResceneScript.instance.Loading(1);
+			ResceneManager.instance.Loading(1);
 		}else if(message=="false"){
 			print("登录失败");
 			WindowConstants.windowList.Add(WindowConstants.LOGIN_FALL);
