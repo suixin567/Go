@@ -24,7 +24,7 @@ public class JobPanel : MonoBehaviour
 		deleteButton.gameObject.SetActive(false);
 
 		string message = Coding<StringDTO>.encode (new StringDTO(GameInfo.ACC_ID));
-		NetWorkScript.getInstance ().sendMessage (Protocol.USER,0,UserProtocol.LIST_CREQ,message);
+		NetWorkManager.getInstance ().sendMessage (Protocol.USER,0,UserProtocol.LIST_CREQ,message);
         print("拉取角色列表");
 	}
 
@@ -88,7 +88,7 @@ public class JobPanel : MonoBehaviour
 		if(GameInfo.myPlayerModel==null){return;}
 		string message = Coding<StringDTO>.encode (new StringDTO (GameInfo.myPlayerModel.Name));
 		//	message="{\"value\":\"8\"}";//手写json格式
-		NetWorkScript.getInstance ().sendMessage (Protocol.USER,0,UserProtocol.SELECT_CREQ,message);
+		NetWorkManager.getInstance ().sendMessage (Protocol.USER,0,UserProtocol.SELECT_CREQ,message);
 		GameInfo.GAME_STATE = GameState.WAIT;//进入等待状态
 	}
 

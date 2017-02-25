@@ -31,7 +31,7 @@ public class UserHandler:MonoBehaviour
 		if (message == "true") {
 			//创建成功后重新获取列表
 			string m = Coding<StringDTO>.encode (new StringDTO(GameInfo.ACC_ID));
-			NetWorkScript.getInstance ().sendMessage (Protocol.USER,0,UserProtocol.LIST_CREQ,m);
+			NetWorkManager.getInstance ().sendMessage (Protocol.USER,0,UserProtocol.LIST_CREQ,m);
 		} else {
 			WindowConstants.windowList.Add (WindowConstants.JOB_CREATE_ERR);
 			GameInfo.GAME_STATE = GameState.RUN;
@@ -63,7 +63,7 @@ public class UserHandler:MonoBehaviour
 		edto.Point = dto.Point;
 		edto.Rotation = dto.Rotation;
 		string m = Coding<EnterMapDTO>.encode (edto);
-		NetWorkScript.getInstance ().sendMessage (Protocol.MAP,dto.Map,MapProtocol.ENTER_CREQ,m);
+		NetWorkManager.getInstance ().sendMessage (Protocol.MAP,dto.Map,MapProtocol.ENTER_CREQ,m);
 	}
 
 }

@@ -9,9 +9,9 @@ using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-public  class NetWorkScript
+public  class NetWorkManager
 {
-	private static NetWorkScript script;//单例
+	private static NetWorkManager script;//单例
 	public static int maxReceiveSize = 5000;
 	private Socket socket;
 	private string host = "127.0.0.1";
@@ -25,9 +25,9 @@ public  class NetWorkScript
 
 
 
-	public static NetWorkScript getInstance() {
+	public static NetWorkManager getInstance() {
 		if (script == null) {
-			script = new NetWorkScript();
+			script = new NetWorkManager();
 			script.init();
 		}
 		return script;

@@ -43,7 +43,7 @@ public class LoginPanel : MonoBehaviour {
 			dto.userName=accText.text;
 			dto.passWord=pwdText.text;
 			string message = Coding<LoginDTO>.encode(dto);
-			NetWorkScript.getInstance().sendMessage(Protocol.LOGIN,0,LoginProtocol.LOGIN_CREQ,message);
+			NetWorkManager.getInstance().sendMessage(Protocol.LOGIN,0,LoginProtocol.LOGIN_CREQ,message);
 			GameInfo.GAME_STATE=GameState.WAIT;
 		} else 
 		{

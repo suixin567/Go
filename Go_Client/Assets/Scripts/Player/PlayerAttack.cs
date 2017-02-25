@@ -74,7 +74,7 @@ public class PlayerAttack : MonoBehaviour {
 					dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().monModel.FirstIndex;
 					dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().monModel.SecondIndex;
                     string message = LitJson.JsonMapper.ToJson(dto);
-                    NetWorkScript.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
+                    NetWorkManager.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
                //     print("攻击");
                 }
                 else

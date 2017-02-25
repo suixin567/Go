@@ -76,7 +76,7 @@ public class PlayerDir : MonoBehaviour
         dto.Point = new Assets.Model.Vector3(targetPosition);
         dto.Rotation = new Assets.Model.Vector4(transform.rotation);
         string message = LitJson.JsonMapper.ToJson(dto);
-        NetWorkScript.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, message);
+        NetWorkManager.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, message);
     }
 
     public void autoMove(Vector3 tar)

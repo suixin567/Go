@@ -7,11 +7,11 @@ public class PlayerAnimation : MonoBehaviour {
     private PlayerMove move;
     private PlayerAttack attack;
 
+
 	void Start () {
         dir = GetComponent<PlayerDir>();
-move =this.GetComponent<PlayerMove>();
+		move =this.GetComponent<PlayerMove>();
         attack = this.GetComponent<PlayerAttack>();
-
     }
 	
 
@@ -26,7 +26,7 @@ move =this.GetComponent<PlayerMove>();
             }
             else if (move.state == PlayerMove.ControlMotionState.Idle)
             {
-                PlayAnim("Idle");
+                PlayAnim("Idle",0.3f);
             }
         }
         else if(dir.Player_Motion_State  == PlayerMotionState.ATTACK)//攻击状态
@@ -37,7 +37,7 @@ move =this.GetComponent<PlayerMove>();
             }
             else if (attack.aniState == PlayerAttack.AniState.Wait)
             {
-                PlayAnim("Idle");
+				PlayAnim("Idle",0.3f);
             }
             else if (attack.aniState == PlayerAttack.AniState.RunTo)
             {
@@ -49,11 +49,12 @@ move =this.GetComponent<PlayerMove>();
 	
 	}
 
-	void Play(string animName) {
-		GetComponent<Animation>().Play(animName);
-	}
-    void PlayAnim(string animName)
+//	void Play(string animName) {
+//		GetComponent<Animation>().Play(animName);
+//	}
+	void PlayAnim(string animName,float time =0)
     {
-        GetComponent<Animation>().CrossFade(animName);
+		GetComponent<Animation>().CrossFade(animName,time);
+	//
     }
 }

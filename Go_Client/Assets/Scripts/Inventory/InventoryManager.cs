@@ -60,11 +60,11 @@ public class InventoryManager : MonoBehaviour
         pickedItem.Hide();
 
 		//初始化游戏物品
-		NetWorkScript.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.INIT_CREQ, "");
+		NetWorkManager.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.INIT_CREQ, "");
 		//获取一个玩家的装备数据
-		NetWorkScript.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.PLAYER_EQUIPMENT_CREQ, "");
+		NetWorkManager.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.PLAYER_EQUIPMENT_CREQ, "");
 		//获取一个玩家的物品数据
-		NetWorkScript.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.PLAYER_ITEM_CREQ, "");
+		NetWorkManager.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.PLAYER_ITEM_CREQ, "");
     }
 
     void Update()

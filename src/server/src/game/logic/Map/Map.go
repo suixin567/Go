@@ -48,7 +48,7 @@ type MapManager struct {
 type MapHandler struct {
 	Area    int
 	Roles   map[*ace.Session]string //根据session获得此地图中的角色名字
-	MonGens []*MonGenDTO            //每个地图管理员有多个刷怪管理器
+	MonGens []*MonGenDTO            //每个地图管理员有许多个刷怪管理器
 }
 
 var Manager = &MapManager{make(map[int]*MapHandler)}

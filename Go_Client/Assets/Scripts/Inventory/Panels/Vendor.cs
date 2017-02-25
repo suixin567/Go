@@ -56,7 +56,7 @@ public class Vendor : Inventory {
 			{
 			string message= Coding<Item>.encode(item);
 		//	print(message);
-			NetWorkScript.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.BUY_CREQ,message);
+			NetWorkManager.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.BUY_CREQ,message);
 			}else{
 			print("钱不够啊");
 		}

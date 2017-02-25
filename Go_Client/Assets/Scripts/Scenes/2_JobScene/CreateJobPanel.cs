@@ -43,7 +43,7 @@ public class CreateJobPanel : MonoBehaviour {
 		dto.Name=inputText.text;
 		string message= Coding<CreateDTO>.encode(dto);
 		print("申请创建角色" + message);
-		NetWorkScript.getInstance().sendMessage(Protocol.USER,0,UserProtocol.CREATE_CREQ,message);
+		NetWorkManager.getInstance().sendMessage(Protocol.USER,0,UserProtocol.CREATE_CREQ,message);
 		gameObject.SetActive (false);
 	//	GameInfo.GAME_STATE = GameState.RUN;
 	}
