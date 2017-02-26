@@ -71,13 +71,13 @@ public class PlayerAttack : MonoBehaviour {
                     aniState = AniState.Attack;
 					//面向敌人,并向服务器发送转向
 					transform.LookAt(attackTarget);
-//					MoveDTO movedto = new MoveDTO();
-//					movedto.Name = GameInfo.myPlayerModel.Name;
-//					movedto.Dir = 0;// state;//传输给其他玩家 此次操作方向 属于角色状态中部分常量
-//					movedto.Point = new Assets.Model.Vector3(transform.position);
-//					movedto.Rotation = new Assets.Model.Vector4(transform.rotation);
-//					string moveMessage = LitJson.JsonMapper.ToJson(movedto);
-//					NetWorkManager.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, moveMessage);
+					MoveDTO movedto = new MoveDTO();
+					movedto.Name = GameInfo.myPlayerModel.Name;
+					movedto.Dir = 0;// state;//传输给其他玩家 此次操作方向 属于角色状态中部分常量
+					movedto.Point = new Assets.Model.Vector3(transform.position);
+					movedto.Rotation = new Assets.Model.Vector4(transform.rotation);
+					string moveMessage = LitJson.JsonMapper.ToJson(movedto);
+					NetWorkManager.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, moveMessage);
 
                     //发送攻击的网络协议
                     AttackMonDTO dto = new AttackMonDTO();
