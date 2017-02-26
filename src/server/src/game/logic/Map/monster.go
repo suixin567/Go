@@ -13,6 +13,7 @@ import (
 
 	"encoding/json"
 	"game/logic/protocol"
+	"math"
 	"math/rand"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -81,14 +82,18 @@ func InitGenMon() {
 			//fmt.Println("具体值", values[0], values[1])
 			_monMap := tools.String2int(&vs[0])
 			_point_x := tools.String2float(&vs[1])
+			_point_x = Round_3(_point_x, 2)
 			_point_y := tools.String2float(&vs[2])
+			_point_y = Round_3(_point_y, 2)
 			_point_z := tools.String2float(&vs[3])
+			_point_z = Round_3(_point_z, 2)
 			_name := vs[4]
 			_ranges := tools.String2int(&vs[5])
 			_amount := tools.String2int(&vs[6])
 			_interval := tools.String2int(&vs[7])
 			//创建子管理器
 			MonGen := &MonGenDTO{_monMap, data.Vector3{_point_x, _point_y, _point_z}, _name, _ranges, _amount, _interval, -1, -1, make([]*MonsterDTO, 0)}
+
 			Manager.Maps[_monMap].MonGens = append(Manager.Maps[_monMap].MonGens, MonGen)
 			MonGen.Index = len(Manager.Maps[_monMap].MonGens) - 1
 			//MonManager.MonGens = append(MonManager.MonGens, MonGen)
@@ -103,14 +108,21 @@ func InitGenMon() {
 					mon.SecondIndex = MonGen.currentAmount
 					//分散一下位置
 					rx := ((rand.Float64() - 0.5) * 2) * (float64(MonGen.ranges) / 2)
+					rx = Round_3(rx, 2)
 					rz := ((rand.Float64() - 0.5) * 2) * (float64(MonGen.ranges) / 2)
-					mon.OriPoint.X = MonGen.point.X + rx
+					rz = Round_3(rz, 2)
+					//mon.OriPoint.X = MonGen.point.X + rx
+					mon.OriPoint.X = Round_3(MonGen.point.X+rx, 2)
+					//fmt.Println("xxxxxxxxxxx", mon.OriPoint.X)
 					mon.OriPoint.Y = MonGen.point.Y
-					mon.OriPoint.Z = MonGen.point.Z + rz
+					//mon.OriPoint.Z = MonGen.point.Z + rz
+					mon.OriPoint.Z = Round_3(MonGen.point.Z+rz, 2)
+					//fmt.Println("zzzzzzzzzzz", mon.OriPoint.Z)
 
 					MonGen.Monsters = append(MonGen.Monsters, mon) //把怪物加入子管理器
 					m, _ := json.Marshal(*mon)
 					fmt.Println("初始化刷怪信息", string(m))
+
 				}
 				go MonGen.reLiveMon()
 			}
@@ -219,4 +231,9 @@ func checkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func Round_3(f float64, n int) float64 {
+	pow10_n := math.Pow10(n)
+	return math.Trunc((f+0.5/pow10_n)*pow10_n) / pow10_n
 }

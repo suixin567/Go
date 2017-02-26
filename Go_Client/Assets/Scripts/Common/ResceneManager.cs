@@ -39,5 +39,7 @@ public class ResceneManager : MonoBehaviour {
 	void OnLevelWasLoaded(int level)
 	{
 		GameInfo.GAME_STATE = GameState.RUN;
+		loadingPanel.SetActive (false);//关闭进度条
+//		print("clodse");
 	}
 }

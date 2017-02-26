@@ -13,7 +13,16 @@ class Coding<T>
 	}
 	public static T decode(string message)
 	{
-//		Debug.Log("要解包的数据："+ message);
-		return JsonMapper.ToObject<T> (message);
+		
+		try{
+			return JsonMapper.ToObject<T> (message);
+		}
+		catch{
+			Debug.LogError("要解包的数据 格式错误："+ message);
+		}
+		finally{
+			
+		}
+		return default (T);
 	}
 }

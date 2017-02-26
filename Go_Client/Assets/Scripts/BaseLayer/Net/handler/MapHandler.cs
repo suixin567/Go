@@ -44,7 +44,7 @@ public class MapHandler : MonoBehaviour {
 
 	void beAttack(string message)
 	{
-		print("怪物血量"+message);
+	//	print("怪物血量"+message);
 		MonsterModel mon = Coding<MonsterModel>.decode(message);
 		string monIndex = mon.FirstIndex.ToString() +"_" +mon.SecondIndex.ToString();
 		if(mon.Hp<=0)
@@ -53,7 +53,7 @@ public class MapHandler : MonoBehaviour {
 			MonList.Remove(monIndex);
 		}else{//更新怪物血条
 			MonList[monIndex].GetComponent<MonsterBase>().monModel.Hp = mon.Hp;
-			print("更新怪物属性"+mon.Hp);
+		//	print("更新怪物属性"+mon.Hp);
 		}
 	}
     //进入新地图时，初始化此地图里的所有怪
@@ -177,8 +177,10 @@ public class MapHandler : MonoBehaviour {
 	void move(string message){
 		//更新移动的玩家的信息
 		MoveDTO dto = Coding<MoveDTO>.decode(message);
-		if(dto.Name == GameInfo.myPlayerModel.Name)
+
+		if(dto == null)
 		{
+			Debug.LogError("解析移动json信息失败，这不应该发生!");
 			return;
 		}
 		GameObject go = playerGoList[dto.Name];

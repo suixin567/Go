@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace Assets.Model{
 	[System.Serializable]
@@ -16,10 +17,14 @@ public class Vector4 {
 	}
 	public Vector4(Quaternion v)
 	{
-		X = v.x;
-		Y = v.y;
-		Z = v.z;
-		W = v.w;
+//
+//		Y = v.y;
+//		Z = v.z;
+//		W = v.w;
+			X = Math.Round(v.x,2);
+			Y = Math.Round(v.y,2);
+			Z = Math.Round(v.z,2);
+			W = Math.Round(v.z,2);
 	}
 }
 

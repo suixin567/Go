@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+//using UnityEngine;
 
 namespace Assets.Model{
 	[System.Serializable]
@@ -14,9 +16,9 @@ public class Vector3 {
 		}
 		public Vector3(UnityEngine.Vector3 v)
 		{
-			X = v.x;
-			Y = v.y;
-			Z = v.z;
+			X = Math.Round(v.x,2);
+			Y = Math.Round(v.y,2);
+			Z = Math.Round(v.z,2);
 		}
 }
 

@@ -155,7 +155,7 @@ func (this *MapHandler) move(session *ace.Session, model ace.DefaultSocketModel)
 	if err != nil {
 		fmt.Println("err", err)
 	}
-	//fmt.Println("移动信息：", moveData.Name, moveData.Point)
+	fmt.Println("移动信息：", moveData.Name, moveData.Point)
 	//获得角色对象
 	var movePlayer *data.PlayerDTO
 	movePlayer = data.SyncAccount.SessionPlayer[session]
