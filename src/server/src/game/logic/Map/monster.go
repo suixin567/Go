@@ -13,7 +13,6 @@ import (
 
 	"encoding/json"
 	"game/logic/protocol"
-	"math"
 	"math/rand"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -43,13 +42,6 @@ type MonsterHandler struct {
 //所有怪物
 var MonsterSync = &MonsterHandler{AllMonsters: make(map[string]*MonsterDTO)}
 
-//type MonGenManager struct {
-//	//子管理器的切片
-//	MonGens []*MonGenDTO
-//}
-
-//var MonManager = &MonGenManager{MonGens: make([]*MonGenDTO, 0)}
-
 type MonGenDTO struct {
 	monMap        int //怪物所在地图
 	point         data.Vector3
@@ -62,10 +54,6 @@ type MonGenDTO struct {
 	Monsters      []*MonsterDTO
 }
 
-func init() {
-
-}
-
 func InitGenMon() {
 	//初始化怪物数据库
 	MonsterSync.initProcess()
@@ -73,7 +61,6 @@ func InitGenMon() {
 	genMons := tools.LoadFile("config/MonGen.txt")
 	//fmt.Println(genMons) //按回车符拆分信息   然后按空格符拆分具体信息
 	dtos := strings.Split(genMons, "\r")
-	//note := 0
 	for _, v := range dtos {
 		//注释行的计数
 		if !strings.Contains(v, ";") { //过滤掉带注释的行
@@ -82,18 +69,14 @@ func InitGenMon() {
 			//fmt.Println("具体值", values[0], values[1])
 			_monMap := tools.String2int(&vs[0])
 			_point_x := tools.String2float(&vs[1])
-			_point_x = Round_3(_point_x, 2)
 			_point_y := tools.String2float(&vs[2])
-			_point_y = Round_3(_point_y, 2)
 			_point_z := tools.String2float(&vs[3])
-			_point_z = Round_3(_point_z, 2)
 			_name := vs[4]
 			_ranges := tools.String2int(&vs[5])
 			_amount := tools.String2int(&vs[6])
 			_interval := tools.String2int(&vs[7])
 			//创建子管理器
 			MonGen := &MonGenDTO{_monMap, data.Vector3{_point_x, _point_y, _point_z}, _name, _ranges, _amount, _interval, -1, -1, make([]*MonsterDTO, 0)}
-
 			Manager.Maps[_monMap].MonGens = append(Manager.Maps[_monMap].MonGens, MonGen)
 			MonGen.Index = len(Manager.Maps[_monMap].MonGens) - 1
 			//MonManager.MonGens = append(MonManager.MonGens, MonGen)
@@ -108,49 +91,24 @@ func InitGenMon() {
 					mon.SecondIndex = MonGen.currentAmount
 					//分散一下位置
 					rx := ((rand.Float64() - 0.5) * 2) * (float64(MonGen.ranges) / 2)
-					rx = Round_3(rx, 2)
 					rz := ((rand.Float64() - 0.5) * 2) * (float64(MonGen.ranges) / 2)
-					rz = Round_3(rz, 2)
-					//mon.OriPoint.X = MonGen.point.X + rx
-					mon.OriPoint.X = Round_3(MonGen.point.X+rx, 2)
-					//fmt.Println("xxxxxxxxxxx", mon.OriPoint.X)
+					mon.OriPoint.X = MonGen.point.X + rx
 					mon.OriPoint.Y = MonGen.point.Y
-					//mon.OriPoint.Z = MonGen.point.Z + rz
-					mon.OriPoint.Z = Round_3(MonGen.point.Z+rz, 2)
-					//fmt.Println("zzzzzzzzzzz", mon.OriPoint.Z)
+					mon.OriPoint.Z = MonGen.point.Z + rz
 
 					MonGen.Monsters = append(MonGen.Monsters, mon) //把怪物加入子管理器
 					m, _ := json.Marshal(*mon)
 					fmt.Println("初始化刷怪信息", string(m))
-
 				}
-				go MonGen.reLiveMon()
 			}
-		} else {
-			//	note++
+			go MonGen.reLiveMon()
 		}
 	}
 }
 
-////玩家上线后要请求这个地图里的所有怪
-//func (this *MonGenDTO) GetMons(session *ace.Session) {
-//	//建立一个数组，保存所有要发送的怪，作为缓冲
-//	tempMonArr := make([]*MonsterDTO, 0)
-
-//	for _, mv := range this.monsters { //遍历刷怪管理器里的所有怪物
-//		if mv != nil {
-//			if mv.Hp != 0 { //判断是活着的怪,随机怪物的位置
-//				tempMonArr = append(tempMonArr, mv)
-//			}
-//		}
-//	}
-//	fmt.Println("怪物数量", len(tempMonArr))
-//	go this.sendMon(session, tempMonArr)
-//}
-
 func sendMon(session *ace.Session, mons []*MonsterDTO) {
 	tempcount := 0
-	timer := time.NewTicker(time.Duration(50) * time.Millisecond)
+	timer := time.NewTicker(time.Duration(10) * time.Millisecond)
 	for {
 		select {
 		case <-timer.C:
@@ -160,7 +118,7 @@ func sendMon(session *ace.Session, mons []*MonsterDTO) {
 					session.Write(&ace.DefaultSocketModel{protocol.MAP, -1, MONSTER_INIT_SRES, m})
 					mons = append(mons[:0], mons[1:]...)
 					tempcount++
-					//	fmt.Println("刷一个怪", string(m), tempcount)
+					//fmt.Println("刷一个怪", string(m), tempcount)
 				}
 			} else {
 				fmt.Println("刷完了")
@@ -177,23 +135,24 @@ func (this *MonGenDTO) reLiveMon() {
 		select {
 		case <-timer.C:
 			//具体刷怪逻辑
-			if this.currentAmount < this.amount-1 { //小于刷怪数的话就刷怪
+			//fmt.Println("当前数量", this.currentAmount+1, "总数量", this.amount)
+			if this.currentAmount+1 < this.amount { //小于刷怪数的话就刷怪
 				for _, mon := range this.Monsters {
 
-					fmt.Println(mon.Name)
 					if mon.Hp <= 0 { //复活这个死怪
+						mon.Hp = mon.MaxHp
 						m, _ := json.Marshal(*mon)
 						fmt.Println("复活死怪", string(m))
 						//广播所有此地图的人刷怪
 						roles := Manager.Maps[this.monMap].Roles
 						for se, _ := range roles {
 							m, _ := json.Marshal(*mon)
-
-							fmt.Println("刷怪信息", string(m))
-							se.Write(&ace.DefaultSocketModel{protocol.MAP, -1, 0, m})
+							//	fmt.Println("刷怪信息", string(m))
+							se.Write(&ace.DefaultSocketModel{protocol.MAP, -1, MOSTER_RELIVE_BRO, m})
 						}
+						this.currentAmount++ //恢复怪物数量
+						break
 					}
-					break
 				}
 			}
 		}
@@ -231,9 +190,4 @@ func checkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func Round_3(f float64, n int) float64 {
-	pow10_n := math.Pow10(n)
-	return math.Trunc((f+0.5/pow10_n)*pow10_n) / pow10_n
 }

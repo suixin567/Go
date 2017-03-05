@@ -84,7 +84,7 @@ func clentConnection(session *Session, server *ServerSocket) {
 				length = int(ulength)
 				//fmt.Println("消息头中所写的长度", ulength)
 				count++
-				fmt.Println("收到信息条数", count)
+				//fmt.Println("收到信息条数", count)
 				// 检查超长消息
 				if length > 10240 {
 					fmt.Printf("Message too length: %d\n", length)

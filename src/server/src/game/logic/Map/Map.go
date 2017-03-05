@@ -20,6 +20,7 @@ const (
 	MONSTER_INIT_SRES = 9  //服务器为一个客户端初始化怪物
 	ATTACK_CREQ       = 12 //客户端发起攻击
 	BE_ATTACK_BRO     = 15 //被攻击的广播
+	MOSTER_RELIVE_BRO = 11 //怪物复活
 )
 
 type EnterMapDTO struct {
@@ -48,7 +49,7 @@ type MapManager struct {
 type MapHandler struct {
 	Area    int
 	Roles   map[*ace.Session]string //根据session获得此地图中的角色名字
-	MonGens []*MonGenDTO            //每个地图管理员有许多个刷怪管理器
+	MonGens []*MonGenDTO            //每个地图管理员有多个刷怪管理器
 }
 
 var Manager = &MapManager{make(map[int]*MapHandler)}
@@ -100,13 +101,12 @@ func (this *MapHandler) attack(session *ace.Session, message ace.DefaultSocketMo
 	}
 	player := data.SyncAccount.SessionPlayer[session]
 	mon.Hp -= player.Atk
+	if mon.Hp <= 0 { //怪物被杀死
+		this.MonGens[monData.FirstIndex].currentAmount--
+	}
 	//攻击怪物的响应  广播新的怪物属性值给地图内的所有人
 	m, _ := json.Marshal(*mon)
-	//	for se, _ := range this.Roles {
-	//		fmt.Println("怪物新属性", string(m))
-	//		se.Write(&ace.DefaultSocketModel{protocol.MAP, -1, BE_ATTACK_BRO, m})
-	//	}
-	fmt.Println("广播怪物新属性", string(m))
+	//fmt.Println("广播怪物新属性", string(m))
 	this.brocast(BE_ATTACK_BRO, m) //告诉所有在这个地图的玩家，这个人离开了
 }
 
@@ -155,7 +155,7 @@ func (this *MapHandler) move(session *ace.Session, model ace.DefaultSocketModel)
 	if err != nil {
 		fmt.Println("err", err)
 	}
-	fmt.Println("移动信息：", moveData.Name, moveData.Point)
+	//fmt.Println("移动信息：", moveData.Name, moveData.Point)
 	//获得角色对象
 	var movePlayer *data.PlayerDTO
 	movePlayer = data.SyncAccount.SessionPlayer[session]

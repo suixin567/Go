@@ -60,7 +60,7 @@ public class MessageManager : MonoBehaviour {
 				user = Camera.main. GetComponent<UserHandler> ();
 			}
 			user.OnMessage(model);
-			print(model.Message);
+//			print(model.Message);
 			break;
 		case Protocol.MAP:
 			if(map==null){

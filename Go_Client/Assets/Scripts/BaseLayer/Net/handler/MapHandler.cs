@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class MapHandler : MonoBehaviour {
 
 	private bool isLoading =false;
@@ -11,6 +12,8 @@ public class MapHandler : MonoBehaviour {
 	public Dictionary<string ,GameObject> playerGoList = new Dictionary<string, GameObject>();
 	public Dictionary<string ,GameObject> MonList = new Dictionary<string, GameObject>();//怪物列表 格式为： 1_2  monModel
     public Transform monsterHolder;
+	//Thread moveThread;
+
 
 
 	public void OnMessage(SocketModel model)
@@ -24,6 +27,7 @@ public class MapHandler : MonoBehaviour {
 			break;
 		case MapProtocol.MOVE_BRO:
 			move(model.Message);
+			//StartCoroutine(move(model.Message));
 			break;
 		case MapProtocol.LEAVE_BRO:
 			leave(model.Message);
@@ -39,7 +43,20 @@ public class MapHandler : MonoBehaviour {
 		case MapProtocol.TALK_BRO:
 			chat(model.Message);
 			break;
+		case MapProtocol.MONSTER_RELIVE_BRO://怪物复活
+			monRelive(model.Message);
+			break;
+			default :
+			Debug.LogError("un known"+model.Command);
+			break;
 		}
+	}
+
+	//怪物复活
+	void monRelive(string message)
+	{
+		MonsterModel mon = Coding<MonsterModel>.decode(message);
+		LoadData.loadingMonsterList.Add(mon);
 	}
 
 	void beAttack(string message)
@@ -174,17 +191,48 @@ public class MapHandler : MonoBehaviour {
 		go.GetComponent<PlayerProperties>().initCommonProperties(model);
 	}
 
+	void accessData(JSONObject obj){
+		switch(obj.type){
+		case JSONObject.Type.OBJECT:
+			for(int i = 0; i < obj.list.Count; i++){
+				string key = (string)obj.keys[i];
+				JSONObject j = (JSONObject)obj.list[i];
+				Debug.Log(key);
+				accessData(j);
+			}
+			break;
+		case JSONObject.Type.ARRAY:
+			foreach(JSONObject j in obj.list){
+				accessData(j);
+			}
+			break;
+		case JSONObject.Type.STRING:
+			Debug.Log(obj.str);
+			break;
+		case JSONObject.Type.NUMBER:
+			Debug.Log(obj.n);
+			break;
+
+		}
+	}
+
 	void move(string message){
 		//更新移动的玩家的信息
-		MoveDTO dto = Coding<MoveDTO>.decode(message);
+		MoveDTO dto=new MoveDTO();
+		JSONObject j = new JSONObject(message);
+		dto.Name = j["Name"].str;
+		dto.Dir =(int)(j["Dir"].n);
 
-		if(dto == null)
-		{
-			Debug.LogError("解析移动json信息失败，这不应该发生!");
-			return;
-		}
+		dto.Point.X =((JSONObject)j["Point"].list[0]).n;
+		dto.Point.Y =((JSONObject)j["Point"].list[1]).n;
+		dto.Point.Z =((JSONObject)j["Point"].list[2]).n;
+
+		dto.Rotation.X =((JSONObject)j["Rotation"].list[0]).n;
+		dto.Rotation.Y =((JSONObject)j["Rotation"].list[1]).n;
+		dto.Rotation.Z =((JSONObject)j["Rotation"].list[2]).n;
+		dto.Rotation.W =((JSONObject)j["Rotation"].list[3]).n;
+
 		GameObject go = playerGoList[dto.Name];
-//		print("收到广播" +go.name+"移动了");
 		//设置这个移动了的人的目标点
 		go.transform.rotation = new Quaternion((float)dto.Rotation.X ,(float)dto.Rotation.Y,(float)dto.Rotation.Z,(float)dto.Rotation.W);
 		go.GetComponent<PlayerDir>().targetPosition =new Vector3((float)dto.Point.X,(float)dto.Point.Y,(float)dto.Point.Z);
