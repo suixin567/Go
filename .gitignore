@@ -1,9 +1,8 @@
 /Go_Client/[Ll]ibrary/
 /src/orignalServer/
-/src/concurrency/
 /Go_Client/[Aa]ssetBundles/
 /Go_Client/[Tt]emp/
-/[Oo]bj/
+/Go_Client/[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*

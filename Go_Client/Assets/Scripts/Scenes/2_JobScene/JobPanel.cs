@@ -35,7 +35,7 @@ public class JobPanel : MonoBehaviour
 		if(players!=null){
 		for(int i=0 ;i<_players.Length;i++)
 		{
-			jobBtns[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/job"+ _players[i].Job);
+			jobBtns[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/JobScene/job"+ _players[i].Job);
 			jobBtns[i].transform.FindChild("nameText").GetComponent<Text>().text = "昵称：" + _players[i].Name;
 			jobBtns[i].transform.FindChild("levelText").GetComponent<Text>().text = "等级：" + _players[i].Level;
 		}
