@@ -64,20 +64,20 @@ public class Vendor : Inventory {
     /// <summary>
     /// 主角出售物品
     /// </summary>
-    public void SellItem()
-    {
-        int sellAmount = 1;
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            sellAmount = 1;
-        }
-        else
-        {
-            sellAmount = InventoryManager.Instance.PickedItem.Amount;
-        }
+    //public void SellItem()
+    //{
+    //    int sellAmount = 1;
+    //    if (Input.GetKey(KeyCode.LeftControl))
+    //    {
+    //        sellAmount = 1;
+    //    }
+    //    else
+    //    {
+    //        sellAmount = InventoryManager.Instance.PickedItem.Amount;
+    //    }
 
-        int coinAmount = InventoryManager.Instance.PickedItem.Item.SellPrice * sellAmount;
-      //  player.EarnCoin(coinAmount);
-        InventoryManager.Instance.ReducePickedItem(sellAmount);
-    }
+    //    int coinAmount = InventoryManager.Instance.PickedItem.Item.SellPrice * sellAmount;
+    //  //  player.EarnCoin(coinAmount);
+    //    InventoryManager.Instance.ReducePickedItem(sellAmount);
+    //}
 }

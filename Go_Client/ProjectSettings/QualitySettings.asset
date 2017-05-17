@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 5
+  m_CurrentQuality: 4
   m_QualitySettings:
   - serializedVersion: 2
     name: Fastest
@@ -124,12 +124,12 @@ QualitySettings:
     blendWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
-    antiAliasing: 2
+    antiAliasing: 0
     softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
     billboardsFaceCameraPosition: 1
-    vSyncCount: 1
+    vSyncCount: 0
     lodBias: 1.5
     maximumLODLevel: 0
     particleRaycastBudget: 1024
@@ -171,10 +171,10 @@ QualitySettings:
     PSM: 5
     PSP2: 5
     Samsung TV: 2
-    Standalone: 5
+    Standalone: 4
     Tizen: 2
     WP8: 5
-    Web: 5
+    Web: 4
     WebGL: 3
     Windows Store Apps: 5
     XBOX360: 5

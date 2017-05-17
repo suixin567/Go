@@ -43,7 +43,6 @@ func (this *GameHandler) MessageReceived(session *ace.Session, message interface
 		if m.Command == 0 { //获取角色
 			User.Manager.GetPlayerProcess(session, m)
 		}
-
 		if m.Command == 2 { //创建账号
 			User.Manager.CreatPlayerProcess(session, m)
 		}
@@ -59,10 +58,6 @@ func (this *GameHandler) MessageReceived(session *ace.Session, message interface
 		break
 	case 99:
 		fmt.Println("收到信息:", string(m.Message))
-		for i := 0; i < 2; i++ {
-			//go session.Write(&ace.DefaultSocketModel{99, 88, 0, []byte("goly")})
-		}
-
 		break
 	default:
 		fmt.Println("未知协议类型！", m.Type)

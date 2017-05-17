@@ -10,11 +10,6 @@ public class MessageManager : MonoBehaviour {
 	private ItemHandler item;
 
 	void Start () {
-//		login=Camera.main. GetComponent<LoginHandler>();
-//		user = Camera.main. GetComponent<UserHandler> ();
-//		map = Camera.main. GetComponent<MapHandler> ();
-//		item =Camera.main. GetComponent<ItemHandler>();
-
 	}
 
 	void Update () 
@@ -60,7 +55,6 @@ public class MessageManager : MonoBehaviour {
 				user = Camera.main. GetComponent<UserHandler> ();
 			}
 			user.OnMessage(model);
-//			print(model.Message);
 			break;
 		case Protocol.MAP:
 			if(map==null){
