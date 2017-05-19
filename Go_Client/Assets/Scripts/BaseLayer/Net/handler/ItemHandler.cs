@@ -46,7 +46,7 @@ public class ItemHandler : MonoBehaviour {
     void learnSkill(string message)
     {
         print("学会技能："+message);
-        Skill newSkill = SkillsInfo._instance.json2Skill(message);
+        Skill newSkill = SkillManager._instance.json2Skill(message);
         SkillPanel._instance.creatSkillItem(newSkill);
 //        Knapsack.Instance.lastUsedItem.ReduceAmount();
     }

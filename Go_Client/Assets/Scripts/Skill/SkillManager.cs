@@ -58,10 +58,10 @@ public class Skill
 
 
 
-public class SkillsInfo : MonoBehaviour
+public class SkillManager : MonoBehaviour
 {
 //    string abc =@"[{""Id"":0, ""Name"":""治愈术""}]";
-    public static SkillsInfo _instance;
+    public static SkillManager _instance;
 
     private Dictionary<int, Skill> skillInfoDict = new Dictionary<int, Skill>();
 

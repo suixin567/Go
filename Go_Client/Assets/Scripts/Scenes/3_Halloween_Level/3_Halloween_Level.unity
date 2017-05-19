@@ -12137,7 +12137,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &535786311
 GameObject:
   m_ObjectHideFlags: 0
@@ -24901,6 +24901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418edb1e5df80024f91cbdfcfb180fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1908620144}
   isPickedItem: 0
 --- !u!114 &1263430476
 MonoBehaviour:

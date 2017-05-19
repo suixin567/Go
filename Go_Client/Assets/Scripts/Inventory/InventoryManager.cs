@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
     private Vector2 toolTipPosionOffset = new Vector2(30, 0);
     #endregion
 
-    private Canvas canvas;
+    public Canvas canvas;
 
     #region PickedItem
 	public bool isPickedItem = false;
@@ -55,7 +55,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         toolTip = GameObject.FindObjectOfType<ToolTip>();
-        canvas = transform.GetComponent<Canvas>();
+      //  canvas = transform.GetComponent<Canvas>();
         pickedItem = GameObject.Find("PickedItem").GetComponent<ItemUI>();
         pickedItem.Hide();
 
