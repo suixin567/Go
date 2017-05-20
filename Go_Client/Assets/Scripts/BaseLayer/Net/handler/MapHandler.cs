@@ -155,7 +155,7 @@ public class MapHandler : MonoBehaviour {
     //初始化怪物
     void creatMon(MonsterModel model)
     {
-        GameInfo.tempCount++;
+//        GameInfo.tempCount++;
        // print("实例化" + GameInfo.tempCount);
         GameObject go = Instantiate(Resources.Load<GameObject>("Monsters/"+model.Look));
         go.GetComponent<MonsterBase>().initCommonProperties(model);

@@ -6,11 +6,11 @@ public class AppConst {
     public const string LAN = "192.168.1.102";
     public const string WAN = "211.159.186.78";
     public static string SocketUrl = LAN;
-    public static string WebUrl = "http://" + SocketUrl + ":6688/";
+  //  public static string WebUrl = "http://" + SocketUrl + ":6688/";
     //public static string StandaloneDBPath = "C:/Users/Public/standalone.db";
-    public static string StandaloneDBPath = "C:/Users/Public/standalone.db";//单机模式数据库位置
-    public static bool StandaloneModel = true;//单机模式的开关
-    public static bool VShowNetWork = true;
+   // public static string StandaloneDBPath = "C:/Users/Public/standalone.db";//单机模式数据库位置
+   // public static bool StandaloneModel = true;//单机模式的开关
+   // public static bool VShowNetWork = true;
     //    public const int maxSocketSize = 5000;
     //public const bool UpdateMode = true;                       //更新模式-默认关闭 
     //      public const int GameFrameRate = 30;                       //游戏帧频

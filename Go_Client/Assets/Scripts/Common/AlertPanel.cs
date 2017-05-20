@@ -17,7 +17,7 @@ public class AlertPanel : MonoBehaviour {
 	public void OnClick()
 	{
 		gameObject.SetActive (false);
-		GameInfo.GAME_STATE = GameInfo.LAST_STATE;
+    //    NetWorkManager.NET_STATE = GameInfo.LAST_STATE;
 	}
 
 }

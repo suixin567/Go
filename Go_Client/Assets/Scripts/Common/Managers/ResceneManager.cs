@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 加载进度条、切换场景
 /// </summary>
@@ -15,7 +16,7 @@ public class ResceneManager : MonoBehaviour {
 	}
 
 	void Update () {
-		if(GameInfo.GAME_STATE==GameState.LOADING)
+		if(NetWorkManager.NET_STATE == NetState.LOADING)
 		{
 			GameInfo.LOAD_PRORESS=async.progress;
 		}
@@ -25,20 +26,20 @@ public class ResceneManager : MonoBehaviour {
 		loadingPanel.SetActive (true);//显示进度条
 		GameInfo.LOAD_PRORESS = 0f;//进度条的进度为0
 
-		GameInfo.GAME_STATE = GameState.LOADING;//切换游戏状态
+        NetWorkManager.NET_STATE = NetState.LOADING;//切换游戏状态
 		StartCoroutine ("load",level);
 	}
 
 	IEnumerator load(int level)
 	{
-		async = Application.LoadLevelAsync (level);
+		async = SceneManager.LoadSceneAsync (level);
 		yield return async;
 	}
 
 
 	void OnLevelWasLoaded(int level)
 	{
-		GameInfo.GAME_STATE = GameState.RUN;
+        NetWorkManager.NET_STATE = NetState.RUN;
 		loadingPanel.SetActive (false);//关闭进度条
 	}
 }

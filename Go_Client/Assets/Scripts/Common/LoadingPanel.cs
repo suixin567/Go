@@ -14,7 +14,7 @@ public class LoadingPanel : MonoBehaviour {
 	
 
 	void Update () {
-	if(GameInfo.GAME_STATE==GameState.LOADING)
+	if(NetWorkManager.NET_STATE == NetState.LOADING)
 		{
 			loadSlider.value=GameInfo.LOAD_PRORESS;
 		//	print("进度:"+GameInfo.LOAD_PRORESS);

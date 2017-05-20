@@ -19,7 +19,7 @@ public class NetWorkManager : MonoBehaviour
     private int dataTrackIndex = 0;//铁轨当前长度
 
     private List<SocketModel> messages = new List<SocketModel>();
-    static Queue<SocketModel> reSendQueue = new Queue<SocketModel>();//需要重新发送的消息列队
+   // static Queue<SocketModel> reSendQueue = new Queue<SocketModel>();//需要重新发送的消息列队
     int temp = 0;//记录编辑器下的会话次数
 
     public static int NET_STATE = 0;    //网络状态

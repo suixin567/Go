@@ -28,7 +28,7 @@ public class CreateJobPanel : MonoBehaviour {
 	}
 	public void  CreateBtnClick()
 	{
-		if(GameInfo.GAME_STATE!=GameState.PLAYER_CREATE)
+		if(NetWorkManager.NET_STATE != NetState.PLAYER_CREATE)
 		{
 			return;
 		}

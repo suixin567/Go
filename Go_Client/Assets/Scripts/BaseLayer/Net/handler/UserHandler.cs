@@ -34,7 +34,7 @@ public class UserHandler:MonoBehaviour
 			NetWorkManager.instance.sendMessage (Protocol.USER,0,UserProtocol.LIST_CREQ,m);
 		} else {
 			WindowConstants.windowList.Add (WindowConstants.JOB_CREATE_ERR);
-			GameInfo.GAME_STATE = GameState.RUN;
+            NetWorkManager.NET_STATE = NetState.RUN;
 		}
 	}
 

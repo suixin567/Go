@@ -36,7 +36,7 @@ public class LoginHandler : MonoBehaviour {
 		{
 			print("注册失败");
 			WindowConstants.windowList.Add (WindowConstants.ACC_REG_FALL);
-			GameInfo.GAME_STATE = GameState.RUN;
+			NetWorkManager.NET_STATE = NetState.RUN;
 			return;
 		}else{
 			print("错误的注册结果");
@@ -57,7 +57,7 @@ public class LoginHandler : MonoBehaviour {
 		}else if(message=="false"){
 			print("登录失败");
 			WindowConstants.windowList.Add(WindowConstants.LOGIN_FALL);
-			GameInfo.GAME_STATE = GameState.RUN;
+            NetWorkManager.NET_STATE = NetState.RUN;
 			return;
 		}else{
 			print("错误的登陆结果");

@@ -263,6 +263,7 @@ func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketMode
 				//因为此物品被脱下了，所以在背包中增加
 				itemsInfo := this.SessionItems[session]
 				itemsInfo = append(itemsInfo, *putOffItem)
+				this.SessionItems[session] = itemsInfo
 			}
 		}
 		//脱下装备后应修改人物的属性

@@ -49,8 +49,8 @@ public class WindowManager : MonoBehaviour {
 			script.setMessage("未知错误");
 			break;
 		}
-		GameInfo.LAST_STATE = GameInfo.GAME_STATE;
-		GameInfo.GAME_STATE = GameState.WINDOW;
+        //	GameInfo.LAST_STATE = GameInfo.GAME_STATE;
+        NetWorkManager.NET_STATE = NetState.WINDOW;
 		alertPanel.SetActive (true);
 	}
 }

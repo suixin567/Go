@@ -40,13 +40,13 @@ public class JobPanel : MonoBehaviour
 			jobBtns[i].transform.FindChild("levelText").GetComponent<Text>().text = "等级：" + _players[i].Level;
 		}
 		}
-		GameInfo.GAME_STATE = GameState.RUN;
+        NetWorkManager.NET_STATE = NetState.RUN;
 	}
 
 
 	//打开创建角色的面板
 	public void createBtnClick() {
-		if(GameInfo.GAME_STATE!=GameState.RUN){return;}
+		if(NetWorkManager.NET_STATE != NetState.RUN){return;}
 		if(players != null)//之前没角色
 		{
 			if(players.Length>=2)
@@ -55,7 +55,7 @@ public class JobPanel : MonoBehaviour
 			}
 		}
 
-		GameInfo.GAME_STATE = GameState.PLAYER_CREATE;
+        NetWorkManager.NET_STATE = NetState.PLAYER_CREATE;
 		createPanel.SetActive (true);
 	}
 
@@ -63,7 +63,7 @@ public class JobPanel : MonoBehaviour
 	//当职业按钮被点击  切换所选择的角色模型
 	public void onJobBtnClick(int btnId)
 	{
-		if(GameInfo.GAME_STATE!=GameState.RUN){return;}
+		if(NetWorkManager.NET_STATE != NetState.RUN){return;}
 		if(players == null) return;//之前没角色 ***
 
 		if(btnId ==0 && players.Length>0)//职业1的按钮被选择
@@ -84,12 +84,12 @@ public class JobPanel : MonoBehaviour
 	//游戏开始按钮
 	public void GameStart()
 	{
-		if(GameInfo.GAME_STATE!=GameState.RUN){return;}
+		if(NetWorkManager.NET_STATE != NetState.RUN){return;}
 		if(GameInfo.myPlayerModel==null){return;}
 		string message = Coding<StringDTO>.encode (new StringDTO (GameInfo.myPlayerModel.Name));
 		//	message="{\"value\":\"8\"}";//手写json格式
 		NetWorkManager.instance.sendMessage (Protocol.USER,0,UserProtocol.SELECT_CREQ,message);
-		GameInfo.GAME_STATE = GameState.WAIT;//进入等待状态
+        NetWorkManager.NET_STATE = NetState.WAIT;//进入等待状态
 	}
 
 }
