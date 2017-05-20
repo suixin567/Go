@@ -33,6 +33,10 @@ const (
 
 	PUTOFF_CREQ = 12 //脱下装备
 	PUTOFF_SREQ = 13
+
+	LEARN_SKILL_SRES  = 15
+	PLAYER_SKILL_CREQ = 16 //请求一个角色技能数据
+	PLAYER_SKILL_SRES = 17
 )
 
 //一条物品信息
@@ -142,6 +146,19 @@ func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketMode
 		//登记结束--------------------------------------
 		session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, PLAYER_EQUIPMENT_SRES, []byte(*playerEquipmentsStr)})
 		break
+	case PLAYER_SKILL_CREQ: //把一个角色的技能传给客户端
+		pn := data.SyncAccount.SessionPlayer[session].Name //角色名字
+		playerSkillsStr := GetPlayerSkillsFromDB(&pn)      //角色技能的字符串
+		//登记一个人的技能信息-----------------------
+		skillsInfo := []SkillDTO{}
+		err := json.Unmarshal([]byte(*playerSkillsStr), &skillsInfo)
+		if err != nil {
+			fmt.Println(err)
+		}
+		this.SessionSkills[session] = skillsInfo
+		//登记结束--------------------------------------
+		session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, PLAYER_SKILL_SRES, []byte(*playerSkillsStr)})
+		break
 	case BUY_CREQ: //购买物品
 		fmt.Println("要购买的是：", string(message.Message))
 		buyItem := &ItemDTO{}
@@ -195,7 +212,7 @@ func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketMode
 			}
 		}
 		if useItem.Id == 6000 { //使用治愈术
-			skillDTO := SkillSync.Skills[useItem.Name]
+			skillDTO := SkillHandlerSync.Skills[useItem.Name]
 			//给人物增加技能
 			skillsInfo := this.SessionSkills[session]
 			skillsInfo = append(skillsInfo, *skillDTO)
@@ -203,7 +220,7 @@ func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketMode
 			//响应是技能模型
 			message, _ := json.Marshal(skillDTO)
 			//fmt.Println(string(message))
-			session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, 15, message})
+			session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, LEARN_SKILL_SRES, message})
 		}
 		break
 	case PUTON_CREQ: //穿戴装备
@@ -323,6 +340,19 @@ func GetPlayerEquipmentsFromDB(playerName *string) *string {
 	err = stmtOut.QueryRow(playerName).Scan(&playerEquipments)
 	checkErr(err)
 	return &playerEquipments
+}
+
+//根据人物名字从数据库得到人物的技能
+func GetPlayerSkillsFromDB(playerName *string) *string {
+	db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/go?charset=utf8")
+	defer db.Close()
+	checkErr(err)
+	stmtOut, err := db.Prepare("SELECT skills FROM playeritem WHERE playername = ?")
+	checkErr(err)
+	var playerSkills string
+	err = stmtOut.QueryRow(playerName).Scan(&playerSkills)
+	checkErr(err)
+	return &playerSkills
 }
 
 func (this *Handler) Items2Json(session *ace.Session) string {

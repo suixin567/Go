@@ -13,17 +13,17 @@ public class ItemHandler : MonoBehaviour {
 	{
 		switch(model.Command)
 		{
-		case ItemProtocal.INIT_SRES:
-			print("初始化游戏物品");
+		case ItemProtocal.INIT_SRES://初始化游戏物品
+            print("初始化游戏物品");
 			InventoryManager.Instance.initOriginalItem(model.Message);
 			break;
-		case ItemProtocal.PLAYER_ITEM_SRES:
+		case ItemProtocal.PLAYER_ITEM_SRES://初始化人物物品
 			initKnapsack(model.Message);
 			break;
-		case ItemProtocal.PLAYER_EQUIPMENT_SRES:
-			initEquipment(model.Message);
+		case ItemProtocal.PLAYER_EQUIPMENT_SRES://初始化人物装备
+            initEquipment(model.Message);
 			break;
-		case ItemProtocal.BUY_SRES:
+		case ItemProtocal.BUY_SRES://购买物品
 			BuyItem(model.Message);
 			break;
 		case ItemProtocal.USE_SRES://使用物品
@@ -35,10 +35,13 @@ public class ItemHandler : MonoBehaviour {
         case ItemProtocal.PUTOFF_SRES://卸下装备的响应
             putOffEquipment(model.Message);
             break;
-            case ItemProtocal.USE_SKILL_SRES://学技能的响应
-                learnSkill(model.Message);
+            case ItemProtocal.LEARN_SKILL_SRES://学技能的响应
+            learnSkill(model.Message);
+            break;
+            case ItemProtocal.PLAYER_SKILL_SRES://初始化人物技能
+                initSkill(model.Message);
                 break;
-		default:
+            default:
 			break;
 		}
 	}
@@ -48,7 +51,13 @@ public class ItemHandler : MonoBehaviour {
         print("学会技能："+message);
         Skill newSkill = SkillManager._instance.json2Skill(message);
         SkillPanel._instance.creatSkillItem(newSkill);
-//        Knapsack.Instance.lastUsedItem.ReduceAmount();
+//      Knapsack.Instance.lastUsedItem.ReduceAmount();
+    }
+
+    //初始化技能栏
+    void initSkill(string message)
+    {
+        print("我有这么多的技能"+message);
     }
 
     //初始化背包

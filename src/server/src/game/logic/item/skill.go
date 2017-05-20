@@ -26,12 +26,13 @@ type SkillDTO struct {
 
 type SkillHandler struct {
 	Skills map[string]*SkillDTO //绑定技能名字与技能模型
+	//SessionSkills map[*ace.Session][]SkillDTO
 }
 
-var SkillSync = &SkillHandler{Skills: make(map[string]*SkillDTO)}
+var SkillHandlerSync = &SkillHandler{Skills: make(map[string]*SkillDTO)}
 
 func init() {
-	SkillSync.initProcess()
+	SkillHandlerSync.initProcess()
 }
 
 //服务器初始化技能数据库

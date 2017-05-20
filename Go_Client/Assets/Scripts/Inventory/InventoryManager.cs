@@ -65,6 +65,8 @@ public class InventoryManager : MonoBehaviour
 		NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.PLAYER_EQUIPMENT_CREQ, "");
 		//获取一个玩家的物品数据
 		NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.PLAYER_ITEM_CREQ, "");
+        //获取一个玩家的技能数据
+        NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.PLAYER_SKILL_CREQ, "");
     }
 
     void Update()

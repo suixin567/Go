@@ -12,7 +12,8 @@ public class ItemProtocal {
 	public const int PLAYER_EQUIPMENT_CREQ=4;//初始化一个角色的装备数据
 	public const int PLAYER_EQUIPMENT_SRES=5;
 
-	public const int BUY_CREQ=6;//申请购买物品
+
+    public const int BUY_CREQ=6;//申请购买物品
 	public const int BUY_SRES=7;
 
 	public const int USE_CREQ=8;//申请使用物品
@@ -25,5 +26,7 @@ public class ItemProtocal {
 	public const int PUTOFF_SRES=13;
 
 //    public const int USE_SKILL_CREQ = 14;//申请学技能
-    public const int USE_SKILL_SRES = 15; //学技能的响应
+    public const int LEARN_SKILL_SRES = 15; //学技能的响应
+    public const int PLAYER_SKILL_CREQ = 16;//初始化一个角色的技能数据
+    public const int PLAYER_SKILL_SRES = 17;
 }
