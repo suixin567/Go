@@ -31,7 +31,21 @@ type CreatDTO struct {
 type Handler struct {
 }
 
-var Manager = &Handler{}
+var UserHandler = &Handler{}
+
+func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketModel) {
+	switch message.Command {
+	case 0: //获取角色
+		this.GetPlayerProcess(session, message)
+		break
+	case 2: //创建角色
+		this.CreatPlayerProcess(session, message)
+		break
+	case 4: //开始游戏时，选择了一个人物
+		this.SelectPlayerProcess(session, message)
+		break
+	}
+}
 
 //创建角色处理函数
 func (this *Handler) CreatPlayerProcess(session *ace.Session, message ace.DefaultSocketModel) {

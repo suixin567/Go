@@ -47,69 +47,6 @@ type Sync struct {
 
 var SyncAccount = &Sync{AccountSession: make(map[string]*ace.Session), SessionAccount: make(map[*ace.Session]string), SessionPlayer: make(map[*ace.Session]*PlayerDTO)}
 
-//注册账号
-func (this *Sync) RegAccount(un *string, psw *string) bool {
-	db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/go?charset=utf8")
-	defer db.Close()
-	checkErr(err)
-	//先对比数据库 看是否已被注册
-	stmtOut, err := db.Prepare("SELECT username FROM userinfo WHERE username = ?")
-	var username string
-	err = stmtOut.QueryRow(*un).Scan(&username)
-	//fmt.Printf("The square is: %s", username)
-	if *un == username {
-		fmt.Printf("这账号已被注册")
-		return false
-	}
-	//插入数据
-	stmt, err := db.Prepare("INSERT userinfo SET username=?,password=?,playeramount=?,player1=?,player2=?,online=?,lasttime=?,createdtime=?")
-	checkErr(err)
-	_, err = stmt.Exec(*un, *psw, 0, "", "", 0, time.Now().Format("2006-01-02 15:04:05"), time.Now().Format("2006-01-02 15:04:05"))
-	checkErr(err)
-	return true
-}
-
-//登陆
-func (this *Sync) GetAccount(session *ace.Session, un *string, psw *string) bool {
-	db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/go?charset=utf8")
-	defer db.Close()
-	checkErr(err)
-	//验证账号与密码
-	stmtOut, err := db.Prepare("SELECT password FROM userinfo WHERE username = ?")
-	var password string
-	err = stmtOut.QueryRow(*un).Scan(&password)
-	//fmt.Printf("The square is: %s", password)
-	if *psw == password {
-		fmt.Printf("账号%s与密码%s匹配", *un, *psw)
-		//检验此账号是否已经登录
-		_, ok := this.AccountSession[*un]
-		if ok { //如果能在此切片中取出值，说明已登录
-			fmt.Println("此账号已登录")
-			//把之前登陆的人顶掉
-			//fmt.Println("踢掉之前的", se)
-			//se.Write(&ace.DefaultSocketModel{protocol.OFFLINE, -1, -1, []byte("false")})
-			//se.Close() //关闭老session
-			return false
-		} else {
-			fmt.Println("  此账号没有登录")
-		}
-
-		//更新最后登录时间
-		stmtUp, err := db.Prepare("update userinfo set online=?,lasttime=? where username=?")
-		checkErr(err)
-		_, err = stmtUp.Exec(1, time.Now().Format("2006-01-02 15:04:05"), *un)
-		checkErr(err)
-		//此账号与session相关联
-		this.AccountSession[*un] = session
-		this.SessionAccount[session] = *un
-		return true
-	} else {
-		fmt.Printf("登陆失败")
-		return false
-	}
-	return false
-}
-
 func checkErr(err error) {
 	if err != nil {
 		panic(err)

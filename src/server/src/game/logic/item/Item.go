@@ -60,21 +60,21 @@ type UseItemDTO struct {
 	ItemId int
 }
 
-type ItemHandler struct {
+type Handler struct {
 	items             map[int]*ItemDTO           //游戏中所有的物品。预留一个根据id获取物品的接口
 	SessionItems      map[*ace.Session][]ItemDTO //一个session中都有什么物品。也就是一个角色的物品
 	SessionEquipments map[*ace.Session][]ItemDTO //一个session中都穿戴了什么物品
 	SessionSkills     map[*ace.Session][]SkillDTO
 }
 
-var ItemHander = &ItemHandler{items: make(map[int]*ItemDTO), SessionItems: make(map[*ace.Session][]ItemDTO), SessionEquipments: make(map[*ace.Session][]ItemDTO), SessionSkills: make(map[*ace.Session][]SkillDTO)}
+var ItemHandler = &Handler{items: make(map[int]*ItemDTO), SessionItems: make(map[*ace.Session][]ItemDTO), SessionEquipments: make(map[*ace.Session][]ItemDTO), SessionSkills: make(map[*ace.Session][]SkillDTO)}
 
 func init() {
-	ItemHander.initProcess()
+	ItemHandler.initProcess()
 }
 
 //服务器初始化所有物品信息
-func (this *ItemHandler) initProcess() {
+func (this *Handler) initProcess() {
 	db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/go?charset=utf8")
 	defer db.Close()
 	checkErr(err)
@@ -103,8 +103,7 @@ func (this *ItemHandler) initProcess() {
 	}
 }
 
-//物品处理逻辑
-func (this *ItemHandler) ItemProcess(session *ace.Session, message ace.DefaultSocketModel) {
+func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketModel) {
 	switch message.Command {
 	case INIT_CREQ: //初始化所有游戏物品
 		itemSlice := []ItemDTO{}
@@ -291,7 +290,7 @@ func (this *ItemHandler) ItemProcess(session *ace.Session, message ace.DefaultSo
 }
 
 //当一个玩家开始游戏后，初始化他的物品
-func (this *ItemHandler) InitPlayerItems(session *ace.Session, playerItems *string) {
+func (this *Handler) InitPlayerItems(session *ace.Session, playerItems *string) {
 	fmt.Println("Item：这个玩家有的物品：", *playerItems)
 
 }
@@ -325,7 +324,7 @@ func GetPlayerEquipmentsFromDB(playerName *string) *string {
 	return &playerEquipments
 }
 
-func (this *ItemHandler) Items2Json(session *ace.Session) string {
+func (this *Handler) Items2Json(session *ace.Session) string {
 	itemsJson, _ := json.Marshal(this.SessionItems[session])
 	//fmt.Println("供持久化的角色物品数据：", string(itemsJson))
 	return string(itemsJson)
@@ -338,7 +337,7 @@ func checkErr(err error) {
 }
 
 //下线处理
-func (this *ItemHandler) SessionClose(session *ace.Session) {
+func (this *Handler) SessionClose(session *ace.Session) {
 	//根据session得到角色名字,但一定先判断
 	_, ok := data.SyncAccount.SessionPlayer[session]
 	if ok {
