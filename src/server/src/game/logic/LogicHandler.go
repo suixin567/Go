@@ -7,8 +7,8 @@ import (
 	"game/data"
 	"game/logic/Map"
 	"game/logic/User"
-	"game/logic/item"
-	"game/logic/login"
+	"game/logic/Item"
+	"game/logic/Login"
 	"game/logic/protocol"
 )
 
@@ -23,7 +23,7 @@ func (this *GameHandler) SessionOpen(session *ace.Session) {
 func (this *GameHandler) SessionClose(session *ace.Session) {
 	fmt.Println("会话 closed", session)
 	Map.Manager.SessionClose(session)
-	item.ItemHander.SessionClose(session)
+	Item.ItemHander.SessionClose(session)
 	data.SyncAccount.SessionClose(session)
 }
 
@@ -33,10 +33,10 @@ func (this *GameHandler) MessageReceived(session *ace.Session, message interface
 	switch m.Type {
 	case protocol.LOGIN: //收到登录消息
 		if m.Command == 0 { //注册
-			login.LoginHander.RegistProcess(session, m)
+			Login.LoginHander.RegistProcess(session, m)
 		}
 		if m.Command == 2 { //登陆
-			login.LoginHander.LoginProcess(session, m)
+			Login.LoginHander.LoginProcess(session, m)
 		}
 		break
 	case protocol.USER: //收到职业信息
@@ -54,9 +54,9 @@ func (this *GameHandler) MessageReceived(session *ace.Session, message interface
 		Map.Manager.Process(session, m)
 		break
 	case protocol.ITEM: //请求物品信息
-		item.ItemHander.ItemProcess(session, m)
+		Item.ItemHander.ItemProcess(session, m)
 		break
-	case 99:
+	case 99://测试类型
 		fmt.Println("收到信息:", string(m.Message))
 		break
 	default:

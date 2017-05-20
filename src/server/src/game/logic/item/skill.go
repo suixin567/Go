@@ -1,4 +1,4 @@
-package item
+package Item
 
 import (
 	"database/sql"

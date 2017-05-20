@@ -1,5 +1,5 @@
 // RegistHandler
-package login
+package Login
 
 import (
 	"ace"
