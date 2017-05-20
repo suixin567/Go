@@ -71,13 +71,13 @@ public class EquipmentPanel : Inventory
 	public void sendPutOnMessage(Item item)
 	{
 		string message = Coding<Item>.encode(item);
-		NetWorkManager.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.PUTON_CREQ, message);
+		NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.PUTON_CREQ, message);
 	}
 
     public void sendPutOffMessage(Item item)
     {
         string message = Coding<Item>.encode(item);
-        NetWorkManager.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.PUTOFF_CRES, message);
+        NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.PUTOFF_CRES, message);
     }
 
 //    private void UpdatePropertyText()

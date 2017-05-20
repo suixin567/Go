@@ -3,39 +3,70 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MessageManager : MonoBehaviour {
+    public static MessageManager instance;
 
-	private LoginHandler login;
+    private LoginHandler login;
 	private UserHandler user;
 	private MapHandler map;
 	private ItemHandler item;
 
-	void Start () {
-	}
+    void Awake()
+    {
+        instance = this;
+    }
 
-	void Update () 
-	{
-		List<SocketModel> list = NetWorkManager.getInstance ().getList ();
-		for(int  i =0;i<8;i++)
-		{
-			if(list.Count>0)
-			{
-				SocketModel model = list[0];
-				OnMessage(model);
-				list.RemoveAt(0);
-			}else
-			{
-				break;
-			}
-		}
-	}
+    public void StartCheckMessage()
+    {
+        StartCoroutine(checkMessage());
+    }
+
+    IEnumerator checkMessage()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+
+            List<SocketModel> list = NetWorkManager.instance.getList();
+            for (int i = 0; i < 8; i++)
+            {
+                if (list.Count > 0)
+                {
+                    SocketModel model = list[0];
+                    OnMessage(model);
+                    list.RemoveAt(0);
+
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }
+ //   void Update () 
+	//{
+	//	List<SocketModel> list = NetWorkManager.getInstance ().getList ();
+	//	for(int  i =0;i<8;i++)
+	//	{
+	//		if(list.Count>0)
+	//		{
+	//			SocketModel model = list[0];
+	//			OnMessage(model);
+	//			list.RemoveAt(0);
+	//		}else
+	//		{
+	//			break;
+	//		}
+	//	}
+	//}
 
 
 	public void OnMessage(SocketModel model)
 	{
-        //		Debug.Log ("模型信息"+model.Type); //总是0
-        //		Debug.Log ("模型信息"+model.Area); //总是1
-        //		Debug.Log ("模型信息"+model.Command); //总是0
-        //		Debug.Log ("模型信息"+model.Message);
+        //Debug.Log("模型信息" + model.Type); //总是0
+        //Debug.Log("模型信息" + model.Area); //总是1
+        //Debug.Log("模型信息" + model.Command); //总是0
+        //Debug.Log("模型信息" + model.Message);
         if (model == null)
         {
             Debug.LogWarning("这个不该发生");

@@ -52,7 +52,7 @@ public class PlayerMove : MonoBehaviour {
 		dto.Point = new Assets.Model.Vector3(transform.position);
 		dto.Rotation = new Assets.Model.Vector4(transform.rotation);
 		string message = LitJson.JsonMapper.ToJson(dto);
-		NetWorkManager.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, message);
+		NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, message);
 	}
 
 }

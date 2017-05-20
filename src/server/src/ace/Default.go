@@ -23,6 +23,10 @@ type DefaultSocketModel struct {
 func (encode *DefaultEncode) Encode(msg interface{}) []byte {
 	m := msg.(*DefaultSocketModel)
 	buffer := NewBuffer1()
+	//消息长度信息
+	buffer.WriteInt(len(m.Message) + 16)
+	//fmt.Println("包头长度------>", len(m.Message)+16)
+	//四个主体信息
 	buffer.WriteInt(m.Type)
 	buffer.WriteInt(m.Area)
 	buffer.WriteInt(m.Command)

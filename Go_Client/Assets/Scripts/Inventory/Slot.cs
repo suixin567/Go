@@ -121,7 +121,7 @@ public class Slot : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler,IPoi
         Knapsack.Instance.lastUsedItem = transform.FindChild("Item(Clone)").GetComponent<ItemUI>().Item;
         Item usedItem = Knapsack.Instance.lastUsedItem;
         string message = Coding<Item>.encode(usedItem);
-        NetWorkManager.getInstance().sendMessage(Protocol.ITEM, 0, ItemProtocal.USE_CREQ, message);
+        NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.USE_CREQ, message);
         transform.FindChild("Item(Clone)").GetComponent<ItemUI>().ReduceAmount();//使用后减少一个物品
     }
 

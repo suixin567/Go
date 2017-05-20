@@ -25,7 +25,7 @@ public class regPanel : MonoBehaviour {
 			dto.passWord=passWordInput.text;
 			string message = Coding<LoginDTO>.encode(dto);
 //			print("json格式的注册账号与密码"+message );
-			NetWorkManager.getInstance().sendMessage(Protocol.LOGIN, 2,LoginProtocol.REG_CREQ,message);
+			NetWorkManager.instance.sendMessage(Protocol.LOGIN, 2,LoginProtocol.REG_CREQ,message);
 		} else 
 		{
 			WindowConstants.windowList.Add(WindowConstants.INPUT_ERROR);

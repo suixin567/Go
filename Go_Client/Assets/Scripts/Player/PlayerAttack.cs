@@ -77,14 +77,14 @@ public class PlayerAttack : MonoBehaviour {
 					movedto.Point = new Assets.Model.Vector3(transform.position);
 					movedto.Rotation = new Assets.Model.Vector4(transform.rotation);
 					string moveMessage = LitJson.JsonMapper.ToJson(movedto);
-					NetWorkManager.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, moveMessage);
+					NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, moveMessage);
 
                     //发送攻击的网络协议
                     AttackMonDTO dto = new AttackMonDTO();
 					dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().monModel.FirstIndex;
 					dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().monModel.SecondIndex;
                     string message = LitJson.JsonMapper.ToJson(dto);
-                    NetWorkManager.getInstance().sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
+                    NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
                //     print("攻击");
                 }
                 else
