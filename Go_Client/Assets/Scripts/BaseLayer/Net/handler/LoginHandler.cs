@@ -25,7 +25,10 @@ public class LoginHandler : MonoBehaviour {
 
 	public void RegResult(string message)
 	{
-		if(message == "true")
+        //恢复状态
+        NetWorkManager.NET_STATE = NetState.RUN;
+
+        if (message == "true")
 		{
 			print("注册成功");
 			WindowConstants.windowList.Add (WindowConstants.ACC_REG_OK);
@@ -44,7 +47,9 @@ public class LoginHandler : MonoBehaviour {
 
 	public void LoginResult(string message)
 	{
-		if(message == "true")
+        NetWorkManager.NET_STATE = NetState.RUN;
+
+        if (message == "true")
 		{
 			print("登陆成功");
 			//登陆成功的话就 加载进度条，并跳转到角色选择场景
