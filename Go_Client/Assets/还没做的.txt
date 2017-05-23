@@ -5,7 +5,7 @@
 
 技能不能保存
 战士不能打怪
-战斗的事件驱动及动画
+战斗的事件驱动及动画  idel(无)  move（pos） attack(tar) skll(tar&skill) die
 战斗增加特效
 人物可以攻击人物
 消息的序列
