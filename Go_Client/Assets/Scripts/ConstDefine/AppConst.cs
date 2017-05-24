@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AppConst {
 
-    public const string LAN = "192.168.1.102";
+    public const string LAN = "127.0.0.1";
     public const string WAN = "211.159.186.78";
     public static string SocketUrl = LAN;
   //  public static string WebUrl = "http://" + SocketUrl + ":6688/";
