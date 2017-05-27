@@ -34,13 +34,15 @@ public class MapHandler : MonoBehaviour {
 			break;
             //初始化怪物
             case MapProtocol.MONSTER_INIT_SRES:
-                initMons(model.Message);
-                break;
-		case MapProtocol.BE_ATTACK_BRO:
-			beAttack(model.Message);
+            initMons(model.Message);
+            break;
+		case MapProtocol.ATTACK_MON_BRO://攻击怪物广播
+			attackMon(model.Message);
 			break;
-
-		case MapProtocol.TALK_BRO:
+            //case MapProtocol.ATTACK_PLAYER_BRO://攻击人物广播
+            //attackPlayer(model.Message);
+            //break;
+            case MapProtocol.TALK_BRO:
 			chat(model.Message);
 			break;
 		case MapProtocol.MONSTER_RELIVE_BRO://怪物复活
@@ -52,27 +54,39 @@ public class MapHandler : MonoBehaviour {
 		}
 	}
 
-	//怪物复活
-	void monRelive(string message)
+    ////攻击人物
+    //void attackPlayer(string message) {
+
+    //}
+
+    //怪物复活
+    void monRelive(string message)
 	{
 		MonsterModel mon = Coding<MonsterModel>.decode(message);
 		LoadData.loadingMonsterList.Add(mon);
 	}
 
-	void beAttack(string message)
+    //攻击怪物
+	void attackMon(string message)
 	{
-	//	print("怪物血量"+message);
-		MonsterModel mon = Coding<MonsterModel>.decode(message);
-		string monIndex = mon.FirstIndex.ToString() +"_" +mon.SecondIndex.ToString();
-		if(mon.Hp<=0)
-		{
-			Destroy(MonList[monIndex]);
-			MonList.Remove(monIndex);
-		}else{//更新怪物血条
-			MonList[monIndex].GetComponent<MonsterBase>().monModel.Hp = mon.Hp;
-		//	print("更新怪物属性"+mon.Hp);
-		}
-	}
+        AttackMonDTO dto = Coding<AttackMonDTO>.decode(message);
+
+        GameObject playerGo = playerGoList[dto.Player];
+
+        
+        if (dto.TarPlayer=="") {//攻击怪物
+            string monIndex = dto.FirstIndex.ToString() + "_" + dto.SecondIndex.ToString();
+            GameObject monGo = MonList[monIndex];
+            playerGo.GetComponent<PlayerController>().Attack(monGo.transform);
+        }
+        else {//攻击人物
+            GameObject tarPlayerGo = playerGoList[dto.TarPlayer];
+            playerGo.GetComponent<PlayerController>().Attack(tarPlayerGo.transform);
+        }
+        
+        print("收到攻击广播"+playerGo.name);
+    }
+
     //进入新地图时，初始化此地图里的所有怪
     void initMons(string message) {
         MonsterModel mon = Coding<MonsterModel>.decode(message);
@@ -223,18 +237,18 @@ public class MapHandler : MonoBehaviour {
 		dto.Name = j["Name"].str;
 		dto.Dir =(int)(j["Dir"].n);
 
-		dto.Point.X =((JSONObject)j["Point"].list[0]).n;
-		dto.Point.Y =((JSONObject)j["Point"].list[1]).n;
-		dto.Point.Z =((JSONObject)j["Point"].list[2]).n;
+		dto.Point.X = j["Point"].list[0].n;
+		dto.Point.Y = j["Point"].list[1].n;
+		dto.Point.Z = j["Point"].list[2].n;
 
-		dto.Rotation.X =((JSONObject)j["Rotation"].list[0]).n;
-		dto.Rotation.Y =((JSONObject)j["Rotation"].list[1]).n;
-		dto.Rotation.Z =((JSONObject)j["Rotation"].list[2]).n;
-		dto.Rotation.W =((JSONObject)j["Rotation"].list[3]).n;
+		//dto.Rotation.X =((JSONObject)j["Rotation"].list[0]).n;
+		//dto.Rotation.Y =((JSONObject)j["Rotation"].list[1]).n;
+		//dto.Rotation.Z =((JSONObject)j["Rotation"].list[2]).n;
+		//dto.Rotation.W =((JSONObject)j["Rotation"].list[3]).n;
 
 		GameObject go = playerGoList[dto.Name];
 		//设置这个移动了的人的目标点
-		go.transform.rotation = new Quaternion((float)dto.Rotation.X ,(float)dto.Rotation.Y,(float)dto.Rotation.Z,(float)dto.Rotation.W);
-		go.GetComponent<PlayerDir>().targetPosition =new Vector3((float)dto.Point.X,(float)dto.Point.Y,(float)dto.Point.Z);
+	//	go.transform.rotation = new Quaternion((float)dto.Rotation.X ,(float)dto.Rotation.Y,(float)dto.Rotation.Z,(float)dto.Rotation.W);
+		go.GetComponent<PlayerController>().Move(new Vector3((float)dto.Point.X,(float)dto.Point.Y,(float)dto.Point.Z));
 	}
 }

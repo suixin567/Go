@@ -6,99 +6,136 @@ public class PlayerAttack : MonoBehaviour {
     public float attackInterval = 1f;
     public float attackDistance = 3f;
     public Transform attackTarget;//攻击的敌人对象
-    PlayerDir playerDir;
-
-    public enum AniState
+    PlayerController playerController;
+    public enum AttackState
     {
         RunTo,
         Attack,
         Wait
     }
-    public AniState aniState = AniState.Wait;
+    public AttackState aniState = AttackState.Wait;
+    bool autoStoped = false;
+    public int currentSkill = 0;//本次攻击使用的技能
+
+    GameObject normalAttackEffPre;
 
     void Start () {
-        playerDir = GetComponent<PlayerDir>();
-
+        playerController = GetComponent<PlayerController>();
+        normalAttackEffPre = Resources.Load<GameObject>("Skills/normalSkill");
     }
 
-    bool autoMoved = false;
-    bool autoStoped = false;
     void Update () {
-
-        if (gameObject.tag != Tags.localPlayer)
+        //主角逻辑
+        if (gameObject.tag == Tags.localPlayer)
         {
-            return;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                bool isHit = Physics.Raycast(ray, out hit);
+                if ((isHit && hit.collider.tag == Tags.enemy) || (isHit && hit.collider.tag == Tags.player))
+                {
+                    attackTarget = hit.collider.transform;
+                    playerController.playerMotionState = PlayerMotionState.ATTACK;
+                }
+                else
+                {//点击非敌人
+                    attackTarget = null;
+                }
+                autoStoped = false;
+            }
         }
 
-            if (Input.GetMouseButtonDown(0)) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            bool isHit = Physics.Raycast(ray,out hit);
-            if (isHit && hit.collider.tag == Tags.enemy)
-            {
-                attackTarget = hit.collider.transform;
-                playerDir.Player_Motion_State = PlayerMotionState.ATTACK;
-            }
-            else {
-                playerDir.Player_Motion_State = PlayerMotionState.NORMAL;
-                attackTarget = null;
-            }
-            autoMoved = false;
-            autoStoped = false;
-        }
-        if (playerDir.Player_Motion_State == PlayerMotionState.ATTACK) {
+        //通用逻辑
+        if (playerController.playerMotionState == PlayerMotionState.ATTACK) {
 			//如果此怪物已被杀死并销毁
 			if(attackTarget ==null ){
-				playerDir.Player_Motion_State = PlayerMotionState.NORMAL;
+                playerController.playerMotionState = PlayerMotionState.IDEL;
 				attackTarget = null;
 				return;
 			}
-
             float dis = Vector3.Distance(transform.position,attackTarget.position);
             if (dis <= attackDistance)//可以攻击
-            {
-                if (autoStoped==false)
-                {
-                    playerDir.autoMove(transform.position);//如果之前是自动跑向目标，应该停下脚步
-                    autoStoped = true;
-                }
-               
+            {             
                 //判断时间间隔
-                if (Time.time > lastAttTime + attackInterval)
-                {
+                if (Time.time > lastAttTime + attackInterval){
                     lastAttTime = Time.time;
                     //攻击
-                    aniState = AniState.Attack;
-					//面向敌人,并向服务器发送转向
+                    aniState = AttackState.Attack;
+					//面向敌人
 					transform.LookAt(attackTarget);
-					MoveDTO movedto = new MoveDTO();
-					movedto.Name = GameInfo.myPlayerModel.Name;
-					movedto.Dir = 0;// state;//传输给其他玩家 此次操作方向 属于角色状态中部分常量
-					movedto.Point = new Assets.Model.Vector3(transform.position);
-					movedto.Rotation = new Assets.Model.Vector4(transform.rotation);
-					string moveMessage = LitJson.JsonMapper.ToJson(movedto);
-					NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.MOVE_CREQ, moveMessage);
-
-                    //发送攻击的网络协议
-                    AttackMonDTO dto = new AttackMonDTO();
-					dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().monModel.FirstIndex;
-					dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().monModel.SecondIndex;
-                    string message = LitJson.JsonMapper.ToJson(dto);
-                    NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_CREQ, message);
-               //     print("攻击");
+                    AttackLogic();
                 }
                 else
                 {//等待间隔
-                    aniState = AniState.Wait;
+                    aniState = AttackState.Wait;
                 }
             }
             else {//走向敌人
-                if (autoMoved == false) {
-                    playerDir.autoMove(attackTarget.position);
-                    aniState = AniState.RunTo;
-                    autoMoved = true;
-                }
+                    playerController.Move(attackTarget.position);
+                    aniState = AttackState.RunTo;
+            }
+        }
+        //判断是否是RunTo状态
+        if (aniState== AttackState.RunTo) {
+            float dis = Vector3.Distance(transform.position, attackTarget.position);
+            if (dis <= attackDistance)//可以攻击
+            {
+                playerController.playerMotionState = PlayerMotionState.ATTACK;
             }
         }
 	}
+
+    /// <summary>
+    /// 对外接口
+    /// </summary>
+    /// <param name="attackTar"></param>
+    /// <param name="skill"></param>
+    public void Attack( Transform attackTar,int skill) {
+        currentSkill = skill;
+        playerController.playerMotionState = PlayerMotionState.ATTACK;
+        attackTarget = attackTar;
+        sendAttack();//发送数据
+    }
+
+    /// <summary>
+    /// 具体攻击逻辑
+    /// </summary>
+    /// <param name="attackTar"></param>
+    /// <param name="skill"></param>
+    public void AttackLogic()
+    {
+        if (currentSkill==0) {//普通攻击
+            GameObject skillEff =  Instantiate(normalAttackEffPre);
+            skillEff.transform.position = transform.position+ new Vector3(0,1,0);
+            skillEff.GetComponent<SkillBase>().tar = attackTarget;
+            skillEff.GetComponent<SkillBase>().damage = GetComponent<PlayerProperties>().M_playerModel.Atk;
+        }
+        sendAttack();
+    }
+
+        void sendAttack() {
+        if (tag != Tags.localPlayer)
+        {
+            return;
+        }
+        //发送攻击的网络协议
+        AttackMonDTO dto = new AttackMonDTO();
+        dto.Player = "";
+        if (attackTarget.tag == Tags.player)//攻击角色
+        {
+            dto.TarPlayer = attackTarget.GetComponent<PlayerProperties>().M_playerModel.Name;
+        }
+        else {//攻击怪物
+            dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().monModel.FirstIndex;
+            dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().monModel.SecondIndex;
+        }
+
+
+
+        dto.Skill = currentSkill;
+        string message = LitJson.JsonMapper.ToJson(dto);
+        NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_MON_CREQ, message);
+        //print("攻击");
+    }
 }

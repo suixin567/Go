@@ -11,10 +11,10 @@ GameObject:
   - 111: {fileID: 11119650}
   - 143: {fileID: 14396212}
   - 114: {fileID: 11499352}
-  - 114: {fileID: 11436228}
   - 114: {fileID: 11424112}
   - 114: {fileID: 11404818}
   - 114: {fileID: 11406496}
+  - 114: {fileID: 11483832}
   m_Layer: 8
   m_Name: Magician
   m_TagString: Player
@@ -1678,19 +1678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9eec95daf03bc748a1a91fd3d09056c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11436228
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d713f896137efc4e8b6642e6da85233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 1
-  speed: 2
 --- !u!114 &11454992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1805,6 +1792,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u89D2\u8272\u540D\u5B57"
+--- !u!114 &11483832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c798fec78cfec754e8d0875f7c8daf17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player_Motion_State: 0
 --- !u!114 &11491040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1831,6 +1830,8 @@ MonoBehaviour:
   effect_click_prefab: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   Player_Motion_State: 0
+  state: 1
+  speed: 2
 --- !u!124 &12475108
 Behaviour:
   m_ObjectHideFlags: 1

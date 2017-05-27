@@ -8,11 +8,12 @@ public class MonsterBase : MonoBehaviour {
 
     Slider bloodSlider;
     Text bloodText;
-
+    public string monCode = "";
 
     public virtual void Start () {
         bloodSlider = transform.FindChild("Canvas/bloodBar").GetComponent<Slider>();
         bloodText = transform.FindChild("Canvas/bloodBar/bloodText").GetComponent<Text>();
+        monCode = monModel.FirstIndex + "_" + monModel.SecondIndex;
     }
 
 
@@ -28,14 +29,24 @@ public class MonsterBase : MonoBehaviour {
         updateBlood(0);
     }
 
-
+    /// <summary>
+    /// 更新怪物血量
+    /// </summary>
+    /// <param name="value"></param>
     public void updateBlood(int value)
     {
-//        model.Hp += value;
-//        if (model.Hp >= model.MaxHp)
-//        {
-//            model.Hp = model.MaxHp;
-//        }
+        monModel.Hp += value;
+        if (monModel.Hp >= monModel.MaxHp)
+        {
+            monModel.Hp = monModel.MaxHp;
+        }
+        if (monModel.Hp<=0) {//死亡
+            if (GameObject.Find("MainCamera").GetComponent<MapHandler>().MonList.ContainsKey(monCode)) {
+                print("移除怪物列表");
+                GameObject.Find("MainCamera").GetComponent<MapHandler>().MonList.Remove(monCode);
+            }            
+            Destroy(gameObject);
+        }
         bloodSlider.value = (float)monModel.Hp / monModel.MaxHp;
         bloodText.text = monModel.Hp + "/" + monModel.MaxHp;
     }

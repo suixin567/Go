@@ -18,9 +18,12 @@ const (
 	LEAVE_CREQ        = 5
 	LEAVE_BRO         = 6
 	MONSTER_INIT_SRES = 9  //服务器为一个客户端初始化怪物
-	ATTACK_CREQ       = 12 //客户端发起攻击
-	BE_ATTACK_BRO     = 15 //被攻击的广播
+	ATTACK_MON_CREQ   = 12 //客户端发起攻击怪物
+	ATTACK_MON_BRO    = 13 //攻击怪物的广播
 	MOSTER_RELIVE_BRO = 11 //怪物复活
+
+	ATTACK_PLAYER_CREQ = 14 //攻击人物
+	ATTACK_PLAYER_BRO  = 15 //攻击人物的广播
 )
 
 type EnterMapDTO struct {
@@ -37,19 +40,31 @@ type MoveDTO struct {
 	Rotation data.Vector4
 }
 
+//攻击怪物
 type AttackMonDTO struct {
+	Player      string
+	TarPlayer   string
 	FirstIndex  int
 	SecondIndex int
+	Skill       int
 }
+
+////攻击角色
+//type AttackPlayerDTO struct {
+//	Player    string
+//	TarPlayer string
+//	Skill     int
+//}
 
 type MapManager struct {
 	Maps map[int]*MapHandler
 }
 
 type MapHandler struct {
-	Area    int
-	Roles   map[*ace.Session]string //根据session获得此地图中的角色名字
-	MonGens []*MonGenDTO            //每个地图管理员有多个刷怪管理器
+	Area  int
+	Roles map[*ace.Session]string //根据session获得此地图中的角色名字
+	//Name_Player map[string]*data.PlayerDTO //根据一个角色名字获得角色模型
+	MonGens []*MonGenDTO //每个地图管理员有多个刷怪管理器
 }
 
 var Manager = &MapManager{make(map[int]*MapHandler)}
@@ -80,34 +95,67 @@ func (this *MapHandler) Process(session *ace.Session, model ace.DefaultSocketMod
 	case MOVE_CREQ: //用户移动
 		this.move(session, model)
 		break
-	case ATTACK_CREQ: //客户端发起攻击
-		go this.attack(session, model)
+	case ATTACK_MON_CREQ: //客户端发起攻击怪物
+		go this.attackMon(session, model)
 		break
+		//	case ATTACK_PLAYER_CREQ: //攻击角色
+		//		this.attackPlayer(session, model)
+		//		break
 	default:
 		fmt.Println("未知的地图协议")
 		break
 	}
 }
-func (this *MapHandler) attack(session *ace.Session, message ace.DefaultSocketModel) {
-	monData := &AttackMonDTO{}
-	err := json.Unmarshal(message.Message, &monData)
+
+//func (this *MapHandler) attackPlayer(session *ace.Session, message ace.DefaultSocketModel) {
+//	attData := &AttackPlayerDTO{}
+//	err := json.Unmarshal(message.Message, &attData)
+//	if err != nil {
+//		fmt.Println(err)
+//	}
+
+//}
+
+func (this *MapHandler) attackMon(session *ace.Session, message ace.DefaultSocketModel) {
+	attData := &AttackMonDTO{}
+	err := json.Unmarshal(message.Message, &attData)
 	if err != nil {
 		fmt.Println(err)
 	}
-	//fmt.Println("就是这个怪", this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex].Name)
-	mon := this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex]
-	if mon.Hp <= 0 { //必须是或者的怪，死怪不需要继续被掉血
-		return
+	if attData.TarPlayer == "" { //******************************************攻击怪物
+		//fmt.Println("就是这个怪", this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex].Name)
+		mon := this.MonGens[attData.FirstIndex].Monsters[attData.SecondIndex]
+		if mon.Hp <= 0 { //必须是活着的怪，死怪不需要继续被掉血
+			return
+		}
+		player := data.SyncAccount.SessionPlayer[session]
+		mon.Hp -= player.Atk
+		if mon.Hp <= 0 { //怪物被杀死
+			this.MonGens[attData.FirstIndex].currentAmount--
+		}
+		//广播人物、怪物 和人物技能
+		attData.Player = player.Name
+		m, _ := json.Marshal(*attData)
+		fmt.Println("广播打怪物", string(m))
+		this.exBrocast(session, ATTACK_MON_BRO, m)
+	} else { //****************************************************攻击人物
+		player := data.SyncAccount.SessionPlayer[session]
+		tarPlayer := &data.PlayerDTO{}
+		for s, name := range this.Roles { //遍历此地图内的所有角色
+			if name == attData.TarPlayer {
+				tarPlayer = data.SyncAccount.SessionPlayer[s]
+			}
+		}
+		tarPlayer.Hp -= player.Atk
+		if tarPlayer.Hp <= 0 { //人物被杀死
+		}
+
+		//广播主动人物、被动人物 和人物技能
+		attData.Player = player.Name
+		m, _ := json.Marshal(*attData)
+		fmt.Println("广播攻击人物", string(m))
+		this.exBrocast(session, ATTACK_PLAYER_BRO, m)
 	}
-	player := data.SyncAccount.SessionPlayer[session]
-	mon.Hp -= player.Atk
-	if mon.Hp <= 0 { //怪物被杀死
-		this.MonGens[monData.FirstIndex].currentAmount--
-	}
-	//攻击怪物的响应  广播新的怪物属性值给地图内的所有人
-	m, _ := json.Marshal(*mon)
-	//fmt.Println("广播怪物新属性", string(m))
-	this.brocast(BE_ATTACK_BRO, m) //告诉所有在这个地图的玩家，这个人离开了
 }
 
 func (this *MapHandler) enter(session *ace.Session, message ace.DefaultSocketModel) {
