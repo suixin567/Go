@@ -1,8 +1,12 @@
 package Item
 
 import (
+	"ace"
 	"database/sql"
+	"encoding/json"
 	"fmt"
+	//"game/data"
+	"game/logic/protocol"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -22,14 +26,15 @@ type SkillDTO struct {
 	Level         int
 	ReleaseType   string
 	Distance      float32
+	Shortcut      int
 }
 
 type SkillHandler struct {
-	Skills map[string]*SkillDTO //绑定技能名字与技能模型
-	//SessionSkills map[*ace.Session][]SkillDTO
+	Id_Skills   map[int]*SkillDTO    //绑定技能id与技能模型
+	Name_Skills map[string]*SkillDTO //绑定技能id与技能模型
 }
 
-var SkillHandlerSync = &SkillHandler{Skills: make(map[string]*SkillDTO)}
+var SkillHandlerSync = &SkillHandler{Id_Skills: make(map[int]*SkillDTO), Name_Skills: make(map[string]*SkillDTO)}
 
 func init() {
 	SkillHandlerSync.initProcess()
@@ -57,10 +62,39 @@ func (this *SkillHandler) initProcess() {
 		var level int
 		var releaseType string
 		var distance float32
-		err = rows.Scan(&id, &name, &icon, &des, &applyType, &applyProperty, &applyValue, &applyTime, &mp, &coldTime, &job, &level, &releaseType, &distance)
+		var shortcut int
+		err = rows.Scan(&id, &name, &icon, &des, &applyType, &applyProperty, &applyValue, &applyTime, &mp, &coldTime, &job, &level, &releaseType, &distance, &shortcut)
 		checkErr(err)
-		skillDto := &SkillDTO{id, name, icon, des, applyType, applyProperty, applyValue, applyTime, mp, coldTime, job, level, releaseType, distance}
+		skillDto := &SkillDTO{id, name, icon, des, applyType, applyProperty, applyValue, applyTime, mp, coldTime, job, level, releaseType, distance, shortcut}
 		fmt.Println(skillDto)
-		this.Skills[name] = skillDto //保存物品信息
+		this.Id_Skills[id] = skillDto     //保存物品信息
+		this.Name_Skills[name] = skillDto //保存物品信息
 	}
+}
+
+//学习一个技能
+func (this *SkillHandler) LearnSkill(skillName string, session *ace.Session) {
+	//所要学的技能
+	SkillDTO := this.Name_Skills[skillName]
+
+	//这个人已有的技能
+	skillsInfo := ItemHandler.SessionSkills[session]
+	//检查是否已经学习
+	for _, v := range skillsInfo {
+		if v.Id == SkillDTO.Id { //已存在
+			session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, LEARN_SKILL_SRES, []byte("false")})
+			return
+		}
+	}
+	skillsInfo = append(skillsInfo, *SkillDTO)
+	ItemHandler.SessionSkills[session] = skillsInfo
+	//响应是技能模型
+	message, _ := json.Marshal(SkillDTO)
+	//fmt.Println(string(message))
+	session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, LEARN_SKILL_SRES, message})
+}
+
+//为一个技能设置快捷键
+func (this *SkillHandler) LearnSkill(skillName string, session *ace.Session) {
+
 }

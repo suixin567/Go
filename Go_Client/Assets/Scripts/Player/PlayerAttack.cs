@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour {
     float lastAttTime = 0;//保存上一次普通攻击的时间
@@ -26,7 +27,7 @@ public class PlayerAttack : MonoBehaviour {
 
     void Update () {
         //主角逻辑
-        if (gameObject.tag == Tags.localPlayer)
+        if (gameObject.tag == Tags.localPlayer && !EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -77,7 +78,7 @@ public class PlayerAttack : MonoBehaviour {
             }
         }
         //判断是否是RunTo状态
-        if (aniState== AttackState.RunTo) {
+        if (aniState== AttackState.RunTo &&attackTarget!=null) {
             float dis = Vector3.Distance(transform.position, attackTarget.position);
             if (dis <= attackDistance)//可以攻击
             {
@@ -130,12 +131,8 @@ public class PlayerAttack : MonoBehaviour {
             dto.FirstIndex = attackTarget.GetComponent<MonsterBase>().monModel.FirstIndex;
             dto.SecondIndex = attackTarget.GetComponent<MonsterBase>().monModel.SecondIndex;
         }
-
-
-
         dto.Skill = currentSkill;
         string message = LitJson.JsonMapper.ToJson(dto);
         NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_MON_CREQ, message);
-        //print("攻击");
     }
 }

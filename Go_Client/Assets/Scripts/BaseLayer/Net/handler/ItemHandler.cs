@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ItemHandler : MonoBehaviour {
 
@@ -49,15 +50,27 @@ public class ItemHandler : MonoBehaviour {
     void learnSkill(string message)
     {
         print("学会技能："+message);
+        if (message=="false") {
+            Debug.LogError("已学会此技能");
+          //  Knapsack.Instance.lastUsedItem.addAmount(1);
+            return;
+        }
         Skill newSkill = SkillManager._instance.json2Skill(message);
-        SkillPanel._instance.creatSkillItem(newSkill);
-//      Knapsack.Instance.lastUsedItem.ReduceAmount();
+        SkillPanel.instance.creatSkillItem(newSkill);
+
     }
 
     //初始化技能栏
     void initSkill(string message)
     {
         print("我有这么多的技能"+message);
+    //    Skill[] mySkills = Coding<Skill[]>.decode(message);
+        List<Skill> skills = SkillManager._instance.jsons2Skills(message);
+
+        for (int i = 0; i < skills.Count; i++)
+        {
+            SkillPanel.instance.creatSkillItem(skills[i]);
+        }
     }
 
     //初始化背包

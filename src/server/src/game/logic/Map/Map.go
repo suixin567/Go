@@ -154,7 +154,7 @@ func (this *MapHandler) attackMon(session *ace.Session, message ace.DefaultSocke
 		attData.Player = player.Name
 		m, _ := json.Marshal(*attData)
 		fmt.Println("广播攻击人物", string(m))
-		this.exBrocast(session, ATTACK_PLAYER_BRO, m)
+		this.exBrocast(session, ATTACK_MON_BRO, m)
 	}
 }
 

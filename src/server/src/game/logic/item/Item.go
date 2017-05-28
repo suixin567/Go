@@ -189,12 +189,19 @@ func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketMode
 		}
 		//使用物品后要删除切片中的物品
 		for k, v := range this.SessionItems[session] {
-			if *useItem == v {
+			if *useItem == v { //找到这个物品
 				fmt.Println("使用的是：", v.Id, v.Name)
 				this.SessionItems[session] = append(this.SessionItems[session][:k], this.SessionItems[session][k+1:]...)
 				break
 			}
 		}
+		//使用技能书
+		if useItem.ItemType == 8 {
+			SkillHandlerSync.LearnSkill(useItem.Name, session)
+			return
+		}
+		//使用药品
+		//使用者
 		usePlayer := data.SyncAccount.SessionPlayer[session]
 		if useItem.Id == 1000 || useItem.Id == 1001 {
 			//更新人物的血量属性
@@ -207,20 +214,8 @@ func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketMode
 			for se, _ := range roles {
 				useItemdto := UseItemDTO{usePlayer.Name, useItem.Id}
 				message, _ := json.Marshal(useItemdto)
-
 				se.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, USE_SRES, message})
 			}
-		}
-		if useItem.Id == 6000 { //使用治愈术
-			skillDTO := SkillHandlerSync.Skills[useItem.Name]
-			//给人物增加技能
-			skillsInfo := this.SessionSkills[session]
-			skillsInfo = append(skillsInfo, *skillDTO)
-			this.SessionSkills[session] = skillsInfo
-			//响应是技能模型
-			message, _ := json.Marshal(skillDTO)
-			//fmt.Println(string(message))
-			session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, LEARN_SKILL_SRES, message})
 		}
 		break
 	case PUTON_CREQ: //穿戴装备

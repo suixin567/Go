@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-//适用角色
+//适用职业
 public enum ApplicableRole
 {
     Swordman,
@@ -63,29 +63,32 @@ public class SkillManager : MonoBehaviour
 //    string abc =@"[{""Id"":0, ""Name"":""治愈术""}]";
     public static SkillManager _instance;
 
-    private Dictionary<int, Skill> skillInfoDict = new Dictionary<int, Skill>();
+  //  private Dictionary<int, Skill> skillInfoDict = new Dictionary<int, Skill>();//技能字典
 
     void Awake()
     {
         _instance = this;
-        //  InitSkillInfoDict();//初始化技能信息字典
     }
 
-    //根据id查找到一个技能信息
-    public Skill GetSkillInfoById(int id)
-    {
-        Skill info = null;
-        skillInfoDict.TryGetValue(id, out info);
-        return info;
-    }
+    ////根据id查找到一个技能信息
+    //public Skill GetSkillInfoById(int id)
+    //{
+    //    Skill info = null;
+    //    skillInfoDict.TryGetValue(id, out info);
+    //    return info;
+    //}
 
-    //初始化技能信息字典
-    void InitSkillInfoDict(string skills)
+
+    //json数组转换为技能数组
+    public List<Skill> jsons2Skills(string skills)
     {
         JSONObject j = new JSONObject(skills);
+
+        List<Skill> skillList = new List<Skill>();
+
         foreach (JSONObject temp in j.list)
         {
-            Skill skill = new Skill ();
+            Skill skill = new Skill();
 
             //下面的事解析这个对象里面的公有属性
             skill.Id = (int)(temp["Id"].n);
@@ -159,13 +162,15 @@ public class SkillManager : MonoBehaviour
                     break;
             }
             skill.Distance = temp["Distance"].f;
-            skillInfoDict.Add(skill.Id, skill);
+            //  skillInfoDict.Add(skill.Id, skill);
+            skillList.Add(skill);
         }
+        return skillList;
     }
 
 
 
-  public  Skill json2Skill(string value)
+    public  Skill json2Skill(string value)
     {
         Skill skill = new Skill();
         JSONObject temp = new JSONObject(value);
