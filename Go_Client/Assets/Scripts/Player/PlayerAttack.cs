@@ -18,11 +18,13 @@ public class PlayerAttack : MonoBehaviour {
     bool autoStoped = false;
     public int currentSkill = 0;//本次攻击使用的技能
 
-    GameObject normalAttackEffPre;
+    GameObject normalAttackEffPre;//普通攻击
+    GameObject firBallEffPre;//火球术
 
     void Start () {
         playerController = GetComponent<PlayerController>();
         normalAttackEffPre = Resources.Load<GameObject>("Skills/normalSkill");
+        firBallEffPre = Resources.Load<GameObject>("Skills/fireBallSkill");
     }
 
     void Update () {
@@ -92,11 +94,12 @@ public class PlayerAttack : MonoBehaviour {
     /// </summary>
     /// <param name="attackTar"></param>
     /// <param name="skill"></param>
-    public void Attack( Transform attackTar,int skill) {
-        currentSkill = skill;
+    public void Attack(int skillId = 0, Transform attackTar=null) {
+        currentSkill = skillId;
+        if (attackTar!=null) {
+            attackTarget = attackTar;
+        }
         playerController.playerMotionState = PlayerMotionState.ATTACK;
-        attackTarget = attackTar;
-        sendAttack();//发送数据
     }
 
     /// <summary>
@@ -106,9 +109,16 @@ public class PlayerAttack : MonoBehaviour {
     /// <param name="skill"></param>
     public void AttackLogic()
     {
-        if (currentSkill==0) {//普通攻击
-            GameObject skillEff =  Instantiate(normalAttackEffPre);
-            skillEff.transform.position = transform.position+ new Vector3(0,1,0);
+        if (currentSkill == 0)
+        {//普通攻击
+            GameObject skillEff = Instantiate(normalAttackEffPre);
+            skillEff.transform.position = transform.position + new Vector3(0, 1, 0);
+            skillEff.GetComponent<SkillBase>().tar = attackTarget;
+            skillEff.GetComponent<SkillBase>().damage = GetComponent<PlayerProperties>().M_playerModel.Atk;
+        }
+        else {//火球术
+            GameObject skillEff = Instantiate(firBallEffPre);
+            skillEff.transform.position = transform.position + new Vector3(0, 1, 0);
             skillEff.GetComponent<SkillBase>().tar = attackTarget;
             skillEff.GetComponent<SkillBase>().damage = GetComponent<PlayerProperties>().M_playerModel.Atk;
         }
@@ -118,6 +128,9 @@ public class PlayerAttack : MonoBehaviour {
         void sendAttack() {
         if (tag != Tags.localPlayer)
         {
+            return;
+        }
+        if (attackTarget==null) {
             return;
         }
         //发送攻击的网络协议

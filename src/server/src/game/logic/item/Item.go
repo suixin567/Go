@@ -37,6 +37,9 @@ const (
 	LEARN_SKILL_SRES  = 15
 	PLAYER_SKILL_CREQ = 16 //请求一个角色技能数据
 	PLAYER_SKILL_SRES = 17
+
+	SET_SKILL_SHORTCUT_CREQ = 18 //设置一个技能的快捷键
+	SET_SKILL_SHORTCUT_SRES = 19
 )
 
 //一条物品信息
@@ -294,6 +297,9 @@ func (this *Handler) Process(session *ace.Session, message ace.DefaultSocketMode
 			fmt.Println("人物的最新属性", string(m))
 			se.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, PUTOFF_SREQ, m})
 		}
+		break
+	case SET_SKILL_SHORTCUT_CREQ: //设置技能快捷键
+		SkillHandlerSync.SetSkillShortcut(session, &message.Message)
 		break
 	default:
 		fmt.Println("物品命令类型错误")

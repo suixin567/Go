@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SkillItem : MonoBehaviour {
 
-    private Skill skill;
+    public Skill skill;
 
     private new Text name;
     private Image icon;
@@ -26,10 +26,6 @@ public class SkillItem : MonoBehaviour {
 		type = transform.FindChild("type").GetComponent<Text>();
 		des = transform.FindChild("des").GetComponent<Text>();
 		mp = transform.FindChild("mp").GetComponent<Text>();
-        //     icon_mask = transform.Find("icon_mask").gameObject;
-        //     icon_mask.SetActive(false);
-
-        shortCutText.text = "";
     }
 
 
@@ -54,6 +50,14 @@ public class SkillItem : MonoBehaviour {
         }
 		des.text = _skill.Des;
 		mp.text = _skill.Mp + "MP";
+        if (skill.Shortcut == 0)
+        {
+            shortCutText.text = "";
+        }
+        else {
+            shortCutText.text = "F" + skill.Shortcut;
+        }
+        shortCutIndex = skill.Shortcut;
     }
 
 
@@ -84,34 +88,42 @@ public class SkillItem : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.F1) && shortCutIndex==1) {
             releaseSkill();
+            return;
         }
         if (Input.GetKeyDown(KeyCode.F2) && shortCutIndex == 2)
         {
             releaseSkill();
+            return;
         }
         if (Input.GetKeyDown(KeyCode.F3) && shortCutIndex == 3)
         {
             releaseSkill();
+            return;
         }
         if (Input.GetKeyDown(KeyCode.F4) && shortCutIndex == 4)
         {
             releaseSkill();
+            return;
         }
         if (Input.GetKeyDown(KeyCode.F5) && shortCutIndex == 5)
         {
             releaseSkill();
+            return;
         }
         if (Input.GetKeyDown(KeyCode.F6) && shortCutIndex == 6)
         {
             releaseSkill();
+            return;
         }
         if (Input.GetKeyDown(KeyCode.F7) && shortCutIndex == 7)
         {
             releaseSkill();
+            return;
         }
         if (Input.GetKeyDown(KeyCode.F8) && shortCutIndex == 8)
         {
             releaseSkill();
+            return;
         }
     }
     /// <summary>
@@ -119,5 +131,6 @@ public class SkillItem : MonoBehaviour {
     /// </summary>
     void releaseSkill() {
         print("释放技能"+ shortCutIndex);
+        GameObject.FindGameObjectWithTag(Tags.localPlayer).GetComponent<PlayerController>().Attack(skill.Id);
     }
 }

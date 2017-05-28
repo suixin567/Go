@@ -80,6 +80,10 @@ public class EquipmentPanel : Inventory
         NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.PUTOFF_CRES, message);
     }
 
+    public void onCloseBtn()
+    {
+        DisplaySwitch();
+    }
 //    private void UpdatePropertyText()
 //    {
 //        //Debug.Log("UpdatePropertyText");

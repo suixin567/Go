@@ -29,6 +29,12 @@ type SkillDTO struct {
 	Shortcut      int
 }
 
+//设置快捷键的DTO
+type ShortcutDTO struct {
+	SkillId       int
+	ShortcutIndex int
+}
+
 type SkillHandler struct {
 	Id_Skills   map[int]*SkillDTO    //绑定技能id与技能模型
 	Name_Skills map[string]*SkillDTO //绑定技能id与技能模型
@@ -76,7 +82,11 @@ func (this *SkillHandler) initProcess() {
 func (this *SkillHandler) LearnSkill(skillName string, session *ace.Session) {
 	//所要学的技能
 	SkillDTO := this.Name_Skills[skillName]
-
+	if SkillDTO == nil {
+		session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, LEARN_SKILL_SRES, []byte("false")})
+		return
+	}
+	fmt.Println("所要学的", SkillDTO.Name, SkillDTO.Id)
 	//这个人已有的技能
 	skillsInfo := ItemHandler.SessionSkills[session]
 	//检查是否已经学习
@@ -95,6 +105,21 @@ func (this *SkillHandler) LearnSkill(skillName string, session *ace.Session) {
 }
 
 //为一个技能设置快捷键
-func (this *SkillHandler) LearnSkill(skillName string, session *ace.Session) {
-
+func (this *SkillHandler) SetSkillShortcut(session *ace.Session, message *[]byte) {
+	sc := &ShortcutDTO{}
+	err := json.Unmarshal(*message, &sc)
+	if err != nil {
+		fmt.Println(err)
+	}
+	//遍历这个人的全部技能
+	skills := ItemHandler.SessionSkills[session]
+	for k, skill := range skills {
+		if skill.Id == sc.SkillId { //找到这个技能
+			skills[k].Shortcut = sc.ShortcutIndex
+			ItemHandler.SessionSkills[session] = skills
+			session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, SET_SKILL_SHORTCUT_SRES, []byte("true")})
+			return
+		}
+	}
+	session.Write(&ace.DefaultSocketModel{protocol.ITEM, -1, SET_SKILL_SHORTCUT_SRES, []byte("false")})
 }

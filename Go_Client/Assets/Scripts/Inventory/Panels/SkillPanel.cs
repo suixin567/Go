@@ -1,19 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+class SkillShortcutDTO
+{
+    public int SkillId { get; set; }
+    public int ShortcutIndex { get; set; }
+}
+
 public class SkillPanel : MonoBehaviour {
 	public static SkillPanel instance;
 
-	private bool isShow = false;
+    CanvasGroup canvasGroup;
+    private bool isShow = false;
     public Transform contentPanel;
     public Transform shortCutPanel;//快捷键面板
-    bool isSetShortCutState = false;//是否在设置快捷键
+   // bool isSetShortCutState = false;//是否在设置快捷键
+    [HideInInspector]
     public SkillItem selectedItem;//被选中，准备设置快捷键的item
+    int selectedShortcutIndex;//被选中的快捷键 F1、F2....
 
-	void Awake() {
+    void Awake() {
 		instance = this;
 	}
 	void Start () {
+        canvasGroup = GetComponent<CanvasGroup>();
         for (int i = 0; i < contentPanel.childCount; i++)
         {
             Destroy(contentPanel.GetChild(i).gameObject);
@@ -22,31 +32,55 @@ public class SkillPanel : MonoBehaviour {
         shortCutPanel.gameObject.SetActive(false);
     }
 	
-	void Update () {
-	}
 
-	public void Show()
-	{
-		isShow=true;
-		gameObject.SetActive(true);
-	}
-	public void Hide()
-	{
-		isShow =false;
-		gameObject.SetActive(false);
-	}
-	public void DisplaySwitch()
-	{
-		if (isShow == false)
-		{
-			Show();
-		}
-		else
-		{
-			Hide();
-		}
-	}
-    
+	//public void Show()
+	//{
+	//	isShow=true;
+	//	gameObject.SetActive(true);
+	//}
+	//public void Hide()
+	//{
+	//	isShow =false;
+	//	gameObject.SetActive(false);
+	//}
+	//public void DisplaySwitch()
+	//{
+	//	if (isShow == false)
+	//	{
+	//		Show();
+	//	}
+	//	else
+	//	{
+	//		Hide();
+	//	}
+	//}
+
+
+
+    public virtual void Show()
+    {
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1;
+    }
+    public void Hide()
+    {
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.alpha = 0;
+    }
+    public void DisplaySwitch()
+    {
+        if (canvasGroup.alpha == 0)
+        {
+            Show();
+        }
+        else
+        {
+            Hide();
+        }
+    }
+
+
+
     public void creatSkillItem(Skill skill)
     {
         GameObject skillItem = Instantiate(Resources.Load<GameObject>("Inventory/skillItem"));
@@ -56,50 +90,80 @@ public class SkillPanel : MonoBehaviour {
         skillItem.GetComponent<SkillItem>().Init(skill);
     }
 
-    //关闭按钮
-    public void onCloseBtn() {
-        DisplaySwitch();
-    }
+
+
 
     //设置技能的快捷键
     public void onF1Btn()
     {
-        selectedItem.onSetShortcut(1);
-        shortCutPanel.gameObject.SetActive(false);
+        sendShortCut(1);
+        selectedShortcutIndex = 1;
     }
     public void onF2Btn()
     {
-        selectedItem.onSetShortcut(2);
-        shortCutPanel.gameObject.SetActive(false);
+        sendShortCut(2);
+        selectedShortcutIndex = 2;
     }
     public void onF3Btn()
     {
-        selectedItem.onSetShortcut(3);
-        shortCutPanel.gameObject.SetActive(false);
+        sendShortCut(3);
+        selectedShortcutIndex = 3;
     }
     public void onF4Btn()
     {
-        selectedItem.onSetShortcut(4);
-        shortCutPanel.gameObject.SetActive(false);
+        sendShortCut(4);
+        selectedShortcutIndex = 4;
     }
     public void onF5Btn()
     {
-        selectedItem.onSetShortcut(5);
-        shortCutPanel.gameObject.SetActive(false);
+        sendShortCut(5);
+        selectedShortcutIndex = 5;
     }
     public void onF6Btn()
     {
-        selectedItem.onSetShortcut(6);
-        shortCutPanel.gameObject.SetActive(false);
+        sendShortCut(6);
+        selectedShortcutIndex = 6;
     }
     public void onF7Btn()
     {
-        selectedItem.onSetShortcut(7);
-        shortCutPanel.gameObject.SetActive(false);
+        sendShortCut(7);
+        selectedShortcutIndex = 7;
     }
     public void onF8Btn()
     {
-        selectedItem.onSetShortcut(8);
+        sendShortCut(8);
+        selectedShortcutIndex = 8;
+    }
+
+    //设置快捷键的网络消息
+    void sendShortCut(int shortCuntIndex) {
         shortCutPanel.gameObject.SetActive(false);
+        //发送网路消息
+        SkillShortcutDTO dto = new SkillShortcutDTO();
+        dto.SkillId = selectedItem.skill.Id;
+        dto.ShortcutIndex = shortCuntIndex;
+        string message = LitJson.JsonMapper.ToJson(dto);
+        NetWorkManager.instance.sendMessage(Protocol.ITEM, -1, ItemProtocal.SET_SKILL_SHORTCUT_CREQ, message);
+    }
+
+    //发送后的结果
+    public void onsendShortCutResponsed(string message)
+    {
+        if (message == "true")
+        {
+            selectedItem.onSetShortcut(selectedShortcutIndex);
+        }
+        else {
+            Debug.LogError("设置失败");
+        }
+    }
+
+    //关闭按钮
+    public void onCloseBtn()
+    {
+        DisplaySwitch();
     }
 }
+
+
+

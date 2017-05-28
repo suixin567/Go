@@ -29,4 +29,7 @@ public class ItemProtocal {
     public const int LEARN_SKILL_SRES = 15; //学技能的响应
     public const int PLAYER_SKILL_CREQ = 16;//初始化一个角色的技能数据
     public const int PLAYER_SKILL_SRES = 17;
+
+    public const int SET_SKILL_SHORTCUT_CREQ = 18;//设置一个技能的快捷键
+    public const int SET_SKILL_SHORTCUT_SRES = 19;//设置一个技能的快捷键
 }

@@ -77,11 +77,11 @@ public class MapHandler : MonoBehaviour {
         if (dto.TarPlayer=="") {//攻击怪物
             string monIndex = dto.FirstIndex.ToString() + "_" + dto.SecondIndex.ToString();
             GameObject monGo = MonList[monIndex];
-            playerGo.GetComponent<PlayerController>().Attack(monGo.transform);
+            playerGo.GetComponent<PlayerController>().Attack(dto.Skill, monGo.transform);
         }
         else {//攻击人物
             GameObject tarPlayerGo = playerGoList[dto.TarPlayer];
-            playerGo.GetComponent<PlayerController>().Attack(tarPlayerGo.transform);
+            playerGo.GetComponent<PlayerController>().Attack(dto.Skill, tarPlayerGo.transform);
         }
         
         print("收到攻击广播"+playerGo.name);

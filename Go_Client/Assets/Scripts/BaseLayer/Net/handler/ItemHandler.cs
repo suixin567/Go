@@ -42,10 +42,18 @@ public class ItemHandler : MonoBehaviour {
             case ItemProtocal.PLAYER_SKILL_SRES://初始化人物技能
                 initSkill(model.Message);
                 break;
+            case ItemProtocal.SET_SKILL_SHORTCUT_SRES://设置技能快捷键
+                setSkillShortcut(model.Message);
+                break;
             default:
+                Debug.LogError("未知item消息类型"+ model.Command);
 			break;
 		}
 	}
+
+    void setSkillShortcut(string message) {
+        SkillPanel.instance.onsendShortCutResponsed(message);
+    }
 
     void learnSkill(string message)
     {

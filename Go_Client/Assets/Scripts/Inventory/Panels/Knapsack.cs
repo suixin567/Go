@@ -87,5 +87,9 @@ public class Knapsack : Inventory
             }
         }
         return false;
-    } 
+    }
+
+    public void onCloseBtn() {
+        DisplaySwitch();
+    }
 }

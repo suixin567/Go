@@ -32,14 +32,9 @@ public class PlayerController : MonoBehaviour {
         GetComponent<PlayerMove>().Move(tarPos);
     }
 
-    public void Attack(Transform attackTar)
+    public void Attack(int skillId = 0 ,Transform attackTar=null)
     {
-        GetComponent<PlayerAttack>().Attack(attackTar,0);
-    }
-
-    public void BeAttack()
-    {
-
+        GetComponent<PlayerAttack>().Attack(skillId, attackTar);
     }
 
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 //适用职业
 public enum ApplicableRole
 {
+    None,
     Swordman,
     Magician
 }
@@ -53,6 +54,7 @@ public class Skill
     public int level;
     public ReleaseType ReleaseType;
     public float Distance;
+    public int Shortcut;
 }
 
 
@@ -110,6 +112,9 @@ public class SkillManager : MonoBehaviour
                 case "MultiTarget":
                     skill.ApplyType = ApplyType.MultiTarget;
                     break;
+                default:
+                    Debug.LogWarning("解析错误");
+                    break;
             }
             string applyProperty = temp["ApplyProperty"].str;
             switch (applyProperty)
@@ -132,6 +137,9 @@ public class SkillManager : MonoBehaviour
                 case "MP":
                     skill.ApplyProperty = ApplyProperty.MP;
                     break;
+                default:
+                    Debug.LogWarning("解析错误" + applyProperty);
+                    break;
             }
             skill.ApplyValue = (int)temp["ApplyValue"].n;
             skill.ApplyTime = temp["ApplyTime"].f;
@@ -145,6 +153,9 @@ public class SkillManager : MonoBehaviour
                     break;
                 case "Magician":
                     skill.Job = ApplicableRole.Magician;
+                    break;
+                default:
+                    skill.Job = ApplicableRole.None;
                     break;
             }
             skill.level = (int)temp["Level"].n;
@@ -160,8 +171,12 @@ public class SkillManager : MonoBehaviour
                 case "Position":
                     skill.ReleaseType = ReleaseType.Position;
                     break;
+                default:
+                    Debug.LogWarning("解析错误");
+                    break;
             }
             skill.Distance = temp["Distance"].f;
+            skill.Shortcut = (int)temp["Shortcut"].n;
             //  skillInfoDict.Add(skill.Id, skill);
             skillList.Add(skill);
         }
@@ -194,6 +209,9 @@ public class SkillManager : MonoBehaviour
             case "MultiTarget":
                 skill.ApplyType = ApplyType.MultiTarget;
                 break;
+            default:
+                Debug.LogWarning("解析错误");
+                break;
         }
         string applyProperty = temp["ApplyProperty"].str;
         switch (applyProperty)
@@ -216,6 +234,9 @@ public class SkillManager : MonoBehaviour
             case "MP":
                 skill.ApplyProperty = ApplyProperty.MP;
                 break;
+            default:
+                Debug.LogWarning("解析错误");
+                break;
         }
         skill.ApplyValue = (int)temp["ApplyValue"].n;
         skill.ApplyTime = temp["ApplyTime"].f;
@@ -229,6 +250,9 @@ public class SkillManager : MonoBehaviour
                 break;
             case "Magician":
                 skill.Job = ApplicableRole.Magician;
+                break;
+            default:
+                skill.Job = ApplicableRole.None;
                 break;
         }
         skill.level = (int)temp["Level"].n;
@@ -244,8 +268,12 @@ public class SkillManager : MonoBehaviour
             case "Position":
                 skill.ReleaseType = ReleaseType.Position;
                 break;
+            default:
+                Debug.LogWarning("解析错误"+ releaseType);
+                break;
         }
         skill.Distance = temp["Distance"].f;
+        skill.Shortcut = (int)temp["Shortcut"].n;
         return skill;
     }
 }
