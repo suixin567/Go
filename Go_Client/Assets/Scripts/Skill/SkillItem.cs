@@ -130,7 +130,7 @@ public class SkillItem : MonoBehaviour {
     /// 释放技能
     /// </summary>
     void releaseSkill() {
-        print("释放技能"+ shortCutIndex);
+        print("释放技能"+ shortCutIndex + " "+ skill.Id);
         GameObject.FindGameObjectWithTag(Tags.localPlayer).GetComponent<PlayerController>().Attack(skill.Id);
     }
 }

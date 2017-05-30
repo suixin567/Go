@@ -73,18 +73,23 @@ public class MapHandler : MonoBehaviour {
 
         GameObject playerGo = playerGoList[dto.Player];
 
-        
-        if (dto.TarPlayer=="") {//攻击怪物
-            string monIndex = dto.FirstIndex.ToString() + "_" + dto.SecondIndex.ToString();
-            GameObject monGo = MonList[monIndex];
-            playerGo.GetComponent<PlayerController>().Attack(dto.Skill, monGo.transform);
+        if (dto.TarPlayer == "" && dto.FirstIndex == -1 && dto.SecondIndex == -1)
+        {//释放空技能
+            playerGo.GetComponent<PlayerController>().Attack(dto.Skill,null,(float) dto.TarPos.X, (float)dto.TarPos.Y, (float)dto.TarPos.Z);
         }
-        else {//攻击人物
-            GameObject tarPlayerGo = playerGoList[dto.TarPlayer];
-            playerGo.GetComponent<PlayerController>().Attack(dto.Skill, tarPlayerGo.transform);
+        else {
+            if (dto.TarPlayer == "")
+            {//攻击怪物
+                string monIndex = dto.FirstIndex.ToString() + "_" + dto.SecondIndex.ToString();
+                GameObject monGo = MonList[monIndex];
+                playerGo.GetComponent<PlayerController>().Attack(dto.Skill, monGo.transform);
+            }
+            else
+            {//攻击人物
+                GameObject tarPlayerGo = playerGoList[dto.TarPlayer];
+                playerGo.GetComponent<PlayerController>().Attack(dto.Skill, tarPlayerGo.transform);
+            }
         }
-        
-        print("收到攻击广播"+playerGo.name);
     }
 
     //进入新地图时，初始化此地图里的所有怪

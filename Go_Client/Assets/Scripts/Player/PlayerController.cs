@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
         {
             Move(new Vector3(-10, 0, -10));
         }
+     //   print(playerMotionState);
     }
 
 
@@ -32,9 +33,9 @@ public class PlayerController : MonoBehaviour {
         GetComponent<PlayerMove>().Move(tarPos);
     }
 
-    public void Attack(int skillId = 0 ,Transform attackTar=null)
+    public void Attack(int skillId = 0 ,Transform attackTar=null, float tarPosX = 0, float tarPosY = 0, float tarPosZ = 0)
     {
-        GetComponent<PlayerAttack>().Attack(skillId, attackTar);
+        GetComponent<PlayerAttack>().Attack(skillId, attackTar, tarPosX, tarPosY, tarPosZ);
     }
 
 }

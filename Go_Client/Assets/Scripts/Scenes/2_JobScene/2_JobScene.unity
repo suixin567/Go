@@ -876,7 +876,7 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 62}
+  m_AnchoredPosition: {x: 0, y: 114}
   m_SizeDelta: {x: 115, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &552472201
@@ -2062,7 +2062,7 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -171.7, y: 58}
+  m_AnchoredPosition: {x: -171.7, y: 110}
   m_SizeDelta: {x: 115, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1381339870
@@ -2510,7 +2510,7 @@ RectTransform:
   m_RootOrder: 6
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 175, y: 63}
+  m_AnchoredPosition: {x: 175, y: 115}
   m_SizeDelta: {x: 115, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1609805219
@@ -2657,6 +2657,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

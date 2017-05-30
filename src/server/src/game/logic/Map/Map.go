@@ -47,6 +47,7 @@ type AttackMonDTO struct {
 	FirstIndex  int
 	SecondIndex int
 	Skill       int
+	TarPos      data.Vector3 //空技能的目标点
 }
 
 ////攻击角色
@@ -122,40 +123,51 @@ func (this *MapHandler) attackMon(session *ace.Session, message ace.DefaultSocke
 	if err != nil {
 		fmt.Println(err)
 	}
-	if attData.TarPlayer == "" { //******************************************攻击怪物
-		//fmt.Println("就是这个怪", this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex].Name)
-		mon := this.MonGens[attData.FirstIndex].Monsters[attData.SecondIndex]
-		if mon.Hp <= 0 { //必须是活着的怪，死怪不需要继续被掉血
-			return
-		}
-		player := data.SyncAccount.SessionPlayer[session]
-		mon.Hp -= player.Atk
-		if mon.Hp <= 0 { //怪物被杀死
-			this.MonGens[attData.FirstIndex].currentAmount--
-		}
-		//广播人物、怪物 和人物技能
-		attData.Player = player.Name
-		m, _ := json.Marshal(*attData)
-		fmt.Println("广播打怪物", string(m))
-		this.exBrocast(session, ATTACK_MON_BRO, m)
-	} else { //****************************************************攻击人物
-		player := data.SyncAccount.SessionPlayer[session]
-		tarPlayer := &data.PlayerDTO{}
-		for s, name := range this.Roles { //遍历此地图内的所有角色
-			if name == attData.TarPlayer {
-				tarPlayer = data.SyncAccount.SessionPlayer[s]
-			}
-		}
-		tarPlayer.Hp -= player.Atk
-		if tarPlayer.Hp <= 0 { //人物被杀死
-		}
 
-		//广播主动人物、被动人物 和人物技能
+	if attData.TarPlayer == "" && attData.FirstIndex == -1 && attData.SecondIndex == -1 { //没有具体目标的攻击
+		player := data.SyncAccount.SessionPlayer[session]
+		//广播主动人物、人物技能、目标位置
 		attData.Player = player.Name
 		m, _ := json.Marshal(*attData)
-		fmt.Println("广播攻击人物", string(m))
+		fmt.Println("广播空技能", string(m))
 		this.exBrocast(session, ATTACK_MON_BRO, m)
+	} else {
+		if attData.TarPlayer == "" { //******************************************攻击怪物
+			//fmt.Println("就是这个怪", this.MonGens[monData.FirstIndex].Monsters[monData.SecondIndex].Name)
+			mon := this.MonGens[attData.FirstIndex].Monsters[attData.SecondIndex]
+			if mon.Hp <= 0 { //必须是活着的怪，死怪不需要继续被掉血
+				return
+			}
+			player := data.SyncAccount.SessionPlayer[session]
+			mon.Hp -= player.Atk
+			if mon.Hp <= 0 { //怪物被杀死
+				this.MonGens[attData.FirstIndex].currentAmount--
+			}
+			//广播主动人物、怪物 和人物技能
+			attData.Player = player.Name
+			m, _ := json.Marshal(*attData)
+			fmt.Println("广播打怪物", string(m))
+			this.exBrocast(session, ATTACK_MON_BRO, m)
+		} else { //****************************************************攻击人物
+			player := data.SyncAccount.SessionPlayer[session]
+			tarPlayer := &data.PlayerDTO{}
+			for s, name := range this.Roles { //遍历此地图内的所有角色
+				if name == attData.TarPlayer {
+					tarPlayer = data.SyncAccount.SessionPlayer[s]
+				}
+			}
+			tarPlayer.Hp -= player.Atk
+			if tarPlayer.Hp <= 0 { //人物被杀死
+			}
+
+			//广播主动人物、被动人物 和人物技能
+			attData.Player = player.Name
+			m, _ := json.Marshal(*attData)
+			fmt.Println("广播攻击人物", string(m))
+			this.exBrocast(session, ATTACK_MON_BRO, m)
+		}
 	}
+
 }
 
 func (this *MapHandler) enter(session *ace.Session, message ace.DefaultSocketModel) {

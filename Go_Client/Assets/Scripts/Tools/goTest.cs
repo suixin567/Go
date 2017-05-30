@@ -3,15 +3,15 @@ using System.Collections;
 
 public class goTest : MonoBehaviour {
 
-	// Use this for initialization
+    public Transform cube;
 	void Start () {
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        cube.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
+    }
 	public void send()
 	{
 		//string message = "a8h";

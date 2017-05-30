@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
   - localPlayer
   - Enemy
   layers:
@@ -17,7 +16,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - Ground
   - 
   - 
   - 

@@ -5,33 +5,55 @@ public class SkillBase : MonoBehaviour
 {
 
     public float speed = 5;
-    public Transform tar;
+    public Transform skillTar;
+    public Vector3 skillTarPos;
     public int damage = 0;//攻击力
 
-    public void Start()
+    public delegate void DestoryTargetEvent();
+    public DestoryTargetEvent destoryTargetEvent;
+
+    public enum SkillType {
+        noTar,
+        haveTar
+    }
+    public SkillType skillType = SkillType.noTar;
+
+    public virtual void Start()
     {
+        if (skillTar!=null) {
+            skillType = SkillType.haveTar;
+        }
     }
 
-    public void Update()
-    {
-        float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, tar.position, step);
-            float dis = Vector3.Distance(transform.position, tar.position);
-            if (dis <= 0.1f)
-            {
-                if (tar.tag == Tags.enemy)
-                {//攻击怪物
-                    tar.GetComponent<MonsterBase>().updateBlood(-damage);
-                }
-                else
+
+    void OnDestroy() {
+        if (skillType == SkillType.haveTar) {//有目标的攻击
+            if (skillTar == null)
+            {//已经被销毁
+                sendDieEvent();
+            }
+            else {//没有被销毁，则去检查血量，小于0则死掉了。
+                if (skillTar.tag == Tags.enemy)//攻击怪物
+                {
+                    if (skillTar.GetComponent<MonsterBase>().monModel.Hp <= 0) {
+                        //怪物死亡了
+                        sendDieEvent();
+                    }
+                } else
                 {//攻击人物
-                    tar.GetComponent<PlayerProperties>().updateBlood(-damage);
+                    if (skillTar.GetComponent<PlayerProperties>().M_playerModel.Hp <= 0) {
+                        //人物死亡了
+                        sendDieEvent();
+                    }                   
                 }
-                des();
-            }        
+            }
+        }
     }
 
-    void des() {
-        Destroy(gameObject);
+    void sendDieEvent() {
+        if (destoryTargetEvent != null)
+        {
+            destoryTargetEvent();
+        }
     }
 }

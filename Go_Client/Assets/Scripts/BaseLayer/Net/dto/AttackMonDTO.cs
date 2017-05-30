@@ -9,6 +9,8 @@ public class AttackMonDTO {
     public int FirstIndex { get; set; }
     public int SecondIndex { get; set; }
     public int Skill { get; set; }
+    //空技能的目标点
+    public Assets.Model.Vector3 TarPos = new Assets.Model.Vector3();
 
 
     public AttackMonDTO() {

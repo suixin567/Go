@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
+using System.Collections;
 
 public class PlayerMove : MonoBehaviour{
 
@@ -17,7 +19,6 @@ public class PlayerMove : MonoBehaviour{
         targetPosition = transform.position;
         if (gameObject.tag == Tags.localPlayer)
             isLocalPlayer = true;
-        //角色控制器
         controller = GetComponent<CharacterController>();
         playerController = GetComponent<PlayerController>();
     }
@@ -29,9 +30,9 @@ public class PlayerMove : MonoBehaviour{
         if (isLocalPlayer == true && !EventSystem.current.IsPointerOverGameObject()) {
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition + new Vector3(0, 0, 10));
                 RaycastHit hitInfo;
-                if (Physics.Raycast(ray, out hitInfo) && hitInfo.collider.tag == Tags.ground)
+                if (Physics.Raycast(ray, out hitInfo, 200) && hitInfo.collider.gameObject.layer == LayerMask.NameToLayer(Layers.ground))
                 {
                     // ShowClickEffect(hitInfo.point); 
                     targetPosition = hitInfo.point;//更新目标点
@@ -52,7 +53,8 @@ public class PlayerMove : MonoBehaviour{
 
             }
             else {
-                playerController.playerMotionState = PlayerMotionState.IDEL;
+           //     
+               playerController.playerMotionState = PlayerMotionState.IDEL;
             }
         }
         if (playerController.playerMotionState == PlayerMotionState.IDEL) {

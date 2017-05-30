@@ -10,10 +10,10 @@ GameObject:
   - 4: {fileID: 449114}
   - 111: {fileID: 11119650}
   - 143: {fileID: 14396212}
-  - 114: {fileID: 11499352}
   - 114: {fileID: 11424112}
   - 114: {fileID: 11404818}
   - 114: {fileID: 11406496}
+  - 114: {fileID: 11499352}
   - 114: {fileID: 11483832}
   m_Layer: 8
   m_Name: Magician
@@ -1602,7 +1602,9 @@ MonoBehaviour:
   attackInterval: 1
   attackDistance: 3
   attackTarget: {fileID: 0}
+  attackTargetPos: {x: 0, y: 0, z: 0}
   aniState: 2
+  currentSkill: 0
 --- !u!114 &11409954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1803,7 +1805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c798fec78cfec754e8d0875f7c8daf17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player_Motion_State: 0
+  playerMotionState: 0
 --- !u!114 &11491040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1828,9 +1830,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLocalPlayer: 0
   effect_click_prefab: {fileID: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
-  Player_Motion_State: 0
-  state: 1
   speed: 2
 --- !u!124 &12475108
 Behaviour:
