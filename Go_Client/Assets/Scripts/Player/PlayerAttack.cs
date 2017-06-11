@@ -28,8 +28,14 @@ public class PlayerAttack : MonoBehaviour {
         firBallEffPre = Resources.Load<GameObject>("Skills/fireBallSkill");
     }
 
+    public void localPalyerAttack(Transform _attackTarget) {
+        attackTarget = _attackTarget;
+    }
+
+
+
     void Update () {
-        //主角逻辑
+        //主角攻击逻辑
         if (gameObject.tag == Tags.localPlayer && !EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetMouseButtonDown(0))
@@ -53,7 +59,7 @@ public class PlayerAttack : MonoBehaviour {
         if (playerController.playerMotionState == PlayerMotionState.ATTACK) {
             if (attackTarget == null)//没有具体目标，找到技能的释放位置,且只放一次
             {
-                print("要攻擊了");
+                print("要攻擊无目标");
                 if (gameObject.tag == Tags.localPlayer)
                 {
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -80,6 +86,7 @@ public class PlayerAttack : MonoBehaviour {
                 }
             }
             else {//有具体目标
+                print("要攻擊有目标");
                 float dis = Vector3.Distance(transform.position, attackTarget.position);
                 if (dis <= attackDistance)//可以攻击
                 {
@@ -129,7 +136,6 @@ public class PlayerAttack : MonoBehaviour {
             attackTargetPos = new Vector3(tarPosX, tarPosY, tarPosZ);
         }
         playerController.playerMotionState = PlayerMotionState.ATTACK;
-        Debug.LogError("切换攻击状态"+ playerController.playerMotionState);
     }
 
     /// <summary>

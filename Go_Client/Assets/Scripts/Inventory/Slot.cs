@@ -54,9 +54,9 @@ public class Slot : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler,IPoi
 
     internal string GetItemName()
     {
-        if (transform.FindChild("Item(Clone)")!=null)
+        if (transform.Find("Item(Clone)")!=null)
         {
-            return transform.FindChild("Item(Clone)").GetComponent<ItemUI>().Item.Name;
+            return transform.Find("Item(Clone)").GetComponent<ItemUI>().Item.Name;
         }
 
         return string.Empty;
@@ -88,9 +88,9 @@ public class Slot : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler,IPoi
     {
         if (eventData.button == PointerEventData.InputButton.Right)//右键穿戴
         {
-			if (InventoryManager.Instance.IsPickedItem==false&& transform.FindChild("Item(Clone)")!=null)
+			if (InventoryManager.Instance.IsPickedItem==false&& transform.Find("Item(Clone)")!=null)
             {
-				ItemUI currentItemUI = transform.FindChild("Item(Clone)").GetComponent<ItemUI>();//想穿戴的物品
+				ItemUI currentItemUI = transform.Find("Item(Clone)").GetComponent<ItemUI>();//想穿戴的物品
 				if (currentItemUI.Item.ItemType>=5)//5以上代表可穿戴物品
                 {
                     currentItemUI.ReduceAmount(1);
@@ -103,7 +103,7 @@ public class Slot : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler,IPoi
 		moveItem();
 		bool doubleClic =HaveClickMouseTwice(doubleInterval,ref mouseTimer,0);
         //使用物品
-        if (doubleClic && transform.FindChild("Item(Clone)")!=null)
+        if (doubleClic && transform.Find("Item(Clone)")!=null)
 		{
             //Knapsack.Instance.lastUsedItem = transform.FindChild("Item(Clone)").GetComponent<ItemUI>().Item;
             //Item usedItem = Knapsack.Instance.lastUsedItem;
@@ -118,18 +118,18 @@ public class Slot : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler,IPoi
     //使用物品
     public void useItem()
     {
-        Knapsack.Instance.lastUsedItem = transform.FindChild("Item(Clone)").GetComponent<ItemUI>().Item;
+        Knapsack.Instance.lastUsedItem = transform.Find("Item(Clone)").GetComponent<ItemUI>().Item;
         Item usedItem = Knapsack.Instance.lastUsedItem;
         string message = Coding<Item>.encode(usedItem);
         NetWorkManager.instance.sendMessage(Protocol.ITEM, 0, ItemProtocal.USE_CREQ, message);
-        transform.FindChild("Item(Clone)").GetComponent<ItemUI>().ReduceAmount();//使用后减少一个物品
+        transform.Find("Item(Clone)").GetComponent<ItemUI>().ReduceAmount();//使用后减少一个物品
     }
 
 	void moveItem()
 	{
 		if (transform.childCount > 0)
 		{
-			ItemUI currentItem = transform.FindChild("Item(Clone)").GetComponent<ItemUI>();//获取格子里的物品
+			ItemUI currentItem = transform.Find("Item(Clone)").GetComponent<ItemUI>();//获取格子里的物品
 			if (InventoryManager.Instance.IsPickedItem == false)//拿取逻辑
 			{
 					InventoryManager.Instance.PickupItem(currentItem.Item,currentItem.Amount);

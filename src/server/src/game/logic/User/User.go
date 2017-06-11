@@ -90,9 +90,9 @@ func CreatPlayer(acc *string, job int, name *string) bool {
 		_, err = stmtIns.Exec(*acc, *name, job, 0, 0, 0, 5, 5, 14, 14, 1, 2, 3, 0, 0, 0, 0, 2, 0)
 		checkErr(err)
 		//添加物品数据库
-		stmtIns, err = db.Prepare("INSERT playeritem SET playername=?,items=?,equipments=?")
+		stmtIns, err = db.Prepare("INSERT playeritem SET playername=?,items=?,equipments=?,skills=?")
 		checkErr(err)
-		_, err = stmtIns.Exec(*name, "[]", "[]")
+		_, err = stmtIns.Exec(*name, "[]", "[]", "[]")
 		checkErr(err)
 		//更细账号表
 		stmtUp, err := db.Prepare("update userinfo set playeramount=?,player1=? where username=?")

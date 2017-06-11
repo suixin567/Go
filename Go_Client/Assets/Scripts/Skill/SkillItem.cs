@@ -21,11 +21,11 @@ public class SkillItem : MonoBehaviour {
     }
 
     void InitProperty() {
-		icon = transform.FindChild("icon").GetComponent<Image>();
-		name = transform.FindChild("name").GetComponent<Text>();
-		type = transform.FindChild("type").GetComponent<Text>();
-		des = transform.FindChild("des").GetComponent<Text>();
-		mp = transform.FindChild("mp").GetComponent<Text>();
+		icon = transform.Find("icon").GetComponent<Image>();
+		name = transform.Find("name").GetComponent<Text>();
+		type = transform.Find("type").GetComponent<Text>();
+		des = transform.Find("des").GetComponent<Text>();
+		mp = transform.Find("mp").GetComponent<Text>();
     }
 
 

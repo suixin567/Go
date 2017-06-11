@@ -5,16 +5,17 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 449114}
-  - 111: {fileID: 11119650}
-  - 143: {fileID: 14396212}
-  - 114: {fileID: 11424112}
-  - 114: {fileID: 11404818}
-  - 114: {fileID: 11406496}
-  - 114: {fileID: 11499352}
-  - 114: {fileID: 11483832}
+  - component: {fileID: 449114}
+  - component: {fileID: 11119650}
+  - component: {fileID: 14396212}
+  - component: {fileID: 11424112}
+  - component: {fileID: 11404818}
+  - component: {fileID: 11406496}
+  - component: {fileID: 11499352}
+  - component: {fileID: 11483832}
+  - component: {fileID: 114761135712072388}
   m_Layer: 8
   m_Name: Magician
   m_TagString: Player
@@ -27,11 +28,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22409948}
-  - 222: {fileID: 22266266}
-  - 114: {fileID: 11482024}
+  - component: {fileID: 22409948}
+  - component: {fileID: 22266266}
+  - component: {fileID: 11482024}
   m_Layer: 8
   m_Name: name
   m_TagString: Untagged
@@ -44,9 +45,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 455132}
+  - component: {fileID: 455132}
   m_Layer: 8
   m_Name: Bone_Robe_014
   m_TagString: Untagged
@@ -59,9 +60,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 433484}
+  - component: {fileID: 433484}
   m_Layer: 8
   m_Name: Bip001 R Hand
   m_TagString: Untagged
@@ -74,13 +75,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 424598}
-  - 20: {fileID: 2004806}
-  - 124: {fileID: 12475108}
-  - 92: {fileID: 9276186}
-  - 81: {fileID: 8113382}
+  - component: {fileID: 424598}
+  - component: {fileID: 2004806}
+  - component: {fileID: 12475108}
+  - component: {fileID: 9276186}
+  - component: {fileID: 8113382}
   m_Layer: 8
   m_Name: faceCamera
   m_TagString: Untagged
@@ -93,9 +94,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 405826}
+  - component: {fileID: 405826}
   m_Layer: 8
   m_Name: Bone_Robe_001
   m_TagString: Untagged
@@ -108,9 +109,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 420544}
+  - component: {fileID: 420544}
   m_Layer: 8
   m_Name: Bip001 R Forearm
   m_TagString: Untagged
@@ -123,10 +124,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 414258}
-  - 137: {fileID: 13769986}
+  - component: {fileID: 414258}
+  - component: {fileID: 13769986}
   m_Layer: 8
   m_Name: Magician_Staff
   m_TagString: Untagged
@@ -139,9 +140,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 493568}
+  - component: {fileID: 493568}
   m_Layer: 8
   m_Name: Bone_Robe_005
   m_TagString: Untagged
@@ -154,9 +155,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 441314}
+  - component: {fileID: 441314}
   m_Layer: 8
   m_Name: Bone_Robe_015
   m_TagString: Untagged
@@ -169,10 +170,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22450368}
-  - 114: {fileID: 11454992}
+  - component: {fileID: 22450368}
+  - component: {fileID: 11454992}
   m_Layer: 8
   m_Name: bloodBar
   m_TagString: Untagged
@@ -185,9 +186,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 461210}
+  - component: {fileID: 461210}
   m_Layer: 8
   m_Name: Bip001 Head
   m_TagString: Untagged
@@ -200,9 +201,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 436588}
+  - component: {fileID: 436588}
   m_Layer: 8
   m_Name: Bone_Robe_016
   m_TagString: Untagged
@@ -215,9 +216,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 415284}
+  - component: {fileID: 415284}
   m_Layer: 8
   m_Name: Bip001
   m_TagString: Untagged
@@ -230,9 +231,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 473986}
+  - component: {fileID: 473986}
   m_Layer: 8
   m_Name: Bip001 R Finger0
   m_TagString: Untagged
@@ -245,9 +246,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 401494}
+  - component: {fileID: 401494}
   m_Layer: 8
   m_Name: Bip001 R Thigh
   m_TagString: Untagged
@@ -260,9 +261,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 498770}
+  - component: {fileID: 498770}
   m_Layer: 8
   m_Name: Bip001 L UpperArm
   m_TagString: Untagged
@@ -275,9 +276,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 420214}
+  - component: {fileID: 420214}
   m_Layer: 8
   m_Name: Bone_Staff
   m_TagString: Untagged
@@ -290,9 +291,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 482264}
+  - component: {fileID: 482264}
   m_Layer: 8
   m_Name: Bone_Robe_006
   m_TagString: Untagged
@@ -305,10 +306,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 484776}
-  - 137: {fileID: 13771762}
+  - component: {fileID: 484776}
+  - component: {fileID: 13771762}
   m_Layer: 8
   m_Name: Magician_Body
   m_TagString: Untagged
@@ -321,9 +322,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 410870}
+  - component: {fileID: 410870}
   m_Layer: 8
   m_Name: Bone_Robe_008
   m_TagString: Untagged
@@ -336,11 +337,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22482648}
-  - 222: {fileID: 22253322}
-  - 114: {fileID: 11412326}
+  - component: {fileID: 22482648}
+  - component: {fileID: 22253322}
+  - component: {fileID: 11412326}
   m_Layer: 8
   m_Name: Fill
   m_TagString: Untagged
@@ -353,9 +354,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 468634}
+  - component: {fileID: 468634}
   m_Layer: 8
   m_Name: Bip001 L Hand
   m_TagString: Untagged
@@ -368,9 +369,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 438682}
+  - component: {fileID: 438682}
   m_Layer: 8
   m_Name: Bip001 L Foot
   m_TagString: Untagged
@@ -383,9 +384,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 416790}
+  - component: {fileID: 416790}
   m_Layer: 8
   m_Name: Bone_Robe_011
   m_TagString: Untagged
@@ -398,9 +399,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 430946}
+  - component: {fileID: 430946}
   m_Layer: 8
   m_Name: Bip001 L Clavicle
   m_TagString: Untagged
@@ -413,9 +414,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 422222}
+  - component: {fileID: 422222}
   m_Layer: 8
   m_Name: Bone_Robe_004
   m_TagString: Untagged
@@ -428,9 +429,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 482890}
+  - component: {fileID: 482890}
   m_Layer: 8
   m_Name: Bip001 R Clavicle
   m_TagString: Untagged
@@ -443,13 +444,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22499500}
-  - 223: {fileID: 22384350}
-  - 114: {fileID: 11409954}
-  - 114: {fileID: 11410382}
-  - 114: {fileID: 11491040}
+  - component: {fileID: 22499500}
+  - component: {fileID: 22384350}
+  - component: {fileID: 11409954}
+  - component: {fileID: 11410382}
+  - component: {fileID: 11491040}
   m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
@@ -462,11 +463,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22491470}
-  - 222: {fileID: 22290500}
-  - 114: {fileID: 11403832}
+  - component: {fileID: 22491470}
+  - component: {fileID: 22290500}
+  - component: {fileID: 11403832}
   m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
@@ -479,9 +480,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 409148}
+  - component: {fileID: 409148}
   m_Layer: 8
   m_Name: Bone_Robe_013
   m_TagString: Untagged
@@ -494,9 +495,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 459138}
+  - component: {fileID: 459138}
   m_Layer: 8
   m_Name: Bip001 Spine2
   m_TagString: Untagged
@@ -509,9 +510,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 475676}
+  - component: {fileID: 475676}
   m_Layer: 8
   m_Name: Bip001 R Calf
   m_TagString: Untagged
@@ -524,9 +525,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 427668}
+  - component: {fileID: 427668}
   m_Layer: 8
   m_Name: Bip001 Spine1
   m_TagString: Untagged
@@ -539,9 +540,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 429270}
+  - component: {fileID: 429270}
   m_Layer: 8
   m_Name: Bone_Robe_007
   m_TagString: Untagged
@@ -554,9 +555,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 470750}
+  - component: {fileID: 470750}
   m_Layer: 8
   m_Name: Bone_Robe_003
   m_TagString: Untagged
@@ -569,9 +570,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 403326}
+  - component: {fileID: 403326}
   m_Layer: 8
   m_Name: Bone_Robe_009
   m_TagString: Untagged
@@ -584,9 +585,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 416284}
+  - component: {fileID: 416284}
   m_Layer: 8
   m_Name: Bip001 Neck
   m_TagString: Untagged
@@ -599,9 +600,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 474364}
+  - component: {fileID: 474364}
   m_Layer: 8
   m_Name: Bip001 R Foot
   m_TagString: Untagged
@@ -614,9 +615,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22405070}
+  - component: {fileID: 22405070}
   m_Layer: 8
   m_Name: Fill Area
   m_TagString: Untagged
@@ -629,9 +630,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 446972}
+  - component: {fileID: 446972}
   m_Layer: 8
   m_Name: Bip001 R Toe0
   m_TagString: Untagged
@@ -644,9 +645,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 473040}
+  - component: {fileID: 473040}
   m_Layer: 8
   m_Name: Bip001 L Thigh
   m_TagString: Untagged
@@ -659,9 +660,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 457714}
+  - component: {fileID: 457714}
   m_Layer: 8
   m_Name: Bip001 Spine
   m_TagString: Untagged
@@ -674,9 +675,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 493370}
+  - component: {fileID: 493370}
   m_Layer: 8
   m_Name: Bone_Robe_002
   m_TagString: Untagged
@@ -689,9 +690,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 433020}
+  - component: {fileID: 433020}
   m_Layer: 8
   m_Name: Bip001 L Finger0
   m_TagString: Untagged
@@ -704,9 +705,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 432974}
+  - component: {fileID: 432974}
   m_Layer: 8
   m_Name: Bip001 R UpperArm
   m_TagString: Untagged
@@ -719,9 +720,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 491790}
+  - component: {fileID: 491790}
   m_Layer: 8
   m_Name: Bone_Robe_010
   m_TagString: Untagged
@@ -734,9 +735,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 488132}
+  - component: {fileID: 488132}
   m_Layer: 8
   m_Name: Bip001 L Finger1
   m_TagString: Untagged
@@ -749,9 +750,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 436698}
+  - component: {fileID: 436698}
   m_Layer: 8
   m_Name: Bip001 L Forearm
   m_TagString: Untagged
@@ -764,11 +765,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22451046}
-  - 222: {fileID: 22207716}
-  - 114: {fileID: 11473634}
+  - component: {fileID: 22451046}
+  - component: {fileID: 22207716}
+  - component: {fileID: 11473634}
   m_Layer: 8
   m_Name: bloodText
   m_TagString: Untagged
@@ -781,9 +782,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 434562}
+  - component: {fileID: 434562}
   m_Layer: 8
   m_Name: Bip001 L Calf
   m_TagString: Untagged
@@ -796,9 +797,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 424564}
+  - component: {fileID: 424564}
   m_Layer: 8
   m_Name: Bip001 Pelvis
   m_TagString: Untagged
@@ -811,9 +812,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 442650}
+  - component: {fileID: 442650}
   m_Layer: 8
   m_Name: Bone_Robe_012
   m_TagString: Untagged
@@ -826,9 +827,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 420982}
+  - component: {fileID: 420982}
   m_Layer: 8
   m_Name: Bip001 L Toe0
   m_TagString: Untagged
@@ -841,9 +842,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 403426}
+  - component: {fileID: 403426}
   m_Layer: 8
   m_Name: Bip001 R Finger1
   m_TagString: Untagged
@@ -864,6 +865,7 @@ Transform:
   - {fileID: 475676}
   m_Father: {fileID: 457714}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &403326
 Transform:
   m_ObjectHideFlags: 1
@@ -877,6 +879,7 @@ Transform:
   - {fileID: 491790}
   m_Father: {fileID: 424564}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &403426
 Transform:
   m_ObjectHideFlags: 1
@@ -890,6 +893,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 433484}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &405826
 Transform:
   m_ObjectHideFlags: 1
@@ -903,6 +907,7 @@ Transform:
   - {fileID: 493370}
   m_Father: {fileID: 424564}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &409148
 Transform:
   m_ObjectHideFlags: 1
@@ -916,6 +921,7 @@ Transform:
   - {fileID: 455132}
   m_Father: {fileID: 424564}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &410870
 Transform:
   m_ObjectHideFlags: 1
@@ -928,6 +934,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 429270}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &414258
 Transform:
   m_ObjectHideFlags: 1
@@ -940,6 +947,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 449114}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &415284
 Transform:
   m_ObjectHideFlags: 1
@@ -953,6 +961,7 @@ Transform:
   - {fileID: 424564}
   m_Father: {fileID: 449114}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &416284
 Transform:
   m_ObjectHideFlags: 1
@@ -968,6 +977,7 @@ Transform:
   - {fileID: 482890}
   m_Father: {fileID: 459138}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &416790
 Transform:
   m_ObjectHideFlags: 1
@@ -981,6 +991,7 @@ Transform:
   - {fileID: 442650}
   m_Father: {fileID: 424564}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &420214
 Transform:
   m_ObjectHideFlags: 1
@@ -993,6 +1004,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 433484}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &420544
 Transform:
   m_ObjectHideFlags: 1
@@ -1006,6 +1018,7 @@ Transform:
   - {fileID: 433484}
   m_Father: {fileID: 432974}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &420982
 Transform:
   m_ObjectHideFlags: 1
@@ -1018,6 +1031,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 438682}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &422222
 Transform:
   m_ObjectHideFlags: 1
@@ -1031,6 +1045,7 @@ Transform:
   - {fileID: 493568}
   m_Father: {fileID: 424564}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &424564
 Transform:
   m_ObjectHideFlags: 1
@@ -1051,6 +1066,7 @@ Transform:
   - {fileID: 441314}
   m_Father: {fileID: 415284}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &424598
 Transform:
   m_ObjectHideFlags: 1
@@ -1063,6 +1079,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 449114}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &427668
 Transform:
   m_ObjectHideFlags: 1
@@ -1076,6 +1093,7 @@ Transform:
   - {fileID: 459138}
   m_Father: {fileID: 457714}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &429270
 Transform:
   m_ObjectHideFlags: 1
@@ -1089,6 +1107,7 @@ Transform:
   - {fileID: 410870}
   m_Father: {fileID: 424564}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &430946
 Transform:
   m_ObjectHideFlags: 1
@@ -1102,6 +1121,7 @@ Transform:
   - {fileID: 498770}
   m_Father: {fileID: 416284}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &432974
 Transform:
   m_ObjectHideFlags: 1
@@ -1115,6 +1135,7 @@ Transform:
   - {fileID: 420544}
   m_Father: {fileID: 482890}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &433020
 Transform:
   m_ObjectHideFlags: 1
@@ -1127,6 +1148,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 468634}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &433484
 Transform:
   m_ObjectHideFlags: 1
@@ -1142,6 +1164,7 @@ Transform:
   - {fileID: 420214}
   m_Father: {fileID: 420544}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &434562
 Transform:
   m_ObjectHideFlags: 1
@@ -1155,6 +1178,7 @@ Transform:
   - {fileID: 438682}
   m_Father: {fileID: 473040}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &436588
 Transform:
   m_ObjectHideFlags: 1
@@ -1167,6 +1191,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 441314}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &436698
 Transform:
   m_ObjectHideFlags: 1
@@ -1180,6 +1205,7 @@ Transform:
   - {fileID: 468634}
   m_Father: {fileID: 498770}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &438682
 Transform:
   m_ObjectHideFlags: 1
@@ -1193,6 +1219,7 @@ Transform:
   - {fileID: 420982}
   m_Father: {fileID: 434562}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &441314
 Transform:
   m_ObjectHideFlags: 1
@@ -1206,6 +1233,7 @@ Transform:
   - {fileID: 436588}
   m_Father: {fileID: 424564}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &442650
 Transform:
   m_ObjectHideFlags: 1
@@ -1218,6 +1246,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 416790}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &446972
 Transform:
   m_ObjectHideFlags: 1
@@ -1230,6 +1259,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 474364}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &449114
 Transform:
   m_ObjectHideFlags: 1
@@ -1247,6 +1277,7 @@ Transform:
   - {fileID: 424598}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &455132
 Transform:
   m_ObjectHideFlags: 1
@@ -1259,6 +1290,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 409148}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &457714
 Transform:
   m_ObjectHideFlags: 1
@@ -1274,6 +1306,7 @@ Transform:
   - {fileID: 427668}
   m_Father: {fileID: 424564}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &459138
 Transform:
   m_ObjectHideFlags: 1
@@ -1287,6 +1320,7 @@ Transform:
   - {fileID: 416284}
   m_Father: {fileID: 427668}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &461210
 Transform:
   m_ObjectHideFlags: 1
@@ -1299,6 +1333,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 416284}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &468634
 Transform:
   m_ObjectHideFlags: 1
@@ -1313,6 +1348,7 @@ Transform:
   - {fileID: 488132}
   m_Father: {fileID: 436698}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &470750
 Transform:
   m_ObjectHideFlags: 1
@@ -1325,6 +1361,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 493370}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &473040
 Transform:
   m_ObjectHideFlags: 1
@@ -1338,6 +1375,7 @@ Transform:
   - {fileID: 434562}
   m_Father: {fileID: 457714}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &473986
 Transform:
   m_ObjectHideFlags: 1
@@ -1350,6 +1388,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 433484}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &474364
 Transform:
   m_ObjectHideFlags: 1
@@ -1363,6 +1402,7 @@ Transform:
   - {fileID: 446972}
   m_Father: {fileID: 475676}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &475676
 Transform:
   m_ObjectHideFlags: 1
@@ -1376,6 +1416,7 @@ Transform:
   - {fileID: 474364}
   m_Father: {fileID: 401494}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &482264
 Transform:
   m_ObjectHideFlags: 1
@@ -1388,6 +1429,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 493568}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &482890
 Transform:
   m_ObjectHideFlags: 1
@@ -1401,6 +1443,7 @@ Transform:
   - {fileID: 432974}
   m_Father: {fileID: 416284}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &484776
 Transform:
   m_ObjectHideFlags: 1
@@ -1413,6 +1456,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 449114}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &488132
 Transform:
   m_ObjectHideFlags: 1
@@ -1425,6 +1469,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 468634}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &491790
 Transform:
   m_ObjectHideFlags: 1
@@ -1437,6 +1482,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 403326}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &493370
 Transform:
   m_ObjectHideFlags: 1
@@ -1450,6 +1496,7 @@ Transform:
   - {fileID: 470750}
   m_Father: {fileID: 405826}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &493568
 Transform:
   m_ObjectHideFlags: 1
@@ -1463,6 +1510,7 @@ Transform:
   - {fileID: 482264}
   m_Father: {fileID: 422222}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &498770
 Transform:
   m_ObjectHideFlags: 1
@@ -1476,6 +1524,7 @@ Transform:
   - {fileID: 436698}
   m_Father: {fileID: 430946}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2004806
 Camera:
   m_ObjectHideFlags: 1
@@ -1506,6 +1555,8 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
+  m_AllowMSAA: 1
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -1825,7 +1876,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 103210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ae8484d805188d41b0ff18b435a0bc8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d713f896137efc4e8b6642e6da85233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isLocalPlayer: 0
@@ -1847,26 +1898,33 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 26b2b606ea0fd5448bfd4871a0b0b880, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 4300002, guid: 002ad81a4a02a2249adfd077ecea691f, type: 3}
   m_Bones:
   - {fileID: 420214}
@@ -1885,26 +1943,33 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 26b2b606ea0fd5448bfd4871a0b0b880, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 4300000, guid: 002ad81a4a02a2249adfd077ecea691f, type: 3}
   m_Bones:
   - {fileID: 461210}
@@ -2004,7 +2069,7 @@ Canvas:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139806}
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 0.3
@@ -2013,6 +2078,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -2029,6 +2095,7 @@ RectTransform:
   - {fileID: 22482648}
   m_Father: {fileID: 22450368}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -2046,6 +2113,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22499500}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.005, y: 0.362}
@@ -2065,6 +2133,7 @@ RectTransform:
   - {fileID: 22405070}
   m_Father: {fileID: 22499500}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.0000016479753, y: 1.6069713}
@@ -2082,6 +2151,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22499500}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1.86}
@@ -2099,6 +2169,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22405070}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -2116,6 +2187,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22450368}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -2136,6 +2208,7 @@ RectTransform:
   - {fileID: 22451046}
   m_Father: {fileID: 449114}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -2160,3 +2233,14 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 103210}
   m_IsPrefabParent: 1
+--- !u!114 &114761135712072388
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be05822c14170e84f9e9ac38c0c338d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -12,7 +12,7 @@ public class ShortCut : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Item shortCutItem;//此快捷栏保存的物品数据模型
 
 	void Start () {
-        icon = transform.FindChild("Image").GetComponent<Image>();
+        icon = transform.Find("Image").GetComponent<Image>();
         icon.gameObject.SetActive(false);
 	}
 	

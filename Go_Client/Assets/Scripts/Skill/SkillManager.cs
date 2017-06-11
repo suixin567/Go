@@ -131,10 +131,10 @@ public class SkillManager : MonoBehaviour
                 case "AttackSpeed":
                     skill.ApplyProperty = ApplyProperty.AttackSpeed;
                     break;
-                case "HP":
+                case "Hp":
                     skill.ApplyProperty = ApplyProperty.HP;
                     break;
-                case "MP":
+                case "Mp":
                     skill.ApplyProperty = ApplyProperty.MP;
                     break;
                 default:
@@ -162,17 +162,17 @@ public class SkillManager : MonoBehaviour
             string releaseType = temp["ReleaseType"].str;
             switch (releaseType)
             {
-                case "Self":
+                case "self":
                     skill.ReleaseType = ReleaseType.Self;
                     break;
-                case "Enemy":
+                case "enemy":
                     skill.ReleaseType = ReleaseType.Enemy;
                     break;
-                case "Position":
+                case "position":
                     skill.ReleaseType = ReleaseType.Position;
                     break;
                 default:
-                    Debug.LogWarning("解析错误");
+                    Debug.LogWarning("解析错误"+ releaseType);
                     break;
             }
             skill.Distance = temp["Distance"].f;

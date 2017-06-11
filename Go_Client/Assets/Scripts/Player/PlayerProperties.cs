@@ -25,8 +25,8 @@ public class PlayerProperties : MonoBehaviour {
 
     private void Awake()
     {
-        bloodSlider = transform.FindChild("Canvas/bloodBar").GetComponent<Slider>();
-        bloodText = transform.FindChild("Canvas/bloodText").GetComponent<Text>();
+        bloodSlider = transform.Find("Canvas/bloodBar").GetComponent<Slider>();
+        bloodText = transform.Find("Canvas/bloodText").GetComponent<Text>();
     }
     public void initCommonProperties(PlayerModel model)
 	{  
@@ -37,7 +37,7 @@ public class PlayerProperties : MonoBehaviour {
             GameInfo.myPlayerModel = m_playerModel;
         }
         //人物名字
-		transform.FindChild("Canvas/name").GetComponent<Text>().text = model.Name;
+		transform.Find("Canvas/name").GetComponent<Text>().text = model.Name;
 	}
 
 

@@ -36,8 +36,8 @@ public class JobPanel : MonoBehaviour
 		for(int i=0 ;i<_players.Length;i++)
 		{
 			jobBtns[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/JobScene/job"+ _players[i].Job);
-			jobBtns[i].transform.FindChild("nameText").GetComponent<Text>().text = "昵称：" + _players[i].Name;
-			jobBtns[i].transform.FindChild("levelText").GetComponent<Text>().text = "等级：" + _players[i].Level;
+			jobBtns[i].transform.Find("nameText").GetComponent<Text>().text = "昵称：" + _players[i].Name;
+			jobBtns[i].transform.Find("levelText").GetComponent<Text>().text = "等级：" + _players[i].Level;
 		}
 		}
         NetWorkManager.NET_STATE = NetState.RUN;
@@ -70,13 +70,13 @@ public class JobPanel : MonoBehaviour
 		{
 			GameInfo.myPlayerModel = players[0];
 			selectedJobBtn.GetComponent<Image>().sprite = jobBtns[0].GetComponent<Image>().sprite;
-			selectedJobBtn.transform.FindChild("Text").GetComponent<Text>().text="已选择"+players[0].Name;//把尚未选择清空
+			selectedJobBtn.transform.Find("Text").GetComponent<Text>().text="已选择"+players[0].Name;//把尚未选择清空
 			startButton.gameObject.SetActive(true);
 		}else if(btnId ==1 && players.Length>1)
 		{
 			GameInfo.myPlayerModel = players[1];
 			selectedJobBtn.GetComponent<Image>().sprite = jobBtns[1].GetComponent<Image>().sprite;
-			selectedJobBtn.transform.FindChild("Text").GetComponent<Text>().text="已选择"+players[1].Name;//把尚未选择清空
+			selectedJobBtn.transform.Find("Text").GetComponent<Text>().text="已选择"+players[1].Name;//把尚未选择清空
 			startButton.gameObject.SetActive(true);
 		}
 	}

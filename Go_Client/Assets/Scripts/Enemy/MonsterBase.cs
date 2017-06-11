@@ -11,8 +11,8 @@ public class MonsterBase : MonoBehaviour {
     public string monCode = "";
 
     public virtual void Start () {
-        bloodSlider = transform.FindChild("Canvas/bloodBar").GetComponent<Slider>();
-        bloodText = transform.FindChild("Canvas/bloodBar/bloodText").GetComponent<Text>();
+        bloodSlider = transform.Find("Canvas/bloodBar").GetComponent<Slider>();
+        bloodText = transform.Find("Canvas/bloodBar/bloodText").GetComponent<Text>();
         monCode = monModel.FirstIndex + "_" + monModel.SecondIndex;
     }
 
@@ -21,7 +21,7 @@ public class MonsterBase : MonoBehaviour {
     {
        this. monModel = model;
         //名字
-        transform.FindChild("Canvas/name").GetComponent<Text>().text = model.Name;
+        transform.Find("Canvas/name").GetComponent<Text>().text = model.Name;
     }
 
 

@@ -12,11 +12,10 @@ public class MapHandler : MonoBehaviour {
 	public Dictionary<string ,GameObject> playerGoList = new Dictionary<string, GameObject>();
 	public Dictionary<string ,GameObject> MonList = new Dictionary<string, GameObject>();//怪物列表 格式为： 1_2  monModel
     public Transform monsterHolder;
-	//Thread moveThread;
+    //Thread moveThread;
 
 
-
-	public void OnMessage(SocketModel model)
+    public void OnMessage(SocketModel model)
 	{
 		switch (model.Command){
 		case MapProtocol.ENTER_SRES://服务器返回当前场景所有玩家集合

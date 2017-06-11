@@ -48,11 +48,11 @@ public class EquipmentPanel : Inventory
             EquipmentSlot equipmentSlot = (EquipmentSlot)slot;//遍历装备面板的每一个格子
 			if (equipmentSlot.IsRightItem(item))  //判断item是否适合放在这个位置
             {
-				if (equipmentSlot.transform.FindChild("Item(Clone)")!=null)//替换已穿的装备
+				if (equipmentSlot.transform.Find("Item(Clone)")!=null)//替换已穿的装备
                 {
 					////////////////////////////
 					sendPutOnMessage(item);
-					ItemUI currentItemUI= equipmentSlot.transform.FindChild("Item(Clone)").GetComponent<ItemUI>();
+					ItemUI currentItemUI= equipmentSlot.transform.Find("Item(Clone)").GetComponent<ItemUI>();
 					Knapsack.Instance.StoreItem(currentItemUI.Item);//被换下的装备要放进背包
                     currentItemUI.SetItem(item, 1);
                 }
