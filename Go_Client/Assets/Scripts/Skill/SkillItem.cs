@@ -11,9 +11,7 @@ public class SkillItem : MonoBehaviour {
     private Text type ;
 	private Text des;
 	private Text mp;
-    //private GameObject icon_mask;
     public Text shortCutText;
-    public int shortCutIndex = 0;//哪个快捷键会释放此技能
 
     private void Awake()
     {
@@ -31,7 +29,6 @@ public class SkillItem : MonoBehaviour {
 
     public void Init(Skill _skill) {
         this.skill = _skill;
-        //    info = SkillsInfo._instance.GetSkillInfoById(id);
         icon.sprite = Resources.Load<Sprite>("Inventory/Item/"+ skill.Icon); 
 		name.text = _skill.Name;
         switch (_skill.ApplyType) {
@@ -57,20 +54,7 @@ public class SkillItem : MonoBehaviour {
         else {
             shortCutText.text = "F" + skill.Shortcut;
         }
-        shortCutIndex = skill.Shortcut;
     }
-
-
-    //    public void UpdateShow(int level) {
-    //        if (info.level <= level) {//技能可用
-    //            icon_mask.SetActive(false);
-    //			icon.GetComponent<SkillItemIcon>().enabled = true;
-    //        } else {
-    //            icon_mask.SetActive(true);
-    //			icon.GetComponent<SkillItemIcon>().enabled = false;
-    //        }
-    //    }
-
 
     //打开设置快捷键面板
     public void onOpenShortcutPanel() {
@@ -81,56 +65,17 @@ public class SkillItem : MonoBehaviour {
     //设置快捷键
     public void onSetShortcut(int index)
     {
-        shortCutIndex = index;
         shortCutText.text = "F" + index;
+        //更换快捷键
+        PlayerSkill playerSkill = GameObject.FindGameObjectWithTag(Tags.localPlayer).GetComponent<PlayerSkill>();
+        for (int i = 0; i < playerSkill.mySkillList.Count; i++)
+        {
+            if (playerSkill.mySkillList[i].Id == skill.Id)
+            {
+                playerSkill.mySkillList[i].Shortcut = index;
+                print(playerSkill.mySkillList[i].Name + "被设置快捷键盘：" + index);
+            }
+        }
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.F1) && shortCutIndex==1) {
-            releaseSkill();
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.F2) && shortCutIndex == 2)
-        {
-            releaseSkill();
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.F3) && shortCutIndex == 3)
-        {
-            releaseSkill();
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.F4) && shortCutIndex == 4)
-        {
-            releaseSkill();
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.F5) && shortCutIndex == 5)
-        {
-            releaseSkill();
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.F6) && shortCutIndex == 6)
-        {
-            releaseSkill();
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.F7) && shortCutIndex == 7)
-        {
-            releaseSkill();
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.F8) && shortCutIndex == 8)
-        {
-            releaseSkill();
-            return;
-        }
-    }
-    /// <summary>
-    /// 释放技能
-    /// </summary>
-    void releaseSkill() {
-        print("释放技能"+ shortCutIndex + " "+ skill.Id);
-        GameObject.FindGameObjectWithTag(Tags.localPlayer).GetComponent<PlayerController>().Attack(skill.Id);
-    }
 }

@@ -16,16 +16,17 @@ public class PlayerAttack : MonoBehaviour {
         Wait
     }
     public AttackState aniState = AttackState.Wait;
-  //  bool autoStoped = false;
-    public int currentSkill = 0;//本次攻击使用的技能
-
+ //   public int currentSkill = 0;//本次攻击使用的技能
     GameObject normalAttackEffPre;//普通攻击
     GameObject firBallEffPre;//火球术
+
+    public PlayerSkill playerSkill;
 
     void Start () {
         playerController = GetComponent<PlayerController>();
         normalAttackEffPre = Resources.Load<GameObject>("Skills/normalSkill");
         firBallEffPre = Resources.Load<GameObject>("Skills/fireBallSkill");
+        playerSkill = GetComponent<PlayerSkill>();
     }
 
     public void localPalyerAttack(Transform _attackTarget) {
@@ -33,9 +34,8 @@ public class PlayerAttack : MonoBehaviour {
     }
 
 
-
     void Update () {
-        //主角攻击逻辑
+        //主角普通攻击逻辑
         if (gameObject.tag == Tags.localPlayer && !EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetMouseButtonDown(0))
@@ -48,45 +48,16 @@ public class PlayerAttack : MonoBehaviour {
                     attackTarget = hit.collider.transform;
                     playerController.playerMotionState = PlayerMotionState.ATTACK;
                 }
-                else
-                {//点击非敌人，不需要在这里改变状态，move中会去做改变。
-                    attackTarget = null;
-                }
+                //else
+                //{//点击非敌人，不需要在这里改变状态，move中会去做改变。
+                //    attackTarget = null;
+                //}
             }
         }
 
-        //通用逻辑
+        //普通攻击逻辑
         if (playerController.playerMotionState == PlayerMotionState.ATTACK) {
-            if (attackTarget == null)//没有具体目标，找到技能的释放位置,且只放一次
-            {
-                print("要攻擊无目标");
-                if (gameObject.tag == Tags.localPlayer)
-                {
-                    Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hitInfo2;
-                    if (Physics.Raycast(ray2, out hitInfo2, 200, LayerMask.GetMask(Layers.ground)))
-                    {
-                        attackTargetPos = hitInfo2.point;
-                    }
-                }
-                //判断时间间隔
-                if (Time.time > lastAttTime + attackInterval)
-                {
-                    lastAttTime = Time.time;
-                    //攻击
-                    aniState = AttackState.Attack;
-                    //面向目标位置
-                    transform.LookAt(attackTargetPos);
-                    AttackLogic();
-                    playerController.playerMotionState = PlayerMotionState.IDEL;//只放一次的话，这一句是必要的。
-                }
-                else
-                {//等待间隔
-                    aniState = AttackState.Wait;
-                }
-            }
-            else {//有具体目标
-                print("要攻擊有目标");
+            //有具体目标
                 float dis = Vector3.Distance(transform.position, attackTarget.position);
                 if (dis <= attackDistance)//可以攻击
                 {
@@ -96,8 +67,6 @@ public class PlayerAttack : MonoBehaviour {
                         lastAttTime = Time.time;
                         //攻击
                         aniState = AttackState.Attack;
-                        //面向敌人
-                        transform.LookAt(attackTarget);
                         AttackLogic();
                     }
                     else
@@ -111,7 +80,7 @@ public class PlayerAttack : MonoBehaviour {
                     aniState = AttackState.RunTo;
                 }
             }
-        }
+        
         //判断是否是RunTo状态
         if (aniState== AttackState.RunTo &&attackTarget!=null) {
             float dis = Vector3.Distance(transform.position, attackTarget.position);
@@ -128,15 +97,22 @@ public class PlayerAttack : MonoBehaviour {
     /// <param name="attackTar"></param>
     /// <param name="skill"></param>
     public void Attack(int skillId , Transform attackTar=null ,float tarPosX=0, float tarPosY = 0, float tarPosZ = 0) {
-        currentSkill = skillId;
-        if (attackTar!=null) {
-            attackTarget = attackTar;
-        }
+        attackTarget = attackTar;
         if (tarPosX!=0 && tarPosZ!=0) {
             attackTargetPos = new Vector3(tarPosX, tarPosY, tarPosZ);
         }
-        playerController.playerMotionState = PlayerMotionState.ATTACK;
+
+        if (skillId!=0)//带技能的攻击
+        {       
+            playerController.playerMotionState = PlayerMotionState.SKILL;
+            playerSkill.runSkill(skillId, attackTarget, attackTargetPos);
+        }
+        else//普通攻击
+        {
+            playerController.playerMotionState = PlayerMotionState.ATTACK;
+        }
     }
+
 
     /// <summary>
     /// 具体攻击逻辑
@@ -145,32 +121,24 @@ public class PlayerAttack : MonoBehaviour {
     /// <param name="skill"></param>
     public void AttackLogic()
     {
-        if (currentSkill == 0)
-        {//普通攻击
-            GameObject skillEff = Instantiate(normalAttackEffPre);
-            skillEff.transform.position = transform.position + new Vector3(0, 1, 0);
-            skillEff.GetComponent<SkillBase>().skillTar = attackTarget;
-            skillEff.GetComponent<SkillBase>().skillTarPos = attackTargetPos;
-            skillEff.GetComponent<SkillBase>().damage = GetComponent<PlayerProperties>().M_playerModel.Atk;
-            skillEff.GetComponent<SkillBase>().destoryTargetEvent += skillCallBack;
-        }
-        else {//火球术
-            GameObject skillEff = Instantiate(firBallEffPre);
-            skillEff.transform.position = transform.position + new Vector3(0, 1, 0);
-            skillEff.GetComponent<SkillBase>().skillTar = attackTarget;
-            skillEff.GetComponent<SkillBase>().skillTarPos = attackTargetPos;
-            skillEff.GetComponent<SkillBase>().damage = GetComponent<PlayerProperties>().M_playerModel.Atk;
-            skillEff.GetComponent<SkillBase>().destoryTargetEvent += skillCallBack;
-        }
-        sendAttack();
-        currentSkill = 0;//先發送，后归零
+        //面向敌人
+        transform.LookAt(attackTarget);
+
+        //普通攻击
+        GameObject skillEff = Instantiate(normalAttackEffPre);
+        skillEff.transform.position = transform.position + new Vector3(0, 1, 0);
+        skillEff.GetComponent<SkillBase>().skillTar = attackTarget;
+        skillEff.GetComponent<SkillBase>().skillTarPos = attackTargetPos;
+        skillEff.GetComponent<SkillBase>().damage = GetComponent<PlayerProperties>().M_playerModel.Atk;
+        skillEff.GetComponent<SkillBase>().destoryTargetEvent += skillCallBack;
+        sendAttack(0);//无技能的普通攻击消息
     }
 
 
     /// <summary>
     /// 发送网络消息
     /// </summary>
-        void sendAttack() {
+        void sendAttack(int skillID) {
         if (tag != Tags.localPlayer)
         {
             return;
@@ -193,13 +161,14 @@ public class PlayerAttack : MonoBehaviour {
         else {//没有具体目标的空技能
             dto.TarPos = new Assets.Model.Vector3(attackTargetPos);
         }
-        dto.Skill = currentSkill;
+        dto.Skill = skillID;
         string message = LitJson.JsonMapper.ToJson(dto);
         NetWorkManager.instance.sendMessage(Protocol.MAP, GameInfo.myPlayerModel.Map, MapProtocol.ATTACK_MON_CREQ, message);
     }
 
-    void skillCallBack() {
-        playerController.playerMotionState = PlayerMotionState.IDEL;
-        print("杀死了怪物，攻击停止");
-    }
+        void skillCallBack()
+        {
+            playerController.playerMotionState = PlayerMotionState.IDEL;
+            print("杀死了怪物，攻击停止");
+        }
 }

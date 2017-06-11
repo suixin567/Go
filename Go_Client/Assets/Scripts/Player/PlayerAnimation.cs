@@ -21,21 +21,16 @@ public class PlayerAnimation : MonoBehaviour {
 
         if (playerController.playerMotionState == PlayerMotionState.IDEL)
         {
-            //if (move.state == PlayerMove.ControlMotionState.Moving)
-            //{
-               
-            //}
-            //else if (move.state == PlayerMove.ControlMotionState.Idle)
-            //{
-            
-            //}
             PlayAnim("Idle", 0.3f);
-        } else if(playerController.playerMotionState == PlayerMotionState.MOVE) {
+        }
+            //移动动画
+        else if (playerController.playerMotionState == PlayerMotionState.MOVE)
+        {
             PlayAnim("Run");
         }
 
-
-        else if (playerController.playerMotionState == PlayerMotionState.ATTACK)//攻击状态
+            //普通攻击动画
+        else if (playerController.playerMotionState == PlayerMotionState.ATTACK)
         {
             if (attack.aniState == PlayerAttack.AttackState.Attack)
             {
@@ -45,13 +40,12 @@ public class PlayerAnimation : MonoBehaviour {
             {
                 PlayAnim("Idle", 0.3f);
             }
-            //else if (attack.aniState == PlayerAttack.AttackState.RunTo)
-            //{
-            //    PlayAnim("Run");
-            //}
         }
-
-
+        //释放技能动画
+        else if (playerController.playerMotionState == PlayerMotionState.SKILL)
+        {
+            PlayAnim("Skill-GroundImpact");
+        }
 
     }
 

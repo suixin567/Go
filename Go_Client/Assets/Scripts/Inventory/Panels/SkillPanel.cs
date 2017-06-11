@@ -14,7 +14,7 @@ public class SkillPanel : MonoBehaviour {
     private bool isShow = false;
     public Transform contentPanel;
     public Transform shortCutPanel;//快捷键面板
-   // bool isSetShortCutState = false;//是否在设置快捷键
+
     [HideInInspector]
     public SkillItem selectedItem;//被选中，准备设置快捷键的item
     int selectedShortcutIndex;//被选中的快捷键 F1、F2....
@@ -31,31 +31,6 @@ public class SkillPanel : MonoBehaviour {
 		Hide();
         shortCutPanel.gameObject.SetActive(false);
     }
-	
-
-	//public void Show()
-	//{
-	//	isShow=true;
-	//	gameObject.SetActive(true);
-	//}
-	//public void Hide()
-	//{
-	//	isShow =false;
-	//	gameObject.SetActive(false);
-	//}
-	//public void DisplaySwitch()
-	//{
-	//	if (isShow == false)
-	//	{
-	//		Show();
-	//	}
-	//	else
-	//	{
-	//		Hide();
-	//	}
-	//}
-
-
 
     public virtual void Show()
     {

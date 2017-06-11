@@ -113,7 +113,7 @@ public class SkillManager : MonoBehaviour
                     skill.ApplyType = ApplyType.MultiTarget;
                     break;
                 default:
-                    Debug.LogWarning("解析错误");
+                    Debug.LogWarning("解析错误" + applyType);
                     break;
             }
             string applyProperty = temp["ApplyProperty"].str;
@@ -235,7 +235,7 @@ public class SkillManager : MonoBehaviour
                 skill.ApplyProperty = ApplyProperty.MP;
                 break;
             default:
-                Debug.LogWarning("解析错误");
+                Debug.LogWarning("解析错误" + applyProperty);
                 break;
         }
         skill.ApplyValue = (int)temp["ApplyValue"].n;

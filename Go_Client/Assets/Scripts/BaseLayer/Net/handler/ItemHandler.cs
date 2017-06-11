@@ -72,13 +72,15 @@ public class ItemHandler : MonoBehaviour {
     void initSkill(string message)
     {
         print("我有这么多的技能"+message);
-    //    Skill[] mySkills = Coding<Skill[]>.decode(message);
         List<Skill> skills = SkillManager._instance.jsons2Skills(message);
-
+        //初始化技能面板
         for (int i = 0; i < skills.Count; i++)
         {
             SkillPanel.instance.creatSkillItem(skills[i]);
         }
+        //初始化本地玩家的技能list
+        GameObject.FindGameObjectWithTag(Tags.localPlayer).GetComponent<PlayerSkill>().mySkillList = skills;
+        print("为技能赋值");
     }
 
     //初始化背包
